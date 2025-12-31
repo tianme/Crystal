@@ -15,14 +15,40 @@ using S = ServerPackets;
 
 namespace Server.MirEnvir
 {
+    /// <summary>
+	/// 怪物线程
+	/// </summary>
     public class MobThread
     {
+        /// <summary>
+        /// 线程Id
+        /// </summary>
         public int Id = 0;
+        /// <summary>
+        /// 最后执行时间(仅用于性能分析)
+        /// </summary>
         public long LastRunTime = 0;
+        /// <summary>
+        /// 起始时间（仅用于性能分析)
+        /// </summary>
         public long StartTime = 0;
+
+        /// <summary>
+        /// 控制线程执行片段的时间
+        /// </summary>
         public long EndTime = 0;
+
+        /// <summary>
+        ///  怪物对象链表
+        /// </summary>
         public LinkedList<MapObject> ObjectsList = new LinkedList<MapObject>();
+        /// <summary>
+        /// 当前要执行的怪物对象
+        /// </summary>
         public LinkedListNode<MapObject> _current = null;
+        /// <summary>
+        /// 是否挂起状态
+        /// </summary>
         public bool Stop = false;
     }
     public class RandomProvider
@@ -43,8 +69,16 @@ namespace Server.MirEnvir
 
     public class Envir
     {
+        /// <summary>
+        /// 广泛用于游戏运行时的核心功能
+        /// <para> 处理玩家交互、NPC脚本、怪物行为、地图管理等 </para>
+        /// <para> 几乎所有运行时组件都使用这个实例 </para>
+        /// </summary>
         public static Envir Main { get; } = new Envir();
-
+        /// <summary>
+        /// GUI编辑器使用
+        /// <para>例如：地图编辑器</para>
+        /// </summary>
         public static Envir Edit { get; } = new Envir();
 
         protected static MessageQueue MessageQueue => MessageQueue.Instance;
@@ -68,7 +102,7 @@ namespace Server.MirEnvir
         public static int LoadVersion;
         public static int LoadCustomVersion;
 
-        private readonly DateTime _startTime = DateTime.UtcNow;
+        private readonly DateTime _startTime = DateTime.UtcNow; // Utc 时间，不是本地时间（如果用本地时间因时区不同可能会有意想不到的问题）
         public readonly Stopwatch Stopwatch = Stopwatch.StartNew();
 
         public long Time { get; private set; }
@@ -81,8 +115,16 @@ namespace Server.MirEnvir
 
         public static ConcurrentDictionary<string, MirConnectionLog> ConnectionLogs = new ConcurrentDictionary<string, MirConnectionLog>();
 
+        /*
+            获取服务器当前的逻辑时间（基于启动时间与运行时长计算）
+
+           _startTime = 秒表开始的真实时间。
+            Time = 秒表当前计数（经过了多少毫秒）。
+            Now = _startTime + 秒表时间。
+            这样做的好处是：即使系统时间被调整（例如管理员改了系统时钟），服务器的逻辑时间仍然稳定、连续，不会突然跳变。
+         */
         public DateTime Now =>
-            _startTime.AddMilliseconds(Time);
+            _startTime.AddMilliseconds(Time); // Time 初始为0 ，会随着运行时间而变动
 
         public bool Running { get; private set; }
 
@@ -107,9 +149,28 @@ namespace Server.MirEnvir
         public List<MirConnection> Connections = new List<MirConnection>();
 
         //Server DB
-        public int MapIndex, ItemIndex, MonsterIndex, NPCIndex, QuestIndex, GameshopIndex, ConquestIndex, RespawnIndex, ScriptIndex;
+        /// <summary>
+        /// MapIndex: 地图索引,记录当前Server.MirDB文件中的最大索引，创建新地图时使用
+        /// </summary>
+        public int MapIndex;
+        /// </summary>
+        /// ItemIndex: 物品索引
+        /// MonsterIndex: 怪物索引
+        /// NPCIndex: NPC 索引
+        /// QuestIndex: 任务索引
+        /// </summary>
+        public int ItemIndex, MonsterIndex, NPCIndex, QuestIndex, GameshopIndex, ConquestIndex, RespawnIndex, ScriptIndex;
+        /// <summary>
+        /// 地图的蓝图集合
+        /// </summary>
         public List<MapInfo> MapInfoList = new List<MapInfo>();
+        /// <summary>
+        /// 物品蓝图集合
+        /// </summary>
         public List<ItemInfo> ItemInfoList = new List<ItemInfo>();
+        /// <summary>
+        /// 怪物蓝图集合
+        /// </summary>
         public List<MonsterInfo> MonsterInfoList = new List<MonsterInfo>();
         public List<MagicInfo> MagicInfoList = new List<MagicInfo>();
         public List<NPCInfo> NPCInfoList = new List<NPCInfo>();
@@ -136,12 +197,28 @@ namespace Server.MirEnvir
 
         //Live Info
         public bool Saving = false;
+        /// <summary>
+        /// 地图集合
+        /// </summary>
         public List<Map> MapList = new List<Map>();
+        /// <summary>
+        /// 重生点集合
+        /// </summary>
         public List<SafeZoneInfo> StartPoints = new List<SafeZoneInfo>();
+
+        /// <summary>
+        /// 玩家初始物品列表
+        /// </summary>
         public List<ItemInfo> StartItems = new List<ItemInfo>();
 
         public List<PlayerObject> Players = new List<PlayerObject>();
+        /// <summary>
+        /// 法术对象集合
+        /// </summary>
         public List<SpellObject> Spells = new List<SpellObject>();
+        /// <summary>
+        /// NPC对象集合
+        /// </summary>
         public List<NPCObject> NPCs = new List<NPCObject>();
         public List<GuildObject> Guilds = new List<GuildObject>();
         public List<ConquestObject> Conquests = new List<ConquestObject>();
@@ -162,11 +239,21 @@ namespace Server.MirEnvir
 
         public Dragon DragonSystem;
         public NPCScript DefaultNPC, MonsterNPC, RobotNPC;
-
+        /// <summary>
+        /// 钓鱼掉落集合
+        /// </summary>
         public List<DropInfo> FishingDrops = new List<DropInfo>();
+        /// <summary>
+        /// 觉醒掉落集合
+        /// </summary>
         public List<DropInfo> AwakeningDrops = new List<DropInfo>();
-
+        /// <summary>
+        /// 宝箱掉落集合
+        /// </summary>
         public List<DropInfo> StrongboxDrops = new List<DropInfo>();
+        /// <summary>
+        /// 宝石掉落集合
+        /// </summary>
         public List<DropInfo> BlackstoneDrops = new List<DropInfo>();
 
         public List<GuildAtWar> GuildsAtWar = new List<GuildAtWar>();
@@ -1916,8 +2003,13 @@ namespace Server.MirEnvir
 
         private string CanStartEnvir()
         {
+            // 至少需要1个地图
             if (StartPoints.Count == 0) return GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CannotStartServerWithoutMapAndStartPoint);
-
+            /*
+             *  怪物数据完整性检查 （仅当 Settings.EnforceDBChecks 为 true 时执行）：
+             - 检查大量必需怪物是否存在，包括骷髅、神兽、血虫蝙蝠、祖玛系列怪物、海龟系列怪物等
+             - 这些怪物是游戏核心内容的一部分，可能与特定任务、活动或地图事件相关
+            */
             if (Settings.EnforceDBChecks)
             {
                 if (GetMonsterInfo(Settings.SkeletonName, true) == null) return GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CannotStartServerWithoutMob) + Settings.SkeletonName;
@@ -1989,12 +2081,14 @@ namespace Server.MirEnvir
         {
             try
             {
+                // 记录启动时的当前时间
                 Time = Stopwatch.ElapsedMilliseconds;
 
                 var conTime = Time;
                 var saveTime = Time + Settings.SaveDelay * Settings.Minute;
                 var userTime = Time + Settings.Minute * 5;
                 var lineMessageTime = Time + Settings.Minute * Settings.LineMessageTimer;
+                // 当前时间+1000ms 也就说间隔1s执行一次
                 var processTime = Time + 1000;
                 var startTime = Time;
 
@@ -2011,18 +2105,21 @@ namespace Server.MirEnvir
                         MobThreads[j].Id = j;
                     }
                 }
-
+                // 启动环境
                 StartEnvir();
                 var canstartserver = CanStartEnvir();
                 if (canstartserver != "true")
                 {
+                    // 环境启动失败，记录错误信息
+                    // 用队列的原因是因为队列是线程安全的
                     MessageQueue.Enqueue(canstartserver);
                     StopEnvir();
                     _thread = null;
                     Stop();
                     return;
                 }
-
+                // 环境启动成功，启动怪物线程
+                // 线程管理地图，地图管理怪物
                 if (Settings.Multithreaded)
                 {
                     for (var j = 0; j < MobThreads.Length; j++)
@@ -2033,7 +2130,20 @@ namespace Server.MirEnvir
                         MobThreading[j].Start();
                     }
                 }
-
+                // 启动网络服务
+                // 网络服务包括 TCP 服务和 HTTP 服务
+                // TCP 服务用于处理客户端连接
+                // HTTP 服务用于提供 Web 接口
+                // 启动 HTTP 服务需要在配置文件中设置 StartHTTPService 为 true
+                // HTTP 服务默认监听端口为 8080
+                // 可以在配置文件中设置 HTTPPort 来改变监听端口
+                // 启动 TCP 服务需要在配置文件中设置 StartTCPService 为 true
+                // TCP 服务默认监听端口为 8000
+                // 可以在配置文件中设置 TCPPort 来改变监听端口
+                // 启动网络服务需要在配置文件中设置 StartNetworkService 为 true
+                // 网络服务启动后，客户端可以通过 TCP 或 HTTP 协议连接到服务器
+                // TCP 协议用于实时游戏交互，如移动、攻击等
+                // HTTP 协议用于提供 Web 接口，如查看服务器状态、发送指令等
                 StartNetwork();
                 if (Settings.StartHTTPService)
                 {
@@ -2045,24 +2155,31 @@ namespace Server.MirEnvir
                     while (Running)
                     {
                         Time = Stopwatch.ElapsedMilliseconds;
-
-                        if (Time >= processTime)
+                        // 用于统计整体负载，每秒钟统计一次
+                        if (Time >= processTime) // Time 是当前时间 processTime 是当前时间加1s，也就是说这个判断里的逻辑 1s 执行一次
                         {
+                            // 用于统计服务器每秒处理的对象数量
                             LastCount = processCount;
                             LastRealCount = processRealCount;
+                            // 重置计数器，用于下一秒的统计
                             processCount = 0;
+                            // 重置真实计数器，用于下一秒的统计
                             processRealCount = 0;
+                            // 下次统计的间隔，这里设置了本次循环起始时间+1s
                             processTime = Time + 1000;
                         }
-
+                        // 每次循环执行一次，具体多久执行一次取决于整个一轮循环耗时多久
                         if (conTime != Time)
                         {
                             conTime = Time;
-
+                            // 调整客户端内的时间：黎明、白天、傍晚、夜晚
                             AdjustLights();
-
-                            lock (Connections)
+                            // 遍历执行Connections的 Process() 方法
+                            lock (Connections) // 加锁
                             {
+                                // 从后向前遍历连接池
+                                // 问：为什么用倒序？
+                                // 答：因Process方法执行时有可能移除Connections中的自身对象，倒序遍历可以避免数组越界
                                 for (var i = Connections.Count - 1; i >= 0; i--)
                                 {
                                     Connections[i].Process();
@@ -2078,16 +2195,16 @@ namespace Server.MirEnvir
                             }
                         }
 
-
+                        // 性能监控：统计当前循环耗时
                         if (current == null)
                             current = Objects.First;
-
+                        // 一轮的遍历执行了多长时间
                         if (current == Objects.First)
                         {
                             LastRunTime = Time - startTime;
                             startTime = Time;
                         }
-
+                        // 调度怪物执行AI
                         if (Settings.Multithreaded)
                         {
                             for (var j = 1; j < MobThreads.Length; j++)
@@ -2106,17 +2223,22 @@ namespace Server.MirEnvir
                             ThreadLoop(MobThreads[0]);
                         }
 
-                        var TheEnd = false;
-                        var Start = Stopwatch.ElapsedMilliseconds;
+                        var TheEnd = false; // 结束标记
+                        var Start = Stopwatch.ElapsedMilliseconds; // 当前毫秒数
+                        // 结束标记不为true 并且 当前毫秒数- Start < 20 则进入循环
+                        // 这里就是 1000 / 20 = 50, 也就是游戏世界的逻辑帧是 1s 50帧
+                        // 持续执行20ms 或者 current（游戏对象执行一遍）跳出循环
                         while (!TheEnd && Stopwatch.ElapsedMilliseconds - Start < 20)
                         {
+                            // 如果current为null则跳出循环
                             if (current == null)
                             {
                                 TheEnd = true;
                                 break;
                             }
 
-                            var next = current.Next;
+                            var next = current.Next; // 取下一个要执行的对象
+                            // Multithreaded 没有开启多线程 || 非怪物类型的对象（如玩家、NPC、物品等）始终在主线程中处理 || 1. - 有主人的怪物（可能是玩家的宠物、召唤物等）也在主线程中处理
                             if (!Settings.Multithreaded || current.Value.Race != ObjectType.Monster || current.Value.Master != null)
                             {
                                 if (Time > current.Value.OperateTime)
@@ -2207,49 +2329,67 @@ namespace Server.MirEnvir
 
             _thread = null;
         }
-
+        /// <summary>
+        /// 怪物线程
+        /// </summary>
+        /// <param name="Info"></param>
         private void ThreadLoop(MobThread Info)
         {
+            // 当前线程不是应该暂停状态
             Info.Stop = false;
 
             try
             {
+                // 定义 stopping 并赋初始值
                 var stopping = false;
                 if (Info._current == null)
-                    Info._current = Info.ObjectsList.First;
-                stopping = Info._current == null;
+                    Info._current = Info.ObjectsList.First; // 如果info._current 为空，指向第一个怪物
+                stopping = Info._current == null; // stopping 这个复制动作没有作用
 
                 while (Running)
                 {
-                    if (Info._current == null)
+                    if (Info._current == null) // 循环中再次判断当前对象是否为空，如果为空则取值第一个
                         Info._current = Info.ObjectsList.First;
                     else
                     {
+                        // 取下一个执行对象
                         var next = Info._current.Next;
 
                         //if we reach the end of our list > go back to the top (since we are running threaded, we dont want the system to sit there for xxms doing nothing)
+                        // 是最后一个对象
                         if (Info._current == Info.ObjectsList.Last)
                         {
+                            // next = 起始对象
                             next = Info.ObjectsList.First;
+                            // 下一次运行的时间 = （上一次运行的时间 + 本次运行的时间）/ 2
                             Info.LastRunTime = (Info.LastRunTime + (Time - Info.StartTime)) / 2;
                             //Info.LastRunTime = (Time - Info.StartTime) /*> 0 ? (Time - Info.StartTime) : Info.LastRunTime */;
-                            Info.StartTime = Time;
+                            Info.StartTime = Time; // 本轮的其实时间
                         }
+                        // 当前时间 > 当前怪物可执行时间
+                        // 当前怪物允许执行
                         if (Time > Info._current.Value.OperateTime)
                         {
+                            // 如果当前对象不是宝宝
                             if (Info._current.Value.Master == null) //since we are running multithreaded, dont allow pets to be processed (unless you constantly move pets into their map appropriate thead)
                             {
                                 Info._current.Value.Process();
+                                // 设置下次执行的时间
                                 Info._current.Value.SetOperateTime();
                             }
                         }
+                        // _current 指向 当前执行的对象
                         Info._current = next;
                     }
 
                     //if it's the main thread > make it loop till the subthreads are done, else make it stop after 'endtime'
+                    // 如果线程Id == 0（主怪物线程）
+                    // 主线程负责其他子线程
                     if (Info.Id == 0)
                     {
+                        // stopping 初始默认设置成 true
                         stopping = true;
+                        // 遍历子线程
                         for (var x = 1; x < MobThreads.Length; x++)
                         {
                             if (MobThreads[x].Stop == false)
@@ -2257,15 +2397,24 @@ namespace Server.MirEnvir
                                 stopping = false;
                             }
                         }
+                        // 如果子线程没有执行完等待子线程执行完
                         if (!stopping) continue;
+                        // 所有子线程都执行完，主线程Stop 设置为 true
                         Info.Stop = stopping;
+                        // 主线程退出
                         return;
                     }
-
+                    // 如果当前线程的执行时间还没超过分配的时间片 (Info.EndTime)，
+                    // 或者服务器已停止运行 (!Running)，则跳过下面的阻塞逻辑，继续执行下一轮。
+                    // 这样可以保证：
+                    // - 时间片内尽可能多地执行怪物 AI (主循环中会给10ms的执行时间, 在WorkLoop中 Info.EndTime = Time + 10)
+                    // - 服务器停止时线程不会挂在 Monitor.Wait 上而无法退出
                     if (Stopwatch.ElapsedMilliseconds <= Info.EndTime || !Running) continue;
                     Info.Stop = true;
                     lock (_locker)
                     {
+                        // while: 用while来阻塞是避免假环境导致的怪物AI不一致
+                        // Monitor.Wait(_locker) 阻塞
                         while (Info.Stop) Monitor.Wait(_locker);
                     }
                 }
@@ -2788,71 +2937,99 @@ namespace Server.MirEnvir
 
             Saving = false;
         }
-
+        /// <summary>
+        /// 加载数据库
+        /// </summary>
+        /// <returns></returns>
         public bool LoadDB()
         {
+            // 加锁
             lock (LoadLock)
             {
+                // 如果没有读到则创建一个
                 if (!File.Exists(DatabasePath))
                 {
                     SaveDB();
                 }
-
+                // 读取文件
                 using (var stream = File.OpenRead(DatabasePath))
                 using (var reader = new BinaryReader(stream))
                 {
+                    // 读取版本
                     LoadVersion = reader.ReadInt32();
+                    // 读取自定义版本
                     LoadCustomVersion = reader.ReadInt32();
-
+                    // 如果当前版本小于最小版本返回false
                     if (LoadVersion < MinVersion)
                     {
                         MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CannotLoadDatabaseMinSupported), LoadVersion, MinVersion));
                         return false;
                     }
+                    // 如果当前版本大于项目版本返回false
                     else if (LoadVersion > Version)
                     {
                         MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CannotLoadDatabaseMaxSupported), LoadVersion, Version));
                         return false;
                     }
-
+                    // 读取地图索引
                     MapIndex = reader.ReadInt32();
+                    // 读取物品索引
                     ItemIndex = reader.ReadInt32();
+                    // 读取怪物索引
                     MonsterIndex = reader.ReadInt32();
-
+                    // 读取NPC索引
                     NPCIndex = reader.ReadInt32();
+                    // 读取任务索引
                     QuestIndex = reader.ReadInt32();
-
+                    // 版本大于 63
                     if (LoadVersion >= 63)
                     {
+                        // 读取商店索引
                         GameshopIndex = reader.ReadInt32();
                     }
 
                     if (LoadVersion >= 66)
                     {
+                        // 征战索引
                         ConquestIndex = reader.ReadInt32();
                     }
 
                     if (LoadVersion >= 68)
-                        RespawnIndex = reader.ReadInt32();
+                        RespawnIndex = reader.ReadInt32(); // 重生点索引
 
-
+                    // 地图数量
                     var count = reader.ReadInt32();
+                    // 清除地图信息
                     MapInfoList.Clear();
                     for (var i = 0; i < count; i++)
-                        MapInfoList.Add(new MapInfo(reader));
-
+                        MapInfoList.Add(new MapInfo(reader)); // 从新添加，MapInfo地图蓝图
+                    // 获取物品长度
                     count = reader.ReadInt32();
+                    // 清理物品集合
                     ItemInfoList.Clear();
                     for (var i = 0; i < count; i++)
                     {
+                        // 添加物品蓝图
                         ItemInfoList.Add(new ItemInfo(reader, LoadVersion, LoadCustomVersion));
-                        if (ItemInfoList[i] != null && ItemInfoList[i].RandomStatsId < Settings.RandomItemStatsList.Count)
+						// 是否可以出现随机属性的物品
+						// RandomItemStatsList 在GUI(Server.MirForms/Program.cs)中Load方法初始化的
+						// 默认可随机的物品有
+						// - 默认随机属性配置
+						// - 武器(Weapon)
+						// - 防具(Armour)
+						// - 头盔(Helmet)
+						// - 项链(Necklace)
+						// - 手镯(Bracelet)
+						// - 戒指(Ring)
+						// - 腰带(Belt)
+						if (ItemInfoList[i] != null && ItemInfoList[i].RandomStatsId < Settings.RandomItemStatsList.Count)
                         {
                             ItemInfoList[i].RandomStats = Settings.RandomItemStatsList[ItemInfoList[i].RandomStatsId];
                         }
                     }
                     count = reader.ReadInt32();
                     MonsterInfoList.Clear();
+                    // 初始化怪物蓝图列表
                     for (var i = 0; i < count; i++)
                         MonsterInfoList.Add(new MonsterInfo(reader));
 
@@ -2911,10 +3088,12 @@ namespace Server.MirEnvir
 
             return true;
         }
-
+        // 加载账号信息
+        // 初始化 AccuntInfo->CharacterInfo->MailList(邮件集合) Heros(英雄集合) 等
         public void LoadAccounts()
         {
             //reset ranking
+            // 重置排行榜
             for (var i = 0; i < RankClass.Count(); i++)
             {
                 if (RankClass[i] != null)
@@ -3279,27 +3458,37 @@ namespace Server.MirEnvir
 
         private void StartEnvir()
         {
+            // 清空环境中的玩家、开始点、开始物品、地图列表、游戏商店日志、自定义命令、英雄列表、怪物数量
             Players.Clear();
+            // 清空环境中的开始点、开始物品
             StartPoints.Clear();
             StartItems.Clear();
+            // 清空环境中的地图列表、游戏商店日志、自定义命令、英雄列表、怪物数量
             MapList.Clear();
+            // 清空环境中的游戏世界地图列表
             GTMapList.Clear();
+            // 清空环境中的游戏商店日志
             GameshopLog.Clear();
+            // 清空环境中的自定义命令
             CustomCommands.Clear();
+            // 清空环境中的英雄列表
             Heroes.Clear();
+            // 清空环境中的怪物数量
             MonsterCount = 0;
-
+            // 加载数据库
             LoadDB();
-
+            // 清空环境中的Buff列表
             BuffInfoList.Clear();
+            // 加载数据库中的Buff信息
             foreach (var buff in BuffInfo.Load())
             {
                 BuffInfoList.Add(buff);
             }
-
+            // 把加载的Buff总数添加到队列中
             MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.BuffsLoaded), BuffInfoList.Count));
 
             RecipeInfoList.Clear();
+            // 加载数据库中的配方信息（物品合成的配方）
             foreach (var recipe in Directory.GetFiles(Settings.RecipePath, "*.txt")
                          .Select(path => Path.GetFileNameWithoutExtension(path))
                          .ToArray())
@@ -3312,6 +3501,7 @@ namespace Server.MirEnvir
             for (var i = 0; i < MapInfoList.Count; i++)
             {
                 // Call CreateMap(), which adds the map to Envir.MapList
+                // 加载每个地图的npc，安全区，和地图，创建好的地图放到MapList中
                 MapInfoList[i].CreateMap();
 
                 // Fetch the created map from Envir.MapList
@@ -3347,7 +3537,7 @@ namespace Server.MirEnvir
             }
 
             MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.MapsLoaded), MapInfoList.Count));
-
+            // 玩家初始化物品
             for (var i = 0; i < ItemInfoList.Count; i++)
             {
                 if (ItemInfoList[i].StartItem)
@@ -3360,7 +3550,7 @@ namespace Server.MirEnvir
 
             LoadDisabledChars();
             LoadLineMessages();
-
+            // 加载游戏中的龙,龙的配置需要GM自己配置，在Server.MirForms/Systems/DragonInfoForm.cs有配置信息
             if (DragonInfo.Enabled)
             {
                 DragonSystem = new Dragon(DragonInfo);
@@ -3371,24 +3561,26 @@ namespace Server.MirEnvir
 
                 MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.DragonLoaded));
             }
-
+            // 扩展 DefaultNPC MonsterNPC RobotNPC 的逻辑，可以在不改代码的情况下修改它们的行为
             DefaultNPC = NPCScript.GetOrAdd((uint)Random.Next(1000000, 1999999), Settings.DefaultNPCFilename, NPCScriptType.AutoPlayer);
             MonsterNPC = NPCScript.GetOrAdd((uint)Random.Next(2000000, 2999999), Settings.MonsterNPCFilename, NPCScriptType.AutoMonster);
             RobotNPC = NPCScript.GetOrAdd((uint)Random.Next(3000000, 3999999), Settings.RobotNPCFilename, NPCScriptType.Robot);
 
-            MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.EnvirStarted));           
+            MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.EnvirStarted));
 
         }
 
-        
+
         private void StartNetwork()
         {
+            // 清空环境中的连接列表
             Connections.Clear();
 
+            // 加载数据库中的账号信息
             LoadAccounts();
-
+            // 加载数据库中的公会信息
             LoadGuilds();
-
+            // 加载数据库中的征服信息
             LoadConquests();
             LoadGTInfo();
 
@@ -3530,6 +3722,7 @@ namespace Server.MirEnvir
         {
             try
             {
+                // 没有运行或服务没有启动
                 if (!Running || !_listener.Server.IsBound) return;
             }
             catch (Exception e)
@@ -3542,12 +3735,15 @@ namespace Server.MirEnvir
                 var tempTcpClient = _listener.EndAcceptTcpClient(result);
 
                 bool connected = false;
+                // 获取ip地址
                 var ipAddress = tempTcpClient.Client.RemoteEndPoint.ToString().Split(':')[0];
-
+                // ip没有被封禁或封禁时间过期
                 if (!IPBlocks.TryGetValue(ipAddress, out DateTime banDate) || banDate < Now)
                 {
+                    // 计数，如果大于配置则不让链接
                     int count = 0;
-
+                    // 遍历所有链接，传奇是早期游戏起，当时一个区里基本就500-1000人，不考虑连接过多的问题
+                    // TODO: 这里应该加锁
                     for (int i = 0; i < Connections.Count; i++)
                     {
                         var connection = Connections[i];
@@ -3557,39 +3753,41 @@ namespace Server.MirEnvir
 
                         count++;
                     }
-
+                    // 统一个ip不能大于最大连接数，最大连接数在配置文件中
                     if (count >= Settings.MaxIP)
                     {
+                        // 封ip，配置文件中设置封禁时间
                         UpdateIPBlock(ipAddress, TimeSpan.FromSeconds(Settings.IPBlockSeconds));
 
                         MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.IpAddressDisconnectedTooManyConnections), ipAddress));
                     }
                     else
                     {
+                        // 初始化 MirConnection (核心：角色相关)
                         var tempConnection = new MirConnection(++_sessionID, tempTcpClient);
-                        if (tempConnection.Connected)
+                        if (tempConnection.Connected) // 如果连接成功
                         {
-                            connected = true;
-                            lock (Connections)
-                                Connections.Add(tempConnection);
+                            connected = true; // connected 设置成true， 默认是false
+                            lock (Connections) // 加锁
+                                Connections.Add(tempConnection); // 添加到Connections集合中
                         }
                     }
                 }
 
-                if (!connected)
-                    tempTcpClient.Close();
+                if (!connected) // 如果 connected 是false， 说明连接失败
+                    tempTcpClient.Close(); // 关闭连接
             }
             catch (Exception ex)
             {
-                MessageQueue.Enqueue(ex);
+                MessageQueue.Enqueue(ex); // 记录报错
             }
             finally
             {
-                while (Connections.Count >= Settings.MaxUser)
+                while (Connections.Count >= Settings.MaxUser) // 如果大于最大连接上限持续休眠，每次1ms
                     Thread.Sleep(1);
 
-                if (Running && _listener.Server.IsBound)
-                    _listener.BeginAcceptTcpClient(Connection, null);
+                if (Running && _listener.Server.IsBound) // 如果Running：true 且 服务已经启动
+                    _listener.BeginAcceptTcpClient(Connection, null); // 异步递归Connection
             }
         }
 
@@ -3619,26 +3817,31 @@ namespace Server.MirEnvir
 
         public void NewAccount(ClientPackets.NewAccount p, MirConnection c)
         {
+            // 配置文件设置不允许注册用户
             if (!Settings.AllowNewAccount)
             {
+                // 返回原因
                 c.Enqueue(new ServerPackets.NewAccount { Result = 0 });
                 return;
             }
-
-
+            // IP地址是否匹配
             if (ConnectionLogs.TryGetValue(c.IPAddress, out MirConnectionLog currentlog))
             {
+                // 如果同一个ip地址在1个小时内创建账户大于2次则封ip24小时
                 if (currentlog.AccountsMade.Count > 2)
                 {
                     IPBlocks[c.IPAddress] = Now.AddHours(24);
                     c.Enqueue(new ServerPackets.NewAccount { Result = 0 });
                     return;
                 }
+                // 加入创建时间
                 currentlog.AccountsMade.Add(Time);
                 for (int i = 0; i < currentlog.AccountsMade.Count; i++)
                 {
+                    // 冷却时间1个小时
                     if ((currentlog.AccountsMade[i] + 60 * 60 * 1000) < Time)
                     {
+                        // 删除记录时间
                         currentlog.AccountsMade.RemoveAt(i);
                         break;
                     }
@@ -3646,57 +3849,60 @@ namespace Server.MirEnvir
             }
             else
             {
+                // 记录到 ConnectionLogs, IPAddress 为 Key， MirConnectionLog 为 value
                 ConnectionLogs[c.IPAddress] = new MirConnectionLog() { IPAddress = c.IPAddress };
             }
 
-
+                // 用户名不符合规范
             if (!AccountIDReg.IsMatch(p.AccountID))
             {
                 c.Enqueue(new ServerPackets.NewAccount { Result = 1 });
                 return;
             }
-
+                // 密码不符合规范
             if (!PasswordReg.IsMatch(p.Password))
             {
                 c.Enqueue(new ServerPackets.NewAccount { Result = 2 });
                 return;
             }
+            // 邮箱不能为空并且格式不对或者邮箱长度大于50
             if (!string.IsNullOrWhiteSpace(p.EMailAddress) && !EMailReg.IsMatch(p.EMailAddress) ||
                 p.EMailAddress.Length > 50)
             {
                 c.Enqueue(new ServerPackets.NewAccount { Result = 3 });
                 return;
             }
-
+            // 用户名不能为空
             if (!string.IsNullOrWhiteSpace(p.UserName) && p.UserName.Length > 20)
             {
                 c.Enqueue(new ServerPackets.NewAccount { Result = 4 });
                 return;
             }
-
+            // 密保问题不能为空
             if (!string.IsNullOrWhiteSpace(p.SecretQuestion) && p.SecretQuestion.Length > 30)
             {
                 c.Enqueue(new ServerPackets.NewAccount { Result = 5 });
                 return;
             }
-
+            // 密保答案不能为空
             if (!string.IsNullOrWhiteSpace(p.SecretAnswer) && p.SecretAnswer.Length > 30)
             {
                 c.Enqueue(new ServerPackets.NewAccount { Result = 6 });
                 return;
             }
-
+            // 加锁
             lock (AccountLock)
             {
+                // 检测用户名是否存在
                 if (AccountExists(p.AccountID))
                 {
                     c.Enqueue(new ServerPackets.NewAccount { Result = 7 });
                     return;
                 }
-
+                // 添加到列表
                 AccountList.Add(new AccountInfo(p) { Index = ++NextAccountID, CreationIP = c.IPAddress });
 
-
+                // 放入队列
                 c.Enqueue(new ServerPackets.NewAccount { Result = 8 });
             }
         }
@@ -3807,35 +4013,43 @@ namespace Server.MirEnvir
             account.RequirePasswordChange = false;
             c.Enqueue(new ServerPackets.ChangePassword { Result = 6 });
         }
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="p">Packet</param>
+        /// <param name="c">MirConnection</param>
         public void Login(ClientPackets.Login p, MirConnection c)
         {
+            // 设置不允许登录
             if (!Settings.AllowLogin)
             {
                 c.Enqueue(new ServerPackets.Login { Result = 0 });
                 return;
             }
-
+            // 账号不匹配
             if (!AccountIDReg.IsMatch(p.AccountID))
             {
                 c.Enqueue(new ServerPackets.Login { Result = 1 });
                 return;
             }
-
+            // 密码是否符合规则
             if (!PasswordReg.IsMatch(p.Password))
             {
                 c.Enqueue(new ServerPackets.Login { Result = 2 });
                 return;
             }
+            // 根据账户id获取账户信息
             var account = GetAccount(p.AccountID);
-
+            // 未获取到用户
             if (account == null)
             {
                 c.Enqueue(new ServerPackets.Login { Result = 3 });
                 return;
             }
-
+            // 用户被禁用
             if (account.Banned)
             {
+                // 过期时间大于时间不处理
                 if (account.ExpiryDate > Now)
                 {
                     c.Enqueue(new ServerPackets.LoginBanned
@@ -3845,21 +4059,27 @@ namespace Server.MirEnvir
                     });
                     return;
                 }
+                // 解封
                 account.Banned = false;
             }
+            // 封禁的原因，初始空字符串
             account.BanReason = string.Empty;
+            // 设置过期时间为最小时间单位
             account.ExpiryDate = DateTime.MinValue;
-
+            // 加密密码并加盐
             p.Password = Utils.Crypto.HashPassword(p.Password, account.Salt);
-
+            // 用户密码跟服务器密码不匹配
             if (string.CompareOrdinal(account.Password, p.Password) != 0)
             {
+                // 重试5次
                 if (account.WrongPasswordCount++ >= 5)
                 {
                     account.Banned = true;
                     account.BanReason = GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.TooManyWrongLoginAttempts);
+                    // 2分钟后重试
                     account.ExpiryDate = Now.AddMinutes(2);
 
+                    // 发送错误原因
                     c.Enqueue(new ServerPackets.LoginBanned
                     {
                         Reason = account.BanReason,
@@ -3867,32 +4087,39 @@ namespace Server.MirEnvir
                     });
                     return;
                 }
-
+                // 大于5次
                 c.Enqueue(new ServerPackets.Login { Result = 4 });
                 return;
             }
+            // 清楚错误标记次数
             account.WrongPasswordCount = 0;
-
+            // 用户需要修改密码
             if (account.RequirePasswordChange)
             {
+                // 发送原因
                 c.Enqueue(new ServerPackets.Login { Result = 5 });
                 return;
             }
 
+            // 加锁
             lock (AccountLock)
             {
+                // 如果 Connection 如果有链接则关闭上次的连接
                 account.Connection?.SendDisconnect(1);
-
+                // 重新赋值当前连接
                 account.Connection = c;
             }
-
+            // 把账户对象赋值给 MirConnection
             c.Account = account;
+            // 切换到选择状态
             c.Stage = GameStage.Select;
-
+            // 更新最后登录时间
             account.LastDate = Now;
+            // 更新最后登录IP
             account.LastIP = c.IPAddress;
-
+            // 登录成功的消息放入消息队列
             MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.UserLoggedIn), account.Connection.SessionID, account.Connection.IPAddress));
+            // 加入待发送消息队列
             c.Enqueue(new ServerPackets.LoginSuccess { Characters = account.GetSelectInfo() });
         }
 
@@ -3952,7 +4179,7 @@ namespace Server.MirEnvir
                 c.Enqueue(new ServerPackets.NewCharacter { Result = 0 });
                 return;
             }
-
+            // 防恶意注册
             if (ConnectionLogs.TryGetValue(c.IPAddress, out MirConnectionLog currentlog))
             {
                 if (currentlog.CharactersMade.Count > 4)
@@ -3976,39 +4203,39 @@ namespace Server.MirEnvir
                 ConnectionLogs[c.IPAddress] = new MirConnectionLog() { IPAddress = c.IPAddress };
             }
 
-
+            // 用户名不符合规范
             if (!CharacterReg.IsMatch(p.Name))
             {
                 c.Enqueue(new ServerPackets.NewCharacter { Result = 1 });
                 return;
             }
-
+            // 不是game并且在禁用角色名字清单
             if (!IsGm && DisabledCharNames.Contains(p.Name.ToUpper()))
             {
                 c.Enqueue(new ServerPackets.NewCharacter { Result = 1 });
                 return;
             }
-
+            // 没有选择性别
             if (p.Gender != MirGender.Male && p.Gender != MirGender.Female)
             {
                 c.Enqueue(new ServerPackets.NewCharacter { Result = 2 });
                 return;
             }
-
+            // 没有选择职业
             if (p.Class != MirClass.Warrior && p.Class != MirClass.Wizard && p.Class != MirClass.Taoist &&
                 p.Class != MirClass.Assassin && p.Class != MirClass.Archer)
             {
                 c.Enqueue(new ServerPackets.NewCharacter { Result = 3 });
                 return;
             }
-
+            // 不允许创建刺客和弓箭手
             if (p.Class == MirClass.Assassin && !Settings.AllowCreateAssassin ||
                 p.Class == MirClass.Archer && !Settings.AllowCreateArcher)
             {
                 c.Enqueue(new ServerPackets.NewCharacter { Result = 3 });
                 return;
             }
-
+            #region 创建角色大于设定上限
             var count = 0;
 
             for (var i = 0; i < c.Account.Characters.Count; i++)
@@ -4021,20 +4248,23 @@ namespace Server.MirEnvir
                     return;
                 }
             }
-
+            #endregion
+            // 加锁
             lock (AccountLock)
             {
+                // 角色名存在
                 if (CharacterExists(p.Name))
                 {
                     c.Enqueue(new ServerPackets.NewCharacter { Result = 5 });
                     return;
                 }
-
+                // 创建角色实例
                 var info = new CharacterInfo(p, c) { Index = ++NextCharacterID, AccountInfo = c.Account };
-
+                // 添加到用户实例角色列表中
                 c.Account.Characters.Add(info);
+                // 添加到角色列表中
                 CharacterList.Add(info);
-
+                // 返回创建成功
                 c.Enqueue(new ServerPackets.NewCharacterSuccess { CharInfo = info.ToSelectInfo() });
             }
         }
@@ -4182,12 +4412,17 @@ namespace Server.MirEnvir
 
             return list;
         }
-
+        /// <summary>
+        /// 根据账户名获取账户信息
+        /// </summary>
+        /// <param name="accountID">账户名</param>
+        /// <returns></returns>
         public AccountInfo GetAccount(string accountID)
         {
             for (var i = 0; i < AccountList.Count; i++)
+                // Compare  判断是否相等如果相等则等于0 （以Unicode编码进行比较大小排在前面小于0排在后面大于0，具体大于0多少看拍的位数）
                 if (string.Compare(AccountList[i].AccountID, accountID, StringComparison.OrdinalIgnoreCase) == 0)
-                    return AccountList[i];
+                    return AccountList[i]; // 返回账户信息
 
             return null;
         }
@@ -4357,7 +4592,7 @@ namespace Server.MirEnvir
 
             //Desync all objects\
         }
-
+        // 创建物品
         public UserItem CreateFreshItem(ItemInfo info)
         {
             var item = new UserItem(info)
@@ -4593,7 +4828,11 @@ namespace Server.MirEnvir
         {
             return Objects.Where(x => x.CurrentMapIndex == map && x.Race == race).ToList();
         }
-
+        /// <summary>
+        /// 根据怪物的重生蓝图中的怪物索引找到怪物蓝图
+        /// </summary>
+        /// <param name="index">怪物索引</param>
+        /// <returns></returns>
         public MonsterInfo GetMonsterInfo(int index)
         {
             for (var i = 0; i < MonsterInfoList.Count; i++)
@@ -5310,7 +5549,7 @@ namespace Server.MirEnvir
         {
             List<RankCharacterInfo> Ranking;
             var Rankindex = -1;
-            //first check overall top           
+            //first check overall top
             Ranking = RankTop;
             Rankindex = FindRank(Ranking, info, 0);
             if (Rankindex >= 0)
@@ -5339,7 +5578,7 @@ namespace Server.MirEnvir
         {
             List<RankCharacterInfo> Ranking;
 
-            //first check overall top           
+            //first check overall top
 
             Ranking = RankTop;
             if (!UpdateRank(Ranking, info, 0))
@@ -5372,7 +5611,11 @@ namespace Server.MirEnvir
 
             MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NpcScriptsReloaded));
         }
-
+        /// <summary>
+        /// 加载物品掉落
+        /// <para>通过配置文件加载掉落物品</para>
+        /// <para>有普通掉落挂到MonsterInfo.drop上，钓鱼掉落挂到主环境的FishingDrops上</para>
+        /// </summary>
         public void ReloadDrops()
         {
             for (var i = 0; i < MonsterInfoList.Count; i++)
@@ -5385,11 +5628,12 @@ namespace Server.MirEnvir
                 }
 
                 MonsterInfoList[i].Drops.Clear();
-
+                // 给 MonsterInfoList[i].Drops 挂载掉落物品
                 DropInfo.Load(MonsterInfoList[i].Drops, MonsterInfoList[i].Name, path, 0, true);
             }
 
             FishingDrops.Clear();
+            // 添加钓鱼掉落
             for (int i = 0; i < 19; i++)
             {
                 var path = Path.Combine(Settings.DropPath, Settings.FishingDropFilename + ".txt");
@@ -5399,12 +5643,15 @@ namespace Server.MirEnvir
             }
 
             AwakeningDrops.Clear();
+            // 觉醒掉落
             DropInfo.Load(AwakeningDrops, "Awakening", Path.Combine(Settings.DropPath, Settings.AwakeningDropFilename + ".txt"));
 
             StrongboxDrops.Clear();
+            // 宝箱掉落
             DropInfo.Load(StrongboxDrops, "StrongBox", Path.Combine(Settings.DropPath, Settings.StrongboxDropFilename + ".txt"));
 
             BlackstoneDrops.Clear();
+            // 宝石掉落
             DropInfo.Load(BlackstoneDrops, "Blackstone", Path.Combine(Settings.DropPath, Settings.BlackstoneDropFilename + ".txt"));
 
             MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.DropsLoaded));

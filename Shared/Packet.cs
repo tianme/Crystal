@@ -4,6 +4,10 @@ using S = ServerPackets;
 public abstract class Packet
 {
     public static bool IsServer;
+
+    /// <summary>
+    /// 消息是否要发给其他用户，默认 true，子类可以重写
+    /// </summary>
     public virtual bool Observable => true;
     public virtual bool Compressed => false;
     public abstract short Index { get; }

@@ -3,6 +3,9 @@ using Server.MirEnvir;
 
 namespace Server.MirDatabase
 {
+    /// <summary>
+	/// 怪物蓝图类
+	/// </summary>
     public class MonsterInfo
     {
         protected static Envir Envir
@@ -19,39 +22,113 @@ namespace Server.MirDatabase
         {
             get { return MessageQueue.Instance; }
         }
-
+        /// <summary>
+        /// 索引
+        /// </summary>
         public int Index;
+        /// <summary>
+        /// 名字
+        /// </summary>
         public string Name = string.Empty;
-
+        /// <summary>
+        /// 图片
+        /// </summary>
         public Monster Image;
-        public byte AI, Effect, ViewRange = 7, CoolEye;
+		/// <summary>
+		/// 怪物AI类型（例如 1代表鹿，5代表食人花）
+		/// <see cref="MonsterInfoAttributeAI.md"/>
+		/// </summary>
+		public byte AI;
+        /// <summary>
+        /// 效果
+        /// </summary>
+		public byte Effect;
+
+		public byte ViewRange = 7;
+        /// <summary>
+        /// <para>识破隐身概率（看破隐身）</para>
+        /// <para>判断逻辑：</para>
+        /// <para>- CoolEye > 100 ：必定（100%）看破隐身</para>
+        /// <para>- CoolEye ≤ 100 ：生成 0~99 的随机数，若 CoolEye > 随机数，则成功看破，否则失败</para>
+        /// <para>说明：</para>
+        /// <para>CoolEye 实际表示“识破隐身的概率（%）”，但数值大于 100 时代表强制成功。</para>
+        /// </summary>
+        public byte CoolEye;
+        /// <summary>
+        /// 等级
+        /// </summary>
         public ushort Level;
-
+        /// <summary>
+		/// 亮度（0-255）
+        /// <para>抗眩晕</para>
+        /// <para>怪物的亮度(例如：在夜晚的光照范围)</para>
+		/// </summary>
         public byte Light;
-
-        public ushort AttackSpeed = 2500, MoveSpeed = 1800;
+		/// <summary>
+		/// 攻击速度（毫秒）,默认 2.5秒
+		/// </summary>
+		public ushort AttackSpeed = 2500;
+		/// <summary>
+		/// 移动速度（毫秒）,默认 1.8秒
+		/// </summary>
+		public ushort MoveSpeed = 1800;
+        /// <summary>
+		/// 击败后的经验值
+		/// </summary>
         public uint Experience;
-
+        /// <summary>
+		/// 掉落路径
+		/// </summary>
         public string DropPath = "";
-        
+        /// <summary>
+        /// 物品掉落集合
+        /// </summary>
         public List<DropInfo> Drops = new List<DropInfo>();
-
-        public bool CanTame = true, CanPush = true, AutoRev = true, Undead = false;
+        /// <summary>
+        /// 是否可以被玩家驯服
+        /// </summary>
+        public bool CanTame = true;
+        /// <summary>
+        /// 是否可以被推动
+        /// </summary>
+        public bool CanPush = true;
+        /// <summary>
+        /// 死亡后是否自动复活
+        /// <para>例如: 僵尸等</para>
+        /// </summary>
+        public bool AutoRev = true;
+        /// <summary>
+        /// 是否是不死生物
+        /// <para> 比如说某些技能对不死生物有伤害加成</para>
+        /// </summary>
+        public bool Undead = false;
         public bool CanRecall = false;
         public bool IsBoss = false;
 
+        /// <summary>
+        /// 是否存在“出生/生成时触发的脚本”
+        /// </summary>
         public bool HasSpawnScript;
+        /// <summary>
+        /// 是否存在死亡脚本
+        /// </summary>
         public bool HasDieScript;
-
+        /// <summary>
+        /// 属性表
+        /// </summary>
         public Stats Stats;
 
         public MonsterInfo()
         {
             Stats = new Stats();
         }
-
+        /// <summary>
+        /// 怪物蓝图的构造函数
+        /// </summary>
+        /// <param name="reader">二进制读取器</param>
         public MonsterInfo(BinaryReader reader)
         {
+
             Index = reader.ReadInt32();
             Name = reader.ReadString();
 
@@ -146,7 +223,9 @@ namespace Server.MirDatabase
                 IsBoss = reader.ReadBoolean();
             }
         }
-
+        /// <summary>
+        /// 客户端使用的怪物名字（替换掉数字）
+        /// </summary>
         public string GameName
         {
             get { return Regex.Replace(Name, @"[\d-]", string.Empty); }
@@ -261,7 +340,7 @@ namespace Server.MirDatabase
             if (!ushort.TryParse(data[21], out info.MoveSpeed)) return;
 
             if (!uint.TryParse(data[22], out info.Experience)) return;
-            
+
             if (!bool.TryParse(data[23], out info.CanTame)) return;
             if (!bool.TryParse(data[24], out info.CanPush)) return;
 
@@ -281,8 +360,8 @@ namespace Server.MirDatabase
         public string ToText()
         {
             return "";// string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27}", Name, (ushort)Image, AI, Effect, Level, ViewRange,
-              //  HP, 
-                //MinAC, MaxAC, MinMAC, MaxMAC, MinDC, MaxDC, MinMC, MaxMC, MinSC, MaxSC, 
+              //  HP,
+                //MinAC, MaxAC, MinMAC, MaxMAC, MinDC, MaxDC, MinMC, MaxMC, MinSC, MaxSC,
                // Accuracy, Agility, Light, AttackSpeed, MoveSpeed, Experience, CanTame, CanPush, AutoRev, Undead, CoolEye);
         }
 
@@ -321,7 +400,9 @@ namespace Server.MirDatabase
         public ItemInfo Item;
         public uint Gold;
         public GroupDropInfo GroupedDrop;
-
+        /// <summary>
+        /// 掉落类型
+        /// </summary>
         public byte Type;
         public bool QuestRequired;
 
@@ -368,7 +449,14 @@ namespace Server.MirDatabase
 
             return info;
         }
-
+        /// <summary>
+        /// 给每一个怪物蓝图添加掉落集合
+        /// </summary>
+        /// <param name="list">掉落集合</param>
+        /// <param name="name">怪物名称</param>
+        /// <param name="path">配置路径</param>
+        /// <param name="type">掉落类型</param>
+        /// <param name="createIfNotExists">如果不存在是否自动创建</param>
         public static void Load(List<DropInfo> list, string name, string path, byte type = 0, bool createIfNotExists = true)
         {
             if (!File.Exists(path))

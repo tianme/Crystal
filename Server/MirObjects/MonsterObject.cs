@@ -485,21 +485,23 @@ namespace Server.MirObjects
                 case 223:
                     return new SepHighArcher(info); //TODO
 
-                case 255://Skill 
+                case 255://Skill
                     return new StoneTrap(info);
 
                 default:
                     return new MonsterObject(info);
             }
         }
-
+        /// <summary>
+        /// 种族
+        /// </summary>
         public override ObjectType Race
         {
             get { return ObjectType.Monster; }
         }
-        
+
         public virtual bool IgnoresNoPetRestriction => false;
-        
+
         public MonsterInfo Info;
         public MapRespawn Respawn;
         public MonsterType MonsterType { get; private set; } = MonsterType.Normal;
@@ -557,11 +559,11 @@ namespace Server.MirObjects
         }
 
         public int HealthPercent
-        { 
-            get 
-            { 
-                return (Health * 100) / MaxHealth; 
-            } 
+        {
+            get
+            {
+                return (Health * 100) / MaxHealth;
+            }
         }
 
         public int HP;
@@ -581,6 +583,9 @@ namespace Server.MirObjects
                 return (uint)Math.Round(scaled);
             }
         }
+        /// <summary>
+		/// 死亡延迟，单位毫秒，用于怪物死亡后，客户端显示死亡动画，玩家可以交互尸体，比如挖肉
+		/// </summary>
         public int DeadDelay
         {
             get
@@ -635,13 +640,13 @@ namespace Server.MirObjects
         {
             get
             {
-                return 
-                    !Dead && 
-                    Envir.Time > MoveTime && 
-                    Envir.Time > ActionTime && 
+                return
+                    !Dead &&
+                    Envir.Time > MoveTime &&
+                    Envir.Time > ActionTime &&
                     Envir.Time > ShockTime &&
-                    (Master == null || Master.PMode == PetMode.MoveOnly || Master.PMode == PetMode.Both || Master.PMode == PetMode.FocusMasterTarget) && 
-                    !CurrentPoison.HasFlag(PoisonType.Paralysis) && 
+                    (Master == null || Master.PMode == PetMode.MoveOnly || Master.PMode == PetMode.Both || Master.PMode == PetMode.FocusMasterTarget) &&
+                    !CurrentPoison.HasFlag(PoisonType.Paralysis) &&
                     !CurrentPoison.HasFlag(PoisonType.LRParalysis) &&
                     !CurrentPoison.HasFlag(PoisonType.Frozen) &&
                     (!CurrentPoison.HasFlag(PoisonType.Stun) || (Info.Light == 10 || Info.Light == 5));
@@ -651,7 +656,7 @@ namespace Server.MirObjects
         {
             get
             {
-                return 
+                return
                     !Dead &&
                     Envir.Time > AttackTime &&
                     Envir.Time > ActionTime &&
@@ -965,20 +970,22 @@ namespace Server.MirObjects
 
         public override void Die()
         {
+            // 死亡
             if (Dead) return;
-
+            // hp=0
             HP = 0;
             Dead = true;
 
             DeadTime = Envir.Time + DeadDelay;
-
+            // 通知客户端怪物死亡
             Broadcast(new S.ObjectDied { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation });
-
+            // 有脚本，并且怪物不是npc
             if (Info.HasDieScript && (Envir.MonsterNPC != null))
             {
+                // 调用脚本
                 Envir.MonsterNPC.Call(this, string.Format("[@_DIE({0})]", Info.Index));
             }
-
+            // 有经验归属，并且主人为空，并且经验归属是玩家或英雄
             if (EXPOwner != null && EXPOwner.Node != null && Master == null && (EXPOwner.Race == ObjectType.Player || EXPOwner.Race == ObjectType.Hero))
             {
                 EXPOwner.WinExp(Experience, Level);
@@ -1944,16 +1951,16 @@ namespace Server.MirObjects
                                     if (ob.Hidden && (!CoolEye || Level < ob.Level)) continue;
                                     if (this is TrapRock && ob.InTrapRock) continue;
 
-                                    if (ob.Race == ObjectType.Monster && 
+                                    if (ob.Race == ObjectType.Monster &&
                                         ob is StoneTrap)
                                     {
-                                        if (Target is null || 
+                                        if (Target is null ||
                                             (Target is not null &&
                                             Target is not StoneTrap))
                                         {
                                             Target = ob;
                                         }
-                                        
+
                                         return;
                                     }
                                     else
@@ -1961,7 +1968,7 @@ namespace Server.MirObjects
                                         Target ??= ob;
                                     }
                                     continue;
-                                    
+
                                 case ObjectType.Player:
 
                                     if (Target != null)
@@ -2470,7 +2477,7 @@ namespace Server.MirObjects
 
             if (attacker.Info.AI == 6 || attacker.Info.AI == 113) // Guard
             {
-                if (Info.AI != 1 && Info.AI != 2 && Info.AI != 3 && (Master == null || Master.PKPoints >= 200)) //Not Dear/Hen/Tree/Pets or Red Master 
+                if (Info.AI != 1 && Info.AI != 2 && Info.AI != 3 && (Master == null || Master.PKPoints >= 200)) //Not Dear/Hen/Tree/Pets or Red Master
                     return true;
             }
             else if (attacker.Info.AI == 58) // Tao Guard - attacks Pets
@@ -3518,7 +3525,9 @@ namespace Server.MirObjects
         }
         public override void Despawn()
         {
+            //清理当前怪物所召唤的随从
             SlaveList.Clear();
+
             base.Despawn();
         }
 
@@ -3658,7 +3667,7 @@ namespace Server.MirObjects
 
             var startPoints = new List<Point>
             {
-                CurrentLocation 
+                CurrentLocation
             };
 
             var half = (width - 1) / 2;
@@ -3828,9 +3837,9 @@ namespace Server.MirObjects
                         break;
                     }
                 }
-            }     
+            }
         }
-    
+
         protected virtual void ProjectileAttack(int damage, DefenceType type = DefenceType.ACAgility, int additionalDelay = 500)
         {
             int delay = Functions.MaxDistance(CurrentLocation, Target.CurrentLocation) * 50 + additionalDelay;

@@ -10,110 +10,180 @@ namespace Server.MirObjects
 {
     public class HumanObject : MapObject
     {
+        /// <summary>
+        /// 种族
+        /// </summary>
         public override ObjectType Race
         {
             get { return ObjectType.Player; }
         }
-
+        /// <summary>
+        /// 角色
+        /// </summary>
         public CharacterInfo Info;
 
         protected MirConnection connection;
+
+        /// <summary>
+        /// TCP 连接对象
+        /// </summary>
         public virtual MirConnection Connection
         {
             get { return connection; }
             set { connection = value; }
         }
+        /// <summary>
+        /// 角色名称
+        /// </summary>
         public override string Name
         {
             get { return Info.Name; }
             set { /*Check if Name exists.*/ }
         }
+        /// <summary>
+        /// 当前地图索引
+        /// </summary>
         public override int CurrentMapIndex
         {
             get { return Info.CurrentMapIndex; }
             set { Info.CurrentMapIndex = value; }
         }
+        /// <summary>
+        /// 当前坐标
+        /// </summary>
         public override Point CurrentLocation
         {
             get { return Info.CurrentLocation; }
             set { Info.CurrentLocation = value; }
         }
+        /// <summary>
+        /// 移动方向
+        /// </summary>
         public override MirDirection Direction
         {
             get { return Info.Direction; }
             set { Info.Direction = value; }
         }
+        /// <summary>
+        /// 等级
+        /// </summary>
         public override ushort Level
         {
             get { return Info.Level; }
             set { Info.Level = value; }
         }
+        /// <summary>
+        /// 当前生命值
+        /// </summary>
         public override int Health
         {
             get { return HP; }
         }
+        /// <summary>
+        /// 最大生命值
+        /// </summary>
         public override int MaxHealth
         {
             get { return Stats[Stat.HP]; }
         }
+        /// <summary>
+        /// 角色生命
+        /// </summary>
         public int HP
         {
             get { return Info.HP; }
             set { Info.HP = value; }
         }
+        /// <summary>
+        /// 角色魔法
+        /// </summary>
         public int MP
         {
             get { return Info.MP; }
             set { Info.MP = value; }
         }
+        /// <summary>
+        /// 攻击模式
+        /// </summary>
         public override AttackMode AMode
         {
             get { return Info.AMode; }
             set { Info.AMode = value; }
         }
+        /// <summary>
+        /// 宝宝模式
+        /// </summary>
         public override PetMode PMode
         {
             get { return Info.PMode; }
             set { Info.PMode = value; }
         }
+        /// <summary>
+        /// 经验
+        /// </summary>
         public long Experience
         {
             set { Info.Experience = value; }
             get { return Info.Experience; }
         }
-
+        /// <summary>
+        /// 升级所需的经验值
+        /// </summary>
         public long MaxExperience;
+
+        /// <summary>
+        /// 发型
+        /// </summary>
         public byte Hair
         {
             get { return Info.Hair; }
             set { Info.Hair = value; }
         }
+        /// <summary>
+        /// 职业
+        /// </summary>
         public MirClass Class
         {
             get { return Info.Class; }
         }
+        /// <summary>
+        /// 性别
+        /// </summary>
         public MirGender Gender
         {
             get { return Info.Gender; }
         }
+        /// <summary>
+        /// Buffs 集合
+        /// </summary>
         public override List<Buff> Buffs
         {
             get { return Info.Buffs; }
             set { Info.Buffs = value; }
         }
+        /// <summary>
+        /// 毒素列表
+        /// </summary>
         public override List<Poison> PoisonList
         {
             get { return Info.Poisons; }
             set { Info.Poisons = value; }
         }
-
+        /// <summary>
+        /// 是否骑乘
+        /// </summary>
         public bool RidingMount;
         public MountInfo Mount
         {
             get { return Info.Mount; }
-        }        
-
+        }
+        /// <summary>
+        /// 日志跟踪类
+        /// </summary>
         public Reporting Report;
+        /// <summary>
+        /// 是否可以移动
+        /// </summary>
         public virtual bool CanMove
         {
             get
@@ -121,6 +191,9 @@ namespace Server.MirObjects
                 return !Dead && Envir.Time >= ActionTime && !CurrentPoison.HasFlag(PoisonType.Paralysis) && !CurrentPoison.HasFlag(PoisonType.LRParalysis) && !CurrentPoison.HasFlag(PoisonType.Frozen);
             }
         }
+        /// <summary>
+        /// 是否可以走动
+        /// </summary>
         public virtual bool CanWalk
         {
             get
@@ -128,6 +201,9 @@ namespace Server.MirObjects
                 return !Dead && Envir.Time >= ActionTime && !InTrapRock && !CurrentPoison.HasFlag(PoisonType.Paralysis) && !CurrentPoison.HasFlag(PoisonType.LRParalysis) && !CurrentPoison.HasFlag(PoisonType.Frozen);
             }
         }
+        /// <summary>
+        /// 是否可以跑步
+        /// </summary>
         public virtual bool CanRun
         {
             get
@@ -135,6 +211,9 @@ namespace Server.MirObjects
                 return !Dead && Envir.Time >= ActionTime && (_stepCounter > 0 || FastRun) && (!Sneaking || ActiveSwiftFeet) && CurrentBagWeight <= Stats[Stat.BagWeight] && !CurrentPoison.HasFlag(PoisonType.Paralysis) && !CurrentPoison.HasFlag(PoisonType.LRParalysis) && !CurrentPoison.HasFlag(PoisonType.Frozen);
             }
         }
+        /// <summary>
+        /// 是否可以攻击
+        /// </summary>
         public virtual bool CanAttack
         {
             get
@@ -142,6 +221,9 @@ namespace Server.MirObjects
                 return !Dead && Envir.Time >= ActionTime && Envir.Time >= AttackTime && !CurrentPoison.HasFlag(PoisonType.Paralysis) && !CurrentPoison.HasFlag(PoisonType.LRParalysis) && !CurrentPoison.HasFlag(PoisonType.Frozen) && !CurrentPoison.HasFlag(PoisonType.Dazed) && Mount.CanAttack;
             }
         }
+        /// <summary>
+        /// 是否可以恢复HP、MP
+        /// </summary>
         public bool CanRegen
         {
             get
@@ -149,6 +231,9 @@ namespace Server.MirObjects
                 return Envir.Time >= RegenTime;
             }
         }
+        /// <summary>
+        /// 是否施法
+        /// </summary>
         protected virtual bool CanCast
         {
             get
@@ -157,38 +242,244 @@ namespace Server.MirObjects
                     !CurrentPoison.HasFlag(PoisonType.Paralysis) && !CurrentPoison.HasFlag(PoisonType.Frozen) && Mount.CanAttack;
             }
         }
-
+        /// <summary>
+        /// 在 500ms 内是否可以穿越
+        /// </summary>
         protected bool CheckCellTime = true;
-
+        /// <summary>
+        /// 记录玩家当前的变形状态类型
+        /// <para>在 RefreshBuffs() 方法中设置，当玩家获得变形类Buff时，会更新此属性</para>
+        /// </summary>
         public short TransformType;
-        public short Looks_Armour = 0, Looks_Weapon = -1, Looks_WeaponEffect = 0;
+        /// <summary>
+        /// 记录玩家当前显示的盔甲外观ID
+        /// </summary>
+		public short Looks_Armour = 0;
+        /// <summary>
+        /// 记录玩家当前显示的武器外观ID
+        /// </summary>
+		public short Looks_Weapon = -1;
+        /// <summary>
+        /// 记录玩家当前显示的武器外观ID
+        /// </summary>
+		public short Looks_WeaponEffect = 0;
+        /// <summary>
+        /// 记录玩家当前显示的翅膀外观ID
+        /// </summary>
         public byte Looks_Wings = 0;
-
-        public int CurrentHandWeight,
-                   CurrentWearWeight,
-                   CurrentBagWeight;
-
+        /// <summary>
+        /// 记录玩家当前手持物品的总重量
+        /// </summary>
+		public int CurrentHandWeight;
+        /// <summary>
+        /// 记录玩家当前穿戴装备的总重量
+        /// </summary>
+		public int CurrentWearWeight;
+        /// <summary>
+        /// 记录玩家当前背包物品的总重量
+        /// </summary>
+		public int CurrentBagWeight;
+        /// <summary>
+        /// 标记玩家是否激活了元素系统
+        /// </summary>
         public bool HasElemental;
+        /// <summary>
+        /// 记录玩家当前的元素等级
+        /// </summary>
         public int ElementsLevel;
-
+        /// <summary>
+        /// 标记玩家是否处于堆叠状态
+        /// </summary>
         public bool Stacking;
-        public bool IsGM, GMNeverDie, GMGameMaster;
+
+		/// <summary>
+		/// 是否是GM
+		/// </summary>
+		public bool IsGM;
+        /// <summary>
+		/// GM无敌
+		/// </summary>
+		public bool GMNeverDie;
+        /// <summary>
+		/// GM管理员（有更高级的命令）
+		/// </summary>
+		public bool GMGameMaster;
+        /// <summary>
+        /// 标记玩家的基础属性是否已经更新
+        /// <para>在属性计算或更新系统中使用，确保属性计算的正确性和避免重复计算</para>
+        /// </summary>
         public bool HasUpdatedBaseStats = true;
-
+        /// <summary>
+        /// 定义药水腰带的最小索引位置
+        /// <para>限制玩家在药水中腰带可使用的起始位置</para>
+        /// </summary>
         public virtual int PotionBeltMinimum => 0;
+        /// <summary>
+        /// 定义药水腰带的最大索引位置
+        /// <para>限制玩家在药水中腰带可使用的结束位置</para>
+        /// </summary>
         public virtual int PotionBeltMaximum => 4;
+        /// <summary>
+        /// 定义护身符腰带的最小索引位置
+        /// <para>限制玩家在护身符腰带可使用的起始位置</para>
+        /// </summary>
         public virtual int AmuletBeltMinimum => 4;
+        /// <summary>
+        /// 定义护身符腰带的最大索引位置
+        /// <para>限制玩家在护身符腰带可使用的结束位置</para>
+        /// </summary>
         public virtual int AmuletBeltMaximum => 6;
+        /// <summary>
+        /// 定义玩家腰带的总大小
+        /// </summary>
         public virtual int BeltSize => 6;
-
+        /// <summary>
+        /// 控制玩家角色显示的等级特效
+        /// - None = 0：无特效
+        /// - Mist = 1：迷雾特效
+        /// - RedDragon = 2：红龙特效
+        /// - BlueDragon = 4：蓝龙特效
+        /// - Rebirth1 = 8：重生1级特效
+        /// - Rebirth2 = 16：重生2级特效
+        /// - Rebirth3 = 32：重生3级特效
+        /// - NewBlue = 64：新蓝龙特效
+        /// - YellowDragon = 128：黄龙特效
+        /// - Phoenix = 256：凤凰特效
+        /// </summary>
         public LevelEffects LevelEffects = LevelEffects.None;
+        /// <summary>
+        /// 控制坐骑忠诚度增减的时间间隔
+        /// </summary>
+        public const long LoyaltyDelay = 1000;
+        /// <summary>
+        /// 控制某些物品的有效期
+        /// </summary>
+        public const long ItemExpireDelay = 60000;
+        /// <summary>
+        /// 控制装备耐久度减少的时间间隔
+        /// </summary>
+        public const long DuraDelay = 10000;
+        /// <summary>
+        /// 控制生命、魔法等属性自动回复的时间间隔
+        /// </summary>
+        public const long RegenDelay = 10000;
+        /// <summary>
+        /// 控制药水使用的冷却时间
+        /// </summary>
+        public const long PotDelay = 200;
+        /// <summary>
+        /// 控制治疗技能或物品的冷却时间
+        /// </summary>
+        public const long HealDelay = 600;
+        /// <summary>
+        /// 控制吸血技能的冷却时间
+        /// </summary>
+        public const long VampDelay = 500;
+        /// <summary>
+        /// 控制角色移动的冷却时间
+        /// </summary>
+        public const long MoveDelay = 600;
 
-        public const long LoyaltyDelay = 1000, ItemExpireDelay = 60000, DuraDelay = 10000, RegenDelay = 10000, PotDelay = 200, HealDelay = 600, VampDelay = 500, MoveDelay = 600;
-        public long StruckTime, RunTime, ActionTime, AttackTime, RegenTime, SpellTime, StackingTime, IncreaseLoyaltyTime, ItemExpireTime, TorchTime, DuraTime, PotTime, HealTime, VampTime, LogTime, DecreaseLoyaltyTime, SearchTime;
-
-        protected int _stepCounter, _runCounter;
+        /// <summary>
+        /// 上次受到攻击（被击中）的时间
+        /// <para>用于判断攻击间隔、受击硬直等战斗机制</para>
+        /// </summary>
+        public long StruckTime;
+        /// <summary>
+        /// 控制角色跑步状态的持续时间
+        /// <para>在Process方法中每1500毫秒减少跑步计数器</para>
+        /// </summary>
+        public long RunTime;
+        /// <summary>
+        /// 控制角色动作的冷却时间
+        /// <para>角色动作控制，确保动作之间有合理间隔</para>
+        /// </summary>
+        public long ActionTime;
+        /// <summary>
+        /// 控制角色攻击的冷却时间
+        /// <para>在攻击前后设置，确保攻击速度符合预期</para>
+        /// </summary>
+        public long AttackTime;
+        /// <summary>
+        /// 控制角色生命值和魔法值的恢复频率
+        /// <para>在ProcessRegen方法中用于定时恢复HP/MP</para>
+        /// </summary>
+        public long RegenTime;
+        /// <summary>
+        /// 控制法术施放的冷却时间
+        /// <para>用于限制法术施放的频率</para>
+        /// </summary>
+        public long SpellTime;
+        /// <summary>
+        /// 控制角色堆叠状态的持续时间
+        /// <para>当角色被其他角色或物体阻挡时触发</para>
+        /// </summary>
+        public long StackingTime;
+        /// <summary>
+        /// 控制坐骑忠诚度增加的时间间隔
+        /// <para>每60秒增加一次坐骑忠诚度</para>
+        /// </summary>
+		public long IncreaseLoyaltyTime;
+        /// <summary>
+        /// 控制物品过期检查的时间间隔
+        /// <para>每分钟检查一次物品是否过期</para>
+        /// </summary>
+        public long ItemExpireTime;
+        /// <summary>
+        /// 控制火把耐久度减少的时间间隔
+        /// <para>每10秒减少火把耐久度5点</para>
+        /// </summary>
+        public long TorchTime;
+        /// <summary>
+        /// 控制装备耐久度更新的时间间隔
+        /// <para>每10秒更新一次装备耐久度状态</para>
+        /// </summary>
+        public long DuraTime;
+        /// <summary>
+        /// 控制药水效果的触发频率
+        /// <para>每200毫秒处理一次药水效果</para>
+        /// </summary>
+        public long PotTime;
+        /// <summary>
+        /// 控制治疗效果的触发频率
+        /// <para>每600毫秒处理一次治疗效果</para>
+        /// </summary>
+        public long HealTime;
+        /// <summary>
+        /// 控制吸血效果的触发频率
+        /// <para>每500毫秒处理一次吸血效果</para>
+		/// </summary>
+        public long VampTime;
+        /// <summary>
+        /// 控制日志记录的时间间隔
+        /// <para>用于限制日志记录的频率</para>
+        /// </summary>
+        public long LogTime;
+        /// <summary>
+        /// 控制坐骑忠诚度减少的时间间隔
+        /// <para>骑乘时定期减少坐骑忠诚度</para>
+        /// </summary>
+        public long DecreaseLoyaltyTime;
+        /// <summary>
+        /// 控制目标搜索的时间间隔
+        /// <para>用于限制目标搜索的频率</para>
+        /// </summary>
+        public long SearchTime;
+        /// <summary>
+        /// 移动计数器
+		/// </summary>
+        protected int _stepCounter;
+        /// <summary>
+        /// 跑步计数
+		/// <para>用于计算疲劳值，如果runConter大于10则会扣除一点生命值</para>
+        /// </summary>
+        protected int _runCounter;
 
         private GuildObject myGuild = null;
+
+        /// <summary>
+        /// 我的公会
+        /// </summary>
         public virtual GuildObject MyGuild
         {
             get { return myGuild; }
@@ -198,26 +489,117 @@ namespace Server.MirObjects
 
         public IntelligentCreatureType SummonedCreatureType = IntelligentCreatureType.None;
         public bool CreatureSummoned;
-
+        /// <summary>
+        /// 特殊物品枚举
+        /// 比如: 复活戒指等
+        /// 通过位运算允许多特殊效果共存
+        /// </summary>
         public SpecialItemMode SpecialMode;
-
+        /// <summary>
+        /// 物品套装系统的核心集合，用于跟踪当前装备的所有套装信息
+        /// </summary>
         public List<ItemSets> ItemSets = new List<ItemSets>();
+        /// <summary>
+        /// 用于装备套装判定的槽位列表
+        /// </summary>
         public List<EquipmentSlot> MirSet = new List<EquipmentSlot>();
-
-        public bool FatalSword, Slaying, TwinDrakeBlade, FlamingSword, MPEater, Hemorrhage, CounterAttack;
-        public int MPEaterCount, HemorrhageAttackCount;
-        public long FlamingSwordTime, CounterAttackTime;
-        public bool ActiveBlizzard, ActiveReincarnation, ActiveSwiftFeet, ReincarnationReady;
-        public HumanObject ReincarnationTarget, ReincarnationHost;
+        /// <summary>
+        /// 致命剑特效激活状态
+        /// </summary>
+        public bool FatalSword;
+        /// <summary>
+        /// 斩杀特效激活状态
+        /// </summary>
+        public bool Slaying;
+        /// <summary>
+        /// 是否激活双龙剑效果
+        /// </summary>
+        public bool TwinDrakeBlade;
+        /// <summary>
+        /// 是否开启烈火剑法
+        /// </summary>
+        public bool FlamingSword;
+        /// <summary>
+        /// 魔法值吞噬者状态标记，标记是否激活了魔法值吞噬效果
+        /// </summary>
+        public bool MPEater;
+        /// <summary>
+        /// 出血状态标记，标记是否激活了出血效果
+        /// </summary>
+        public bool Hemorrhage;
+        /// <summary>
+        /// 反击状态标记，标记是否激活了反击效果
+        /// </summary>
+        public bool CounterAttack;
+        /// <summary>
+        /// MP吞噬者效果的计数或等级
+        /// </summary>
+        public int MPEaterCount;
+        /// <summary>
+        /// 出血攻击计数，记录出血效果的累计攻击次数
+        /// </summary>
+        public int HemorrhageAttackCount;
+        /// <summary>
+        /// 烈火剑法持续时间
+        /// </summary>
+        public long FlamingSwordTime;
+        /// <summary>
+        /// 反击（CounterAttack）技能的冷却时间
+        /// </summary>
+        public long CounterAttackTime;
+        /// <summary>
+        /// 标记是否激活了暴雪（Blizzard）效果
+        /// </summary>
+        public bool ActiveBlizzard;
+        /// <summary>
+        /// 激活复活术状态
+        /// </summary>
+        public bool ActiveReincarnation;
+        /// <summary>
+        /// 标记是否激活了疾步（Swift Feet）效果
+        /// </summary>
+        public bool ActiveSwiftFeet;
+        /// <summary>
+        /// 复活术准备状态
+        /// </summary>
+        public bool ReincarnationReady;
+        /// <summary>
+        /// 释放复活术的目标对象
+        /// </summary>
+        public HumanObject ReincarnationTarget;
+        /// <summary>
+        /// 转世宿主
+        /// </summary>
+        public HumanObject ReincarnationHost;
+        /// <summary>
+        /// 复活术的超时时间
+        /// </summary>
         public long ReincarnationExpireTime;
-
+        /// <summary>
+        /// 下一次特殊效果生效的时间
+        /// 程序里是5分钟
+        /// </summary>
         public long LastRevivalTime;
+        /// <summary>
+        /// HP吸取效果的累计值
+        /// </summary>
         public float HpDrain = 0;
-
+        /// <summary>
+        /// 标记是否解除了诅咒状态
+        /// </summary>
         public bool UnlockCurse = false;
+        /// <summary>
+        /// 标记是否激活了快速奔跑效果
+        /// </summary>
         public bool FastRun = false;
+        /// <summary>
+        /// 标记是否可以获得经验值
+        /// </summary>
         public bool CanGainExp = true;
         private int _fireWallCastSeq = 0;
+        /// <summary>
+        /// 标记是否是阻挡对象
+        /// </summary>
         public override bool Blocking
         {
             get
@@ -231,19 +613,30 @@ namespace Server.MirObjects
             Load(info, connection);
         }
         protected virtual void Load(CharacterInfo info, MirConnection connection) { }
+        /// <summary>
+		/// 初始化新角色的属性和状态
+		/// </summary>
         protected virtual void NewCharacter()
         {
+            // 设置成1级
             Level = 1;
+            // 随机发型
             Hair = (byte)Envir.Random.Next(0, 9);
-
+            // 设置初始物品
             for (int i = 0; i < Envir.StartItems.Count; i++)
             {
                 ItemInfo info = Envir.StartItems[i];
+                // 如果该物品不符合当前职业则不添加
                 if (!CorrectStartItem(info)) continue;
-
+                //添加物品
                 AddItem(Envir.CreateFreshItem(info));
             }
         }
+        /// <summary>
+        /// 如果角色当前有减速状态，返回原始延时的2倍，否则返回原始延时
+        /// </summary>
+        /// <param name="original">原始延时间</param>
+        /// <returns>处理后的延时时间</returns>
         public long GetDelayTime(long original)
         {
             if (CurrentPoison.HasFlag(PoisonType.Slow))
@@ -252,25 +645,32 @@ namespace Server.MirObjects
             }
             return original;
         }
+        /// <summary>
+        /// 逻辑帧中处理角色的逻辑更新
+        /// </summary>
         public override void Process()
         {
+            // 如果是玩家 && TCP连接对象不为 null || 当前对象不在全局节点 || 没有角色对象
             if ((Race == ObjectType.Player && Connection == null) || Node == null || Info == null) return;
-
+            // 更新步数计数器
             if (CellTime + 700 < Envir.Time) _stepCounter = 0;
-
+            // 如果是潜行则需要检查周围有没有其他玩家，有则取消潜行状态
             if (Sneaking) CheckSneakRadius();
-
+            // 是否开启烈火剑法 && 当前时间是否大于烈火剑法的冷却时间
             if (FlamingSword && Envir.Time >= FlamingSwordTime)
             {
+                // 关闭烈火剑法
                 FlamingSword = false;
+                // 通知客户端关闭烈火剑法
                 Enqueue(new S.SpellToggle { ObjectID = ObjectID, Spell = Spell.FlamingSword, CanUse = false });
             }
-
+            // 是否开启反击 && 当前时间是否大于反击的冷却时间
             if (CounterAttack && Envir.Time >= CounterAttackTime)
             {
+                // 关闭反击效果
                 CounterAttack = false;
             }
-
+            // 复活术超时处理
             if (ReincarnationReady && Envir.Time >= ReincarnationExpireTime)
             {
                 ReincarnationReady = false;
@@ -278,42 +678,47 @@ namespace Server.MirObjects
                 ReincarnationTarget = null;
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.ReincarnationFailed), ChatType.System);
             }
+            // 复活术兜底方案
+            // 如果复活术准备状态或激活状态为true，且目标对象为空或目标对象未死亡
+            // 就是在复活中复活者被杀，或意外死亡
             if ((ReincarnationReady || ActiveReincarnation) && (ReincarnationTarget == null || !ReincarnationTarget.Dead))
             {
                 ReincarnationReady = false;
                 ActiveReincarnation = false;
                 ReincarnationTarget = null;
             }
-
+            // 如果当前时间大于跑步时间||并且跑步计数大于0，没休息1.5秒回清除一点疲劳值
             if (Envir.Time > RunTime && _runCounter > 0)
             {
                 RunTime = Envir.Time + 1500;
                 _runCounter--;
             }
-
+            // 如果当前时间大于堆叠时间，且堆叠状态为true
             if (Stacking && Envir.Time > StackingTime)
             {
                 Stacking = false;
-
+                // 尝试向8个方向展开
                 for (int i = 0; i < 8; i++)
                 {
                     if (Pushed(this, (MirDirection)i, 1) == 1) break;
                 }
             }
-
+            // 如果有坐骑 && 当前时间大于增加忠诚度增加间隔时间
             if (Mount.HasMount && Envir.Time > IncreaseLoyaltyTime)
             {
+                // 设置下次增加忠诚度的时间
                 IncreaseLoyaltyTime = Envir.Time + (LoyaltyDelay * 60);
+                // 增加坐骑忠诚度
                 IncreaseMountLoyalty(1);
             }
-
+            // 1分钟检测一次物品是否过期
             if (Envir.Time > ItemExpireTime)
             {
                 ItemExpireTime = Envir.Time + ItemExpireDelay;
 
                 ProcessItems();
             }
-
+            // 遍历宠物集合，删除已死亡的宠物
             for (int i = Pets.Count() - 1; i >= 0; i--)
             {
                 MonsterObject pet = Pets[i];
@@ -394,10 +799,23 @@ namespace Server.MirObjects
             OperateTime = Envir.Time;
         }
         public override void Die() { }
+        /// <summary>
+		/// 处理 buff 效果
+		/// </summary>
         protected virtual void ProcessBuffs()
         {
+            // 标记角色是否刷新
             bool refresh = false;
-            bool clearRing = false, skill = false, gm = false, mentor = false, lover = false;
+			// 隐身戒指的效果
+			bool clearRing = false;
+            // 技巧戒指(技能增益)的效果
+			bool skill = false;
+            // 是否有GM权限
+			bool gm = false;
+            // 师徒效果
+			bool mentor = false;
+            // 结婚效果
+			bool lover = false;
 
             for (int i = Buffs.Count - 1; i >= 0; i--)
             {
@@ -406,93 +824,115 @@ namespace Server.MirObjects
                 switch (buff.Type)
                 {
                     case BuffType.Concentration:
+                        // 若处于打断状态，且打断持续时间已结束，则清除打断标记并恢复专注状态
                         if (buff.Get<bool>("Interrupted") && buff.Get<long>("InterruptTime") <= Envir.Time)
                         {
+                            // 清除打断标记
                             buff.Set("Interrupted", false);
+                            // 清除打断时间
                             buff.Set("InterruptTime", (long)0);
+                            // 恢复专注状态
                             UpdateConcentration(true, false);
                         }
                         break;
                     case BuffType.ClearRing:
-                        clearRing = true;
-                        if (!SpecialMode.HasFlag(SpecialItemMode.ClearRing)) buff.FlagForRemoval = true;
+                        clearRing = true; // 如果没有隐身戒指，清除标记
+                        if (!SpecialMode.HasFlag(SpecialItemMode.ClearRing)) buff.FlagForRemoval = true; // 隐身buff标记为清理
                         break;
                     case BuffType.Skill:
-                        skill = true;
-                        if (!SpecialMode.HasFlag(SpecialItemMode.Skill)) buff.FlagForRemoval = true;
+                        skill = true; // 如果没有技巧戒指，清除标记
+                        if (!SpecialMode.HasFlag(SpecialItemMode.Skill)) buff.FlagForRemoval = true; // 技巧buff标记为清理
                         break;
                     case BuffType.GameMaster:
-                        gm = true;
-                        if (!IsGM) buff.FlagForRemoval = true;
+                        gm = true; // 如果没有GM权限，清除标记
+                        if (!IsGM) buff.FlagForRemoval = true; // GMbuff标记为清理
                         break;
                     case BuffType.Mentor:
                     case BuffType.Mentee:
-                        mentor = true;
-                        if (Info.Mentor == 0) buff.FlagForRemoval = true;
+                        mentor = true; // 如果没有师徒关系，清除标记
+                        if (Info.Mentor == 0) buff.FlagForRemoval = true; // 师徒buff标记为清理
                         break;
                     case BuffType.Lover:
-                        lover = true;
-                        if (Info.Married == 0) buff.FlagForRemoval = true;
+                        lover = true; // 如果没有结婚关系，清除标记
+                        if (Info.Married == 0) buff.FlagForRemoval = true; // 结婚buff标记为清理
                         break;
                 }
-
+                // 如果buff过期时间未到，继续下一个buff, 也就是不处理
                 if (buff.NextTime > Envir.Time) continue;
-
+                // 不是暂停状态，且不是无限时间的buff
                 if (!buff.Paused && buff.StackType != BuffStackType.Infinite)
                 {
+                    // 计算buff过期时间减少的时间
                     var change = Envir.Time - buff.LastTime;
+                    // 过期时间减去消耗时间
                     buff.ExpireTime -= change;
                 }
-
+                // 当前时间复制给LastTime
                 buff.LastTime = Envir.Time;
+                // 下次生效时间默认 1s 后(所有的buff都是1s结算一次)
                 buff.NextTime = Envir.Time + 1000;
-
+                // 当前 buff 如果过期时间大于0，或者是无限时间的buff，且buff不是标记为清理，则不继续执行，处理下一个buff
                 if ((buff.ExpireTime > 0 || buff.StackType == BuffStackType.Infinite) && !buff.FlagForRemoval) continue;
-
+                // 如果以上的判断都不成立则buff到期了，移除当前buff
                 Buffs.RemoveAt(i);
+                // 通知客户端移除buff
                 Enqueue(new S.RemoveBuff { Type = buff.Type, ObjectID = ObjectID });
-
+                // 如果buff是可见的，则通知附近玩家移除buff
                 if (buff.Info.Visible)
                 {
                     Broadcast(new S.RemoveBuff { Type = buff.Type, ObjectID = ObjectID });
                 }
-
+                // buff 到期要执行的操作
                 switch (buff.Type)
                 {
                     case BuffType.Hiding:
                     case BuffType.MoonLight:
                     case BuffType.DarkBody:
                     case BuffType.ClearRing:
+                        /* 这里要判断是因为很多隐身的buff不能直接清除，要等到所有buff都没有的时候才能清楚：
+                         * 1. 玩家可能在潜行状态下获得隐身类buff（月光术、暗影术、隐身戒指）
+                         * 2. 玩家可能在潜行状态下失去隐身类buff（月光术、暗影术、隐身戒指）
+                         * 3. 玩家可能在非潜行状态下获得隐身类buff（月光术、暗影术、隐身戒指）
+                         * 4. 玩家可能在非潜行状态下失去隐身类buff（月光术、暗影术、隐身戒指）
+                         */
+
+                        // 如果是隐身类的buff（隐身术、月光术、暗影术、隐身戒指）
+                        // 且当前玩家没有其他隐身类的buff，则设置为不隐身
                         if (!HasAnyBuffs(buff.Type, BuffType.ClearRing, BuffType.Hiding, BuffType.MoonLight, BuffType.DarkBody))
                         {
-                            Hidden = false;
+                            Hidden = false; // 标记为不隐身（Hidden仅针对怪物有效）
                         }
                         if (buff.Type == BuffType.MoonLight || buff.Type == BuffType.DarkBody)
                         {
+                            // 月光术或暗影术属于潜行buff
+                            // 如果当前buff中没有月光术buff或暗影术buff
                             if (!HasAnyBuffs(buff.Type, BuffType.MoonLight, BuffType.DarkBody))
                             {
+                                // 取消潜行
                                 Sneaking = false;
                             }
                             break;
                         }
                         break;
                     case BuffType.Concentration:
-                        UpdateConcentration(false, false);
+                        UpdateConcentration(false, false); // 取消专注
                         break;
                     case BuffType.SwiftFeet:
-                        ActiveSwiftFeet = false;
+                        ActiveSwiftFeet = false; // 取消疾步
                         break;
                     case BuffType.MagicShield:
+                        // 魔法盾到期通知周围玩家
                         CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.MagicShieldDown }, CurrentLocation);
                         break;
                     case BuffType.ElementalBarrier:
+                        // 元素屏障到期通知周围玩家
                         CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.ElementalBarrierDown }, CurrentLocation);
                         break;
                 }
-
+                // 标记为需要刷新属性
                 refresh = true;
             }
-
+            // 如果是GM且GM状态发生了改变
             if (IsGM && !gm)
             {
                 UpdateGMBuff();
@@ -773,8 +1213,13 @@ namespace Server.MirObjects
             }
             return false;
         }
+        /// <summary>
+        /// 检测物品是否过期
+		/// <para>包括背包物品、装备物品、仓库物品</para>
+        /// </summary>
         private void ProcessItems()
         {
+            // 检测背包物品
             for (var i = 0; i < Info.Inventory.Length; i++)
             {
                 var item = Info.Inventory[i];
@@ -793,7 +1238,7 @@ namespace Server.MirObjects
                     item.RentalInformation = null;
                 }
             }
-
+            // 检测装备
             for (var i = 0; i < Info.Equipment.Length; i++)
             {
                 var item = Info.Equipment[i];
@@ -812,9 +1257,10 @@ namespace Server.MirObjects
                     item.RentalInformation = null;
                 }
             }
-
+            // 如果是角色的英雄或人形怪是没有账户信息的则不继续处理
             if (Info.AccountInfo == null) return;
-
+            // 遍历账户中的仓库的物品是否过期
+            // 没有遍历租赁物品是因为租赁物品不允许放到仓库
             for (int i = 0; i < Info.AccountInfo.Storage.Length; i++)
             {
                 var item = Info.AccountInfo.Storage[i];
@@ -832,14 +1278,17 @@ namespace Server.MirObjects
         }
         protected void UpdateGMBuff()
         {
+            // 不是GM则退出方法
             if (!IsGM) return;
-
+            // 初始化 options
             GMOptions options = GMOptions.None;
-
+            // 开启管理员权限
             if (GMGameMaster) options |= GMOptions.GameMaster;
+            // 开启无敌模式
             if (GMNeverDie) options |= GMOptions.Superman;
+            // 开启观察模式
             if (Observer) options |= GMOptions.Observer;
-
+            // 添加GM权限buff(buff 类型是 GameMaster， 给自己添加， 不加属性， 不需要刷新属性， 需要加的是管理员权限、无敌模式、观察模式)
             AddBuff(BuffType.GameMaster, this, 0, null, false, values: (byte)options);
         }
         public virtual void LevelUp()
@@ -847,8 +1296,8 @@ namespace Server.MirObjects
             RefreshStats();
             SetHP(Stats[Stat.HP]);
             SetMP(Stats[Stat.MP]);
-            
-            Broadcast(new S.ObjectLeveled { ObjectID = ObjectID });          
+
+            Broadcast(new S.ObjectLeveled { ObjectID = ObjectID });
         }
         public virtual Color GetNameColour(HumanObject human)
         {
@@ -857,14 +1306,18 @@ namespace Server.MirObjects
         public virtual void RefreshNameColour() { }
         protected void SetHP(int amount)
         {
+            // 当前HP 等于 amount
             if (HP == amount) return;
-
+            // 取amount 和 Stats[Stat.HP] 最小值为HP
             HP = amount <= Stats[Stat.HP] ? amount : Stats[Stat.HP];
+            // 如果开启GM开启无敌模式则不掉血
             HP = GMNeverDie ? Stats[Stat.HP] : HP;
-
+            // 如果不为死亡状态并且 HP 为 0 则为角色死亡
+            // 初始化不会走这里，如果走这里会报错，Die 里访问了 PlayerObject 实例的属性，这个时候 PlayerObject 没还初始化
             if (!Dead && HP == 0) Die();
 
             //HealthChanged = true;
+
             SendHealthChanged();
         }
         protected virtual void SendHealthChanged()
@@ -983,7 +1436,7 @@ namespace Server.MirObjects
 
                 message = GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.WeaponCurse);
                 chatType = ChatType.System;
-                
+
             }
             else if (item.AddedStats[Stat.Luck] <= 0 || Envir.Random.Next(10 * item.GetTotal(Stat.Luck)) == 0)
             {
@@ -1074,7 +1527,7 @@ namespace Server.MirObjects
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.ArchersCannotUseItem), ChatType.System);
                         return false;
-                    } 
+                    }
                     break;
             }
 
@@ -1576,33 +2029,42 @@ namespace Server.MirObjects
         }
         protected void AddItem(UserItem item)
         {
+            // StackSize 大于1代表可堆叠
             if (item.Info.StackSize > 1) //Stackable
             {
+                // 遍历背包
                 for (int i = 0; i < Info.Inventory.Length; i++)
                 {
                     UserItem temp = Info.Inventory[i];
+                    // 如果背包没值||Info(模版引用)不相等|| 背包里的物品已经是最大堆叠则继续循环
                     if (temp == null || item.Info != temp.Info || temp.Count >= temp.Info.StackSize) continue;
-
+                    // 如果新物品的数量+背包物品的数量< 最大堆叠数量
                     if (item.Count + temp.Count <= temp.Info.StackSize)
                     {
+                        // 堆叠到一起
                         temp.Count += item.Count;
+                        // 退出方法
                         return;
                     }
+                    // 留下多余
                     item.Count -= (ushort)(temp.Info.StackSize - temp.Count);
+                    // 背包里的物品堆叠设置为最大
                     temp.Count = temp.Info.StackSize;
                 }
             }
-
+            // 物品类型是药水 || 卷轴 || (物品脚本 && 掉落加成)
             if (item.Info.Type == ItemType.Potion || item.Info.Type == ItemType.Scroll || (item.Info.Type == ItemType.Script && item.Info.Effect == 1))
             {
+                // 遍历药品栏
                 for (int i = PotionBeltMinimum; i < PotionBeltMaximum; i++)
                 {
+                    // 如果药品栏为空则放入到药品蓝中
                     if (Info.Inventory[i] != null) continue;
                     Info.Inventory[i] = item;
                     return;
                 }
             }
-            else if (item.Info.Type == ItemType.Amulet)
+            else if (item.Info.Type == ItemType.Amulet) // 放到护身符
             {
                 for (int i = AmuletBeltMinimum; i < AmuletBeltMaximum; i++)
                 {
@@ -1613,6 +2075,7 @@ namespace Server.MirObjects
             }
             else
             {
+                // 尝试放到快捷栏中
                 for (int i = BeltSize; i < Info.Inventory.Length; i++)
                 {
                     if (Info.Inventory[i] != null) continue;
@@ -1620,7 +2083,7 @@ namespace Server.MirObjects
                     return;
                 }
             }
-
+            // 最后放到背包中
             for (int i = 0; i < Info.Inventory.Length; i++)
             {
                 if (Info.Inventory[i] != null) continue;
@@ -1671,7 +2134,7 @@ namespace Server.MirObjects
         }
         public void CheckItem(UserItem item)
         {
-            Connection.CheckItem(item);         
+            Connection.CheckItem(item);
         }
         public void SetLevelEffects()
         {
@@ -1720,21 +2183,28 @@ namespace Server.MirObjects
             Enqueue(new S.Revived());
             Broadcast(new S.ObjectRevived { ObjectID = ObjectID, Effect = effect });
         }
-
+        /// <summary>
+        /// 发送基础属性
+        /// </summary>
         protected virtual void SendBaseStats()
         {
+            // 基础属性在配置文件里，根据职业发送对应的属性表
             Enqueue(new S.BaseStatsInfo { Stats = Settings.ClassBaseStats[(byte)Class] });
         }
 
         #region Refresh Stats
+        /// <summary>
+        /// 刷新属性表
+        /// </summary>
         public void RefreshStats()
         {
+            // 如果基础属性修改了还没有更新，发送基础属性
             if (HasUpdatedBaseStats == false)
             {
-                SendBaseStats();                
+                SendBaseStats();
                 HasUpdatedBaseStats = true;
             }
-
+            // 清除属性表
             Stats.Clear();
 
             RefreshLevelStats();
@@ -1747,7 +2217,7 @@ namespace Server.MirObjects
             RefreshGuildBuffs();
 
             //Add any rate percent changes
-
+            // 通用加成
             Stats[Stat.HP] += (Stats[Stat.HP] * Stats[Stat.HPRatePercent]) / 100;
             Stats[Stat.MP] += (Stats[Stat.MP] * Stats[Stat.MPRatePercent]) / 100;
             Stats[Stat.MaxAC] += (Stats[Stat.MaxAC] * Stats[Stat.MaxACRatePercent]) / 100;
@@ -1768,12 +2238,18 @@ namespace Server.MirObjects
             if (AttackSpeed < 550) AttackSpeed = 550;
         }
         public virtual void RefreshGuildBuffs() { }
-
+        /// <summary>
+		/// 刷新最大经验值
+        /// <para>虚方法，HumanObject 里没有默认实现，需要子类重写</para>
+		/// </summary>
         public virtual void RefreshMaxExperience() { }
+        /// <summary>
+		/// 刷新等级属性
+		/// </summary>
         protected virtual void RefreshLevelStats()
         {
             RefreshMaxExperience();
-
+            // 重新计算基础属性
             foreach (var stat in Settings.ClassBaseStats[(byte)Class].Stats)
             {
                 Stats[stat.Type] = stat.Calculate(Class, Level);
@@ -1926,7 +2402,7 @@ namespace Server.MirObjects
 
             if ((OldLooks_Armour != Looks_Armour) || (OldLooks_Weapon != Looks_Weapon) || (OldLooks_WeaponEffect != Looks_WeaponEffect) || (OldLooks_Wings != Looks_Wings) || (OldLight != Light))
             {
-                UpdateLooks(OldLooks_Weapon);                
+                UpdateLooks(OldLooks_Weapon);
             }
 
             if (Old_MountType != Mount.MountType)
@@ -2269,7 +2745,7 @@ namespace Server.MirObjects
 
                 var magic = new UserMagic(spelltype) { IsTempSpell = true };
                 Info.Magics.Add(magic);
-                SendMagicInfo(magic);                
+                SendMagicInfo(magic);
             }
         }
         public virtual void SendMagicInfo(UserMagic magic)
@@ -2348,6 +2824,9 @@ namespace Server.MirObjects
                 Broadcast(new S.TransformUpdate { ObjectID = ObjectID, TransformType = TransformType });
             }
         }
+        /// <summary>
+        /// 通知其他玩家我的名字变化
+        /// </summary>
         public void BroadcastColourChange()
         {
             if (CurrentMap == null) return;
@@ -2491,8 +2970,8 @@ namespace Server.MirObjects
             Moved();
 
             CellTime = Envir.Time + 500;
-            ActionTime = Envir.Time + GetDelayTime(MoveDelay);          
-            
+            ActionTime = Envir.Time + GetDelayTime(MoveDelay);
+
             Enqueue(new S.UserLocation { Direction = Direction, Location = CurrentLocation });
             Broadcast(new S.ObjectWalk { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation });
             GetPlayerLocation();
@@ -2535,7 +3014,7 @@ namespace Server.MirObjects
                     concentration.Set("Interrupted", true);
                     UpdateConcentration(true, true);
                 }
-            }            
+            }
 
             if (Hidden && !Sneaking)
             {
@@ -2610,7 +3089,7 @@ namespace Server.MirObjects
                 InSafeZone = true;
             }
             else
-                InSafeZone = false;            
+                InSafeZone = false;
 
             CellTime = Envir.Time + 500;
             ActionTime = Envir.Time + GetDelayTime(MoveDelay);
@@ -2643,23 +3122,35 @@ namespace Server.MirObjects
 
             return true;
         }
-        protected virtual void Moved()
+		/// <summary>
+		/// 角色在移动时要做的校验
+		/// </summary>
+		protected virtual void Moved()
         {
         }
+        /// <summary>
+		/// 推动效果
+		/// <para>例如：战士的野蛮冲撞或法师的抗拒火环</para>
+		/// </summary>
+		/// <param name="pusher">推动者</param>
+		/// <param name="dir">推动方向</param>
+		/// <param name="distance">推动距离</param>
+		/// <returns></returns>
         public override int Pushed(MapObject pusher, MirDirection dir, int distance)
         {
             int result = 0;
-            MirDirection reverse = Functions.ReverseDirection(dir);
+            MirDirection reverse = Functions.ReverseDirection(dir); // 反向方向
             Cell cell;
             for (int i = 0; i < distance; i++)
             {
+                // 向推动方向移动一格,返回一个新的坐标
                 Point location = Functions.PointMove(CurrentLocation, dir, 1);
-
-                if (!CurrentMap.ValidPoint(location)) return result;
-
+				// 检查新坐标是否有效， 如果无效则返回 result 为 0
+				if (!CurrentMap.ValidPoint(location)) return result;
+                // 获取当前单元格的对象列表
                 cell = CurrentMap.GetCell(location);
 
-                bool stop = false;
+                bool stop = false; // 是否有不可穿越的对象
                 if (cell.Objects != null)
                     for (int c = 0; c < cell.Objects.Count; c++)
                     {
@@ -2667,14 +3158,18 @@ namespace Server.MirObjects
                         if (!ob.Blocking) continue;
                         stop = true;
                     }
-                if (stop) break;
-
+                if (stop) break; // 如果有不可穿越的对象，则停止推动
+                // 在当前坐标移除自身
                 CurrentMap.GetCell(CurrentLocation).Remove(this);
-
+                // 方向翻转
                 Direction = reverse;
-                RemoveObjects(dir, 1);
+				// 从地图 AOI / 视野系统中移除旧位置影响（通常是一格范围）
+				RemoveObjects(dir, 1);
+                // 当前坐标等于移动的坐标
                 CurrentLocation = location;
+                // 把当前对象放入当前坐标
                 CurrentMap.GetCell(CurrentLocation).Add(this);
+                // 刷新 AOI / 视野系统中增加常是影响（通常是一格范围）
                 AddObjects(dir, 1);
 
                 Moved();
@@ -2731,9 +3226,9 @@ namespace Server.MirObjects
             for (int i = 0; i < GroupMembers.Count; i++)
             {
                 PlayerObject member = GroupMembers[i];
-                
+
                 if (member.CurrentMap.Info.BigMap <= 0) continue;
-                  
+
                 member.Enqueue(new S.SendMemberLocation { MemberName = Name, MemberLocation = CurrentLocation });
                 Enqueue(new S.SendMemberLocation { MemberName = member.Name, MemberLocation = member.CurrentLocation });
             }
@@ -3223,7 +3718,7 @@ namespace Server.MirObjects
                     magic = GetMagic(spell);
                     damageFinal = magic.GetDamage(damageBase);
                     ob.Attacked(this, damageFinal,
-                        ob is MonsterObject monster && (monster.Info.AI == 49) ? DefenceType.Repulsion : DefenceType.Agility, 
+                        ob is MonsterObject monster && (monster.Info.AI == 49) ? DefenceType.Repulsion : DefenceType.Agility,
                         false);
                     break;
                 }
@@ -3794,6 +4289,12 @@ namespace Server.MirObjects
 
             UpdateConcentration(true, false);
         }
+        /// <summary>
+		/// 更新专注状态
+		/// <para> 通知客户端 && 通知周围的其他玩家专注状态改变</para>
+		/// </summary>
+		/// <param name="concentrating">true 开启专注状态，false 关闭专注状态</param>
+		/// <param name="interrupted">true 开启打断状态，false 关闭打断状态</param>
         public void UpdateConcentration(bool concentrating, bool interrupted)
         {
             Enqueue(new S.SetConcentration { ObjectID = ObjectID, Enabled = concentrating, Interrupted = interrupted });
@@ -4013,7 +4514,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             if (target == null || !target.IsAttackTarget(this)) return;
 
             if (Envir.Random.Next(4 - magic.Level) > 0)
@@ -4228,7 +4729,7 @@ namespace Server.MirObjects
                         !master.AtWar(this)))
                     {
                             BrownTime = Envir.Time + Settings.Minute;
-                    }   
+                    }
                 }
 
                 if (Envir.Random.Next(2) + Level - 1 <= target.Level)
@@ -4275,7 +4776,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             MonsterObject monster;
             DelayedAction action;
             for (int i = 0; i < Pets.Count; i++)
@@ -4403,7 +4904,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             MonsterObject monster;
             for (int i = 0; i < Pets.Count; i++)
             {
@@ -4452,7 +4953,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             MonsterObject monster;
             for (int i = 0; i < Pets.Count; i++)
             {
@@ -4703,7 +5204,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             MonsterObject monster;
             for (int i = 0; i < Pets.Count; i++)
             {
@@ -5035,7 +5536,7 @@ namespace Server.MirObjects
                             }
                         }
                     }
-                    
+
                     if (_blocking)
                     {
                         break;
@@ -5327,7 +5828,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             if (target == null) return;
 
             MonsterObject monster;
@@ -5723,7 +6224,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             if (target != null && target.IsAttackTarget(this))
                 location = target.CurrentLocation;
             if (!CanFly(location)) return;
@@ -5745,7 +6246,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             if (!CurrentMap.ValidPoint(location) ||
                 !CanFly(location))
             {
@@ -5869,7 +6370,10 @@ namespace Server.MirObjects
         }
 
         #endregion
-
+        /// <summary>
+        /// 检查潜行是否在当前环境下仍然有效。
+        /// 规则：以自身为中心 3 格范围内，只要存在其他玩家，潜行立即失效。（共扫描49格）
+        /// </summary>
         private void CheckSneakRadius()
         {
             if (!Sneaking) return;
@@ -5892,7 +6396,7 @@ namespace Server.MirObjects
                         MapObject ob = cell.Objects[i];
                         if ((ob.Race != ObjectType.Player) || ob == this) continue;
 
-                        SneakingActive = false;
+                        SneakingActive = false; // 取消潜行状态
                         return;
                     }
                 }
@@ -6093,7 +6597,7 @@ namespace Server.MirObjects
                 #endregion
 
                 #region Teleport
-                case Spell.Teleport:                                 
+                case Spell.Teleport:
                     if (CurrentMap.Info.NoTeleport)
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.YouCannotTeleportOnMap), ChatType.System);
@@ -6101,7 +6605,7 @@ namespace Server.MirObjects
                     }
 
                     if (!MagicTeleport(magic))
-                        return;                    
+                        return;
 
                     AddBuff(BuffType.TemporalFlux, this, Settings.Second * 30, new Stats { [Stat.TeleportManaPenaltyPercent] = 30 });
                     LevelMagic(magic);
@@ -6385,7 +6889,7 @@ namespace Server.MirObjects
 
                 #endregion
 
-                #region CatTongue 
+                #region CatTongue
                 case Spell.CatTongue:
                     value = (int)data[1];
                     target = (MapObject)data[2];
@@ -7025,7 +7529,7 @@ namespace Server.MirObjects
                 InSafeZone = true;
             }
             else
-                InSafeZone = false;            
+                InSafeZone = false;
 
             return true;
         }
@@ -7075,7 +7579,7 @@ namespace Server.MirObjects
             return true;
         }
         public override bool IsAttackTarget(MonsterObject attacker)
-        {            
+        {
             return true;
         }
 
@@ -7084,7 +7588,7 @@ namespace Server.MirObjects
             return true;
         }
         public override bool IsFriendlyTarget(MonsterObject ally)
-        {            
+        {
             return true;
         }
         public override void ReceiveChat(string text, ChatType type) { }
@@ -7376,19 +7880,31 @@ namespace Server.MirObjects
             ChangeHP(armour - damage);
             return damage - armour;
         }
-
-        public override void ApplyPoison(Poison p, MapObject Caster = null, bool NoResist = false, bool ignoreDefence = true)
+		/// <summary>
+		///  应用中毒效果
+		/// </summary>
+		/// <param name="p">毒药的对象</param>
+		/// <param name="Caster">要对谁施加中毒</param>
+		/// <param name="NoResist">是否要忽略中毒几率</param>
+		/// <param name="ignoreDefence">是否忽略目标的防御减免（只对绿毒有用）</param>
+		public override void ApplyPoison(Poison p, MapObject Caster = null, bool NoResist = false, bool ignoreDefence = true)
         {
+            // Caster: 中毒对象， Caster
             if (Caster != null && !NoResist)
             {
+                // 如果是玩家，或配置文件中开启了PvpCanResistPoison(玩家对玩家战斗时是否允许躲避中毒)
+                // (Envir.Random.Next(Settings.PoisonResistWeight) < Stats[Stat.PoisonResist]) 会取玩家装备+自身毒物躲避（整体不能大于60%）
                 if (((Caster.Race != ObjectType.Player) || Settings.PvpCanResistPoison) && (Envir.Random.Next(Settings.PoisonResistWeight) < Stats[Stat.PoisonResist]))
                 {
+                    // 躲避成功则施法失败
                     return;
                 }
             }
-
+            // ignoreDefence 默认是 true, 表示考虑目标魔抗，如果设置成false才会进入这个判断，只针对绿毒
+            // 考虑目标魔抗能抵消绿毒伤害
             if (!ignoreDefence && (p.PType == PoisonType.Green))
             {
+                // 获取魔法防御力
                 int armour = GetAttackPower(Stats[Stat.MinMAC], Stats[Stat.MaxMAC]);
 
                 if (p.Value < armour)
@@ -7456,30 +7972,45 @@ namespace Server.MirObjects
 
             PoisonList.Add(p);
         }
-
-        public override Buff AddBuff(BuffType type, MapObject owner, int duration, Stats stats, bool refreshStats = true, bool updateOnly = false, params int[] values)
+		/// <summary>
+		/// 添加buff
+		/// </summary>
+		/// <param name="type">buff 类型</param>
+		/// <param name="owner">buff 所有者</param>
+		/// <param name="duration">buff 持续时间</param>
+		/// <param name="stats">buff 属性加成</param>
+		/// <param name="refreshStats">是否刷新属性</param>
+		/// <param name="updateOnly">仅更新模式</param>
+		/// <param name="values">buff 的额外参数</param>
+		/// <returns></returns>
+		public override Buff AddBuff(BuffType type, MapObject owner, int duration, Stats stats, bool refreshStats = true, bool updateOnly = false, params int[] values)
         {
+            // 获得一个buff（如果不存在则创建一个）
             Buff b = base.AddBuff(type, owner, duration, stats, refreshStats, updateOnly, values);
-
+            // 处理特殊的buff
             switch (b.Type)
             {
+                // 魔法护盾
                 case BuffType.MagicShield:
+                    // 通知客户端魔法护盾视觉效果生效
                     CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.MagicShieldUp }, CurrentLocation);
                     break;
-                case BuffType.ElementalBarrier:
+				// 元素屏障
+				case BuffType.ElementalBarrier:
+                    // 通知客户端元素屏障视觉效果生效
                     CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.ElementalBarrierUp }, CurrentLocation);
                     break;
             }
-
+            // 获得buff的客户端数据
             var packet = new S.AddBuff { Buff = b.ToClientBuff() };
-
+            // 发送给自己
             Enqueue(packet);
-
+            // 如果buff是可见的，广播给其他玩家
             if (b.Info.Visible)
             {
                 Broadcast(packet);
             }
-
+            // 如果需要刷新角色属性，刷新属性
             if (refreshStats)
             {
                 RefreshStats();
@@ -7567,16 +8098,16 @@ namespace Server.MirObjects
                 return item.h
 
             else if ((gem.Info.MPrate) > 0)
-                return 
+                return
 
             else if ((gem.Info.SpellRecovery) > 0)
-                return 
+                return
 
             else if ((gem.Info.Holy) > 0)
-                return 
+                return
 
             else if ((gem.Info.Strong + gem.Strong) > 0)
-                return 
+                return
 
             else if (gem.Info.HPrate > 0)
                 return
@@ -7860,7 +8391,12 @@ namespace Server.MirObjects
             item.DuraChanged = false;
             RefreshStats();
         }
-
+        /// <summary>
+		/// 从地图 AOI（Area Of Interest）/ 视野系统中移除旧位置影响（通常是一格范围）
+		/// <para>例如 count = 1是：四个角方向移除一行 + 一列，四个正方向移除一行或一列，根据 count 值依次类推</para>
+		/// </summary>
+		/// <param name="dir">方向</param>
+		/// <param name="count">范围</param>
         public void RemoveObjects(MirDirection dir, int count)
         {
             switch (dir)
@@ -8149,6 +8685,12 @@ namespace Server.MirObjects
                     break;
             }
         }
+        /// <summary>
+        /// 从地图 AOI（Area Of Interest）/ 视野系统中增加置影响（通常是一格范围）
+        /// <para>例如 count = 1是：四个角方向增加一行 + 一列，四个正方向增加一行或一列，根据 count 值依次类推</para>
+        /// </summary>
+        /// <param name="dir">方向</param>
+        /// <param name="count">范围</param>
         public void AddObjects(MirDirection dir, int count)
         {
             switch (dir)
@@ -8488,7 +9030,7 @@ namespace Server.MirObjects
             //MessageQueue.EnqueueDebugging(((ServerPacketIds)p.Index).ToString());
         }
         public virtual void Enqueue(Packet p, MirConnection c)
-        {            
+        {
             if (c == null)
             {
                 Enqueue(p);

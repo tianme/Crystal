@@ -26,16 +26,22 @@ namespace Server.MirNetwork
 
         public readonly int SessionID;
         public readonly string IPAddress;
-
+        /// <summary>
+        /// 游戏当前的状态， Stage 构造函数里没有初始化，C# 默认是 0，也就是 None
+        /// </summary>
         public GameStage Stage;
 
         private TcpClient _client;
         private ConcurrentQueue<Packet> _receiveList;
-        private ConcurrentQueue<Packet> _sendList; 
+        private ConcurrentQueue<Packet> _sendList;
         private Queue<Packet> _retryList;
 
         private bool _disconnecting;
         public bool Connected;
+
+        /// <summary>
+        /// 用于标记断开连接，会保持 500ms的时间，过期后会在过期的那次tick中清理掉连接
+        /// </summary>
         public bool Disconnecting
         {
             get { return _disconnecting; }
@@ -52,10 +58,26 @@ namespace Server.MirNetwork
         byte[] _rawData = new byte[0];
         byte[] _rawBytes = new byte[8 * 1024];
 
+        /// <summary>
+        /// 账户信息
+        /// </summary>
         public AccountInfo Account;
         public PlayerObject Player;
-
+        /// <summary>
+        /// 观战系统集合
+        /// 存放所有正在观战本玩家的连接
+        /// 举例：PlayerA 观察 PlayerB
+        /// 则 PlayerB.Observers 包含 PlayerA
+        /// 一对多关系：一个玩家可以被多人观战
+        /// </summary>
         public List<MirConnection> Observers = new List<MirConnection>();
+
+        /// <summary>
+        /// 我正在观察谁
+        /// 举例：PlayerA.Observing = PlayerB
+        /// Observing 表示“正在观察的对象”
+        /// 一对一关系：一个玩家同时只能观战一个目标
+        /// </summary>
         public MirConnection Observing;
 
         public List<ItemInfo> SentItemInfo = new List<ItemInfo>();
@@ -118,6 +140,7 @@ namespace Server.MirNetwork
 
             try
             {
+                // _rawBytes 默认 8K 缓冲区，用于接受客户端发送的数据，如果一次接受>8K 会分多次接收，如果大于次数上限会锁定IP，不在接收
                 _client.Client.BeginReceive(_rawBytes, 0, _rawBytes.Length, SocketFlags.None, ReceiveData, _rawBytes);
             }
             catch
@@ -128,30 +151,31 @@ namespace Server.MirNetwork
 
         private void ReceiveData(IAsyncResult result)
         {
+            // 连接断开时，直接返回
             if (!Connected) return;
 
-            int dataRead;
+            int dataRead; // 存储客户端发送的数据
 
             try
             {
-                dataRead = _client.Client.EndReceive(result);
+                dataRead = _client.Client.EndReceive(result); // 读取数据
             }
             catch
             {
-                Disconnecting = true;
+                Disconnecting = true; // 读取失败，标记为待断开
                 return;
             }
 
-            if (dataRead == 0)
+            if (dataRead == 0) // 未读取到数据
             {
-                Disconnecting = true;
+                Disconnecting = true; // 标记为待断开
                 return;
             }
 
-            if (_dataCounterReset < Envir.Now)
+            if (_dataCounterReset < Envir.Now) // 判断是否需要重置数据计数器（Envir.now 是服务器运行时间）
             {
-                _dataCounterReset = Envir.Now.AddSeconds(5);
-                _dataCounter = 0;
+                _dataCounterReset = Envir.Now.AddSeconds(5);// 5秒内未收到数据，重置计数器
+                _dataCounter = 0; // 计数器清零
             }
 
             _dataCounter++;
@@ -166,41 +190,46 @@ namespace Server.MirNetwork
                 Buffer.BlockCopy(rawBytes, 0, _rawData, temp.Length, dataRead);
 
                 Packet p;
-
+                // 取出数据放到队列中等待下次tick中解析
+                // ReceivePacket 会处理黏包问题
+                // out: 允许吧内部变量赋值给外部变量，达到内部修改外部也会跟着变的效果，out是成对出现的，两个out变量是双向绑定的
                 while ((p = Packet.ReceivePacket(_rawData, out _rawData)) != null)
                     _receiveList.Enqueue(p);
             }
             catch
             {
+                // 解析错误后封ip24小时
                 Envir.UpdateIPBlock(IPAddress, TimeSpan.FromHours(24));
 
                 MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.IPAddressDisconnectedInvalidPacket), IPAddress));
-
+                // 标记为待断开
                 Disconnecting = true;
                 return;
             }
-
+            // 如果包太大(因为tcp会自动分成多个小包，会导致频繁回调自身)或者频繁调用服务端接口，封ip24小时
             if (_dataCounter > Settings.MaxPacket)
             {
+                // 封24小时
                 Envir.UpdateIPBlock(IPAddress, TimeSpan.FromHours(24));
-
+                // 创建包裹List
                 List<string> packetList = new List<string>();
-
+                // 取出最近收到的10个包
                 while (_lastPackets.Count > 0)
                 {
+                    // 尝试取出包转成 Packet 类型 并赋值给 pkt（C#7.0 支持不声明类型直接通过 out Packet pkt 声明一个局部变量）
                     _lastPackets.TryDequeue(out Packet pkt);
-
+                    // 尝试转成ClientPacketIds枚举类型，转不成功是0.toString()，转成功就是 Index.toString() 复制给cPacket
                     Enum.TryParse<ClientPacketIds>((pkt?.Index ?? 0).ToString(), out ClientPacketIds cPacket);
-
+                    // 添加到 packetList 中
                     packetList.Add(cPacket.ToString());
                 }
 
                 MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.IPAddressDisconnectedLargePackets), IPAddress, String.Join(",", packetList.Distinct())));
-
+                // 标记为关闭状态
                 Disconnecting = true;
                 return;
             }
-
+            // 继续接收下次tcp信息
             BeginReceive();
         }
         private void BeginSend(List<byte> data)
@@ -211,65 +240,81 @@ namespace Server.MirNetwork
 
             try
             {
+                // 发送数据，SendData 作为回调函数
                 _client.Client.BeginSend(data.ToArray(), 0, data.Count, SocketFlags.None, SendData, Disconnecting);
             }
             catch
             {
+                // 发送失败,Disconnecting = true,等待释放
                 Disconnecting = true;
             }
         }
+        // 发送完成
         private void SendData(IAsyncResult result)
         {
             try
             {
-                _client.Client.EndSend(result);
+                _client.Client.EndSend(result); // 清理异步上下文
             }
             catch
             { }
+
         }
-        
+        /// <summary>
+        /// 加入消息队列
+        /// </summary>
+        /// <param name="p"></param>
         public void Enqueue(Packet p)
         {
             if (p == null) return;
+            // 加入消息队列
             if (_sendList != null && p != null)
+                // _sendList 会在 Process 中处理
                 _sendList.Enqueue(p);
-
+            // 如果不是观察者返回
             if (!p.Observable) return;
+            // 遍历 Observers对象
             foreach (MirConnection c in Observers)
                 c.Enqueue(p);
         }
-
+        // 在 Envir.cs 中调用，约 20ms调用一次
         public void Process()
         {
             if (_client == null || !_client.Connected)
             {
+                // 20: 表示当客户端连接对象为空或未连接时使用（网络连接已断开）
                 Disconnect(20);
                 return;
             }
-
+            // 如果不为空解析数据包
+            // 尝试取出数据放到_lastPackets 队列中
+            // _receiveList 出队， _lastPackets 入队
             while (!_receiveList.IsEmpty && !Disconnecting)
             {
                 Packet p;
                 if (!_receiveList.TryDequeue(out p)) continue;
-
+                // 记录最近收到的数据包，大小10 用于封IP时记录封禁原因
                 _lastPackets.Enqueue(p);
-
+                // 更新超时时间
                 TimeOutTime = Envir.Time + Settings.TimeOut;
+                // 解析用户发送过来的信息
                 ProcessPacket(p);
 
                 if (_receiveList == null)
                     return;
             }
-
+            // 把重试的数据放到_receiveList中
+            // 重试数据包含角色冷却中发到服务端的指令
             while (_retryList.Count > 0)
                 _receiveList.Enqueue(_retryList.Dequeue());
-
+            // 超时时断开连接
             if (Envir.Time > TimeOutTime)
             {
+                // 超时
                 Disconnect(21);
                 return;
             }
-
+            #region "检查有没有要发送的数据，如果有放入data中"
             if (_sendList == null || _sendList.Count <= 0) return;
 
             List<byte> data = new List<byte>();
@@ -280,7 +325,8 @@ namespace Server.MirNetwork
                 if (!_sendList.TryDequeue(out p) || p == null) continue;
                 data.AddRange(p.GetPacketBytes());
             }
-
+            #endregion
+            // 发送数据data
             BeginSend(data);
         }
         private void ProcessPacket(Packet p)
@@ -289,7 +335,9 @@ namespace Server.MirNetwork
 
             switch (p.Index)
             {
+                // 检查版本
                 case (short)ClientPacketIds.ClientVersion:
+                	//检查客户端版本是否与服务端版本匹配
                     ClientVersion((C.ClientVersion) p);
                     break;
                 case (short)ClientPacketIds.Disconnect:
@@ -305,6 +353,7 @@ namespace Server.MirNetwork
                     ChangePassword((C.ChangePassword) p);
                     break;
                 case (short)ClientPacketIds.Login:
+                    // 登录
                     Login((C.Login) p);
                     break;
                 case (short)ClientPacketIds.NewCharacter:
@@ -747,12 +796,12 @@ namespace Server.MirNetwork
                     break;
             }
         }
-
+        // 软断开，不关闭tcp连接，是否真实断开由客户端说了算
         public void SoftDisconnect(byte reason)
         {
             Stage = GameStage.Disconnected;
             TimeDisconnected = Envir.Time;
-            
+
             lock (Envir.AccountLock)
             {
                 if (Player != null)
@@ -785,7 +834,7 @@ namespace Server.MirNetwork
             }
 
             if (Observing != null)
-                Observing.Observers.Remove(this);            
+                Observing.Observers.Remove(this);
 
             Account = null;
 
@@ -805,7 +854,7 @@ namespace Server.MirNetwork
                 SoftDisconnect(reason);
                 return;
             }
-            
+
             Disconnecting = true;
 
             List<byte> data = new List<byte>();
@@ -823,13 +872,15 @@ namespace Server.MirNetwork
                 c.Enqueue(new S.ReturnToLogin());
             }
         }
-
+        // 检查客户端
         private void ClientVersion(C.ClientVersion p)
         {
+            // 如果不是默认状态，说明已经处理过了，直接返回
             if (Stage != GameStage.None) return;
-
+            // 是否配置了客户端检测
             if (Settings.CheckVersion)
             {
+                // 检测版本是否一致
                 bool match = false;
 
                 foreach (var hash in Settings.VersionHashes)
@@ -840,23 +891,26 @@ namespace Server.MirNetwork
                         break;
                     }
                 }
-
+                // 没匹配上，断开连接
                 if (!match)
                 {
                     Disconnecting = true;
 
                     List<byte> data = new List<byte>();
-
+                    // 创建客户端连接 Packet 实例(S.ClientVersion)，包含断开连接的原因
                     data.AddRange(new S.ClientVersion { Result = 0 }.GetPacketBytes());
-
+                    // 发送给客户端断开连接的原因
                     BeginSend(data);
+                    // 逻辑断开不关闭tcp连接
                     SoftDisconnect(10);
+                    // 写入消息队列
                     MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.PlayerDisconnectedWrongClientVersion), SessionID));
                     return;
                 }
             }
-
+            // 加入消息队列
             MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.ClientVersionMatched), SessionID, IPAddress));
+            // 创建客户端连接 Packet 实例(S.ClientVersion)，包含成功原因
             Enqueue(new S.ClientVersion { Result = 1 });
 
             Stage = GameStage.Login;
@@ -882,6 +936,8 @@ namespace Server.MirNetwork
             MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.PasswordBeingChanged), SessionID, IPAddress));
             Envir.ChangePassword(p, this);
         }
+
+        // 登录
         private void Login(C.Login p)
         {
             if (Stage != GameStage.Login) return;
@@ -898,7 +954,7 @@ namespace Server.MirNetwork
         private void DeleteCharacter(C.DeleteCharacter p)
         {
             if (Stage != GameStage.Select) return;
-            
+
             if (!Settings.AllowDeleteCharacter)
             {
                 Enqueue(new S.DeleteCharacter { Result = 0 });
@@ -906,7 +962,7 @@ namespace Server.MirNetwork
             }
 
             CharacterInfo temp = null;
-            
+
 
             for (int i = 0; i < Account.Characters.Count; i++)
 			{
@@ -927,25 +983,31 @@ namespace Server.MirNetwork
             Envir.RemoveRank(temp);
             Enqueue(new S.DeleteCharacterSuccess { CharacterIndex = temp.Index });
         }
+
+        /// <summary>
+		/// 开始游戏
+		/// </summary>
+		/// <param name="p"></param>
         private void StartGame(C.StartGame p)
         {
+            // Stage 必须是选择角色界面
             if (Stage != GameStage.Select) return;
-
+            // 检查是否允许开始游戏 并且 账号不为null 账号不是管理员账号
             if (!Settings.AllowStartGame && (Account == null || (Account != null && !Account.AdminAccount)))
             {
                 Enqueue(new S.StartGame { Result = 0 });
                 return;
             }
-
+            // 账号不为null
             if (Account == null)
             {
                 Enqueue(new S.StartGame { Result = 1 });
                 return;
             }
 
-
+            // 初始化角色信息实例 默认值为null
             CharacterInfo info = null;
-
+            // 遍历账号角色列表 检查角色索引是否匹配
             for (int i = 0; i < Account.Characters.Count; i++)
             {
                 if (Account.Characters[i].Index != p.CharacterIndex) continue;
@@ -953,12 +1015,13 @@ namespace Server.MirNetwork
                 info = Account.Characters[i];
                 break;
             }
+            // 角色不存在
             if (info == null)
             {
                 Enqueue(new S.StartGame { Result = 2 });
                 return;
             }
-
+            // 角色已被禁用
             if (info.Banned)
             {
                 if (info.ExpiryDate > Envir.Now)
@@ -968,9 +1031,11 @@ namespace Server.MirNetwork
                 }
                 info.Banned = false;
             }
+            // 角色已被禁用的原因
             info.BanReason = string.Empty;
+            // 设置过期时间
             info.ExpiryDate = DateTime.MinValue;
-
+            // 未使用的变量
             long delay = (long) (Envir.Now - info.LastLogoutDate).TotalMilliseconds;
 
 
@@ -979,8 +1044,9 @@ namespace Server.MirNetwork
             //    Enqueue(new S.StartGameDelay { Milliseconds = Settings.RelogDelay - delay });
             //    return;
             //}
-
+            // 初始化 PlayerObject 实例
             Player = new PlayerObject(info, this);
+            // 开始游戏
             Player.StartGame();
         }
 
@@ -1040,7 +1106,7 @@ namespace Server.MirNetwork
             else
                 Player.Run(p.Direction);
         }
-        
+
         private void Chat(C.Chat p)
         {
             if (p.Message.Length > Globals.MaxChatLength)
@@ -1136,7 +1202,7 @@ namespace Server.MirNetwork
 
             Player.DepositTradeItem(p.From, p.To);
         }
-        
+
         private void RetrieveTradeItem(C.RetrieveTradeItem p)
         {
             if (Stage != GameStage.Game) return;
@@ -1191,7 +1257,7 @@ namespace Server.MirNetwork
                 case MirGridType.HeroInventory:
                     Player.HeroUseItem(p.UniqueID);
                     break;
-            }            
+            }
         }
         private void DropItem(C.DropItem p)
         {
@@ -1282,7 +1348,7 @@ namespace Server.MirNetwork
             else
             {
                 Envir.Inspect(this, p.ObjectID);
-            } 
+            }
         }
         private void Observe(C.Observe p)
         {
@@ -1518,7 +1584,7 @@ namespace Server.MirNetwork
                 return;
             }
             if (Player.HeroSpawned)
-                Player.Hero.SpellToggle(p.Spell, p.canUse);            
+                Player.Hero.SpellToggle(p.Spell, p.canUse);
         }
         private void ConsignItem(C.ConsignItem p)
         {
@@ -2024,7 +2090,7 @@ namespace Server.MirNetwork
         }
 
         public List<byte[]> Image = new List<byte[]>();
-        
+
         private void ReportIssue(C.ReportIssue p)
         {
             if (Stage != GameStage.Game) return;

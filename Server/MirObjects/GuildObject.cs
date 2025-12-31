@@ -507,7 +507,7 @@ namespace Server.MirObjects
 
         public void DeleteMember(string name)
         {//carefull this can lead to guild with no ranks or members(or no leader)
-            
+
             GuildMember Member = null;
             GuildRank MemberRank = null;
             for (int i = 0; i < Ranks.Count; i++)
@@ -647,7 +647,7 @@ namespace Server.MirObjects
             if (expAmount == 0) return;
 
             Info.Experience += expAmount;
-            
+
             var experience = Info.Experience;
 
             while (experience > Info.MaxExperience)
@@ -738,7 +738,10 @@ namespace Server.MirObjects
                 }
             }
         }
-
+        /// <summary>
+        /// 当前行会是否在宣战中
+        /// </summary>
+        /// <returns>是或否</returns>
         public bool IsAtWar()
         {
             if (WarringGuilds.Count == 0) return false;
@@ -1022,7 +1025,7 @@ namespace Server.MirObjects
             RefreshAllStats();
 
             NeedSave = true;
-        }      
+        }
     }
 
     public class GuildAtWar

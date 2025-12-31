@@ -68,6 +68,13 @@ public static class Functions
     {
         return String.Format("{0}, {1}", p.X, p.Y);
     }
+    /// <summary>
+    /// 是否在范围之内
+    /// </summary>
+    /// <param name="a">中心点</param>
+    /// <param name="b">当前坐标</param>
+    /// <param name="i">中心点的范围</param>
+    /// <returns></returns>
     public static bool InRange(Point a, Point b, int i)
     {
         return Math.Abs(a.X - b.X) <= i && Math.Abs(a.Y - b.Y) <= i;
@@ -177,6 +184,12 @@ public static class Functions
             default: return d;
         }
     }
+    /// <summary>
+    /// 通过两个坐标获取目标方向
+    /// </summary>
+    /// <param name="source">当前坐标</param>
+    /// <param name="dest">目标的坐标</param>
+    /// <returns></returns>
     public static MirDirection DirectionFromPoint(Point source, Point dest)
     {
         if (source.X < dest.X)
@@ -470,7 +483,7 @@ public static class Functions
             _tempChunks.Add(originalList);
         else
         {
-            // Determine how many lists are required 
+            // Determine how many lists are required
             var numberOfLists = (originalList.Count / width);
 
             for (var i = 0; i <= numberOfLists; i++)

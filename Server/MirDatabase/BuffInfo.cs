@@ -5,12 +5,30 @@ namespace Server.MirDatabase
 {
     public class BuffInfo
     {
+        /// <summary>
+        /// buff 类型
+        /// </summary>
         public BuffType Type { get; set; }
+        /// <summary>
+        /// 叠加规则
+        /// </summary>
         public BuffStackType StackType { get; set; }
+        /// <summary>
+        /// buff 的特殊属性标志
+        /// </summary>
         public BuffProperty Properties { get; set; }
-        public int Icon { get; set; }
-        public bool Visible { get; set; }
-
+		/// <summary>
+		/// buff在客户端显示的图标ID
+		/// </summary>
+		public int Icon { get; set; }
+		/// <summary>
+		/// buff是否在客户端可见
+		/// </summary>
+		public bool Visible { get; set; }
+        /// <summary>
+		/// 加载buff信息
+		/// </summary>
+		/// <returns></returns>
         public static List<BuffInfo> Load()
         {
             List<BuffInfo> info = new List<BuffInfo>
@@ -89,49 +107,118 @@ namespace Server.MirDatabase
 
     public class Buff
     {
+        /// <summary>
+		/// 主环境
+		/// </summary>
         protected static Envir Envir
         {
             get { return Envir.Main; }
         }
-
-        private Dictionary<string, object> Data { get; set; } = new Dictionary<string, object>();
-
+		/// <summary>
+		/// Buff 的私有运行时状态数据（不由时间字段直接描述）。
+		/// 仅供具体 Buff 逻辑使用，框架层不关心其内容。
+		/// 私有字段，通过Get/Set访问。
+		/// </summary
+		private Dictionary<string, object> Data { get; set; } = new Dictionary<string, object>();
+        /// <summary>
+        /// buff 的蓝图
+        /// </summary>
         public BuffInfo Info;
+        /// <summary>
+        /// 施法者
+        /// </summary>
         public MapObject Caster;
+        /// <summary>
+        /// buff 的归属对象的ID
+        /// </summary>
         public uint ObjectID;
+        /// <summary>
+        /// buff 的过期时间
+        /// </summary>
         public long ExpireTime;
+        /// <summary>
+        /// 上一次Tick的生效时间
+        /// </summary>
+        public long LastTime;
+        /// <summary>
+        /// 下次生效时间
+        /// </summary>
+        public long NextTime;
 
-        public long LastTime, NextTime;
-
+        /// <summary>
+        /// 属性加成系统
+        /// </summary>
         public Stats Stats;
-
-        public int[] Values;
-
+		/// <summary>
+		///
+		/// Buff 参数数组。
+		/// 各下标的具体含义由 BuffType 的处理逻辑约定，
+		/// 不同 BuffType 之间 Values 的语义可以完全不同。
+		///
+		/// 使用约定：
+		/// 1. 同一 BuffType 内，Values 下标语义必须保持一致；
+		/// 2. 不要在不同 BuffType 间复用下标含义；
+		/// 3. 仅用于存放简单整数参数（配置/公式用）；
+		/// 4. 如需存放运行态状态或复杂对象，请使用 Data。
+		///
+		/// </summary>
+		public int[] Values;
+        /// <summary>
+		/// 标记用于标记 buff 是否需要移除
+		/// </summary>
         public bool FlagForRemoval;
+        /// <summary>
+		/// 标记用于标记 buff 是否暂停倒计时
+		/// </summary>
         public bool Paused;
-
+        /// <summary>
+        /// buff 的类型
+        /// </summary>
         public BuffType Type
         {
             get { return Info.Type; }
         }
 
+        /// <summary>
+        /// buff 的叠加类型
+        /// <para>护盾类(MagicShield)</para>
+        /// <para>经验、掉落加成</para>
+        /// <para>状态类<para>
+        /// <para>身份类(GameMaster、师徒、婚姻)</para>
+        /// <para>终极强化（UltimateEnhancer）</para>
+        /// </summary>
         public BuffStackType StackType
         {
             get { return Info.StackType; }
         }
-
-        public BuffProperty Properties
+		/// <summary>
+		/// buff的特殊属性标志，用于定义buff的行为特性
+		/// <para>例如: </para>
+		/// <para>1. 角色死亡时移除该buff</para>
+		/// <para>2. 角色退出游戏时移除该buff</para>
+		/// <para>3. 负面效果，减益buff</para>
+		/// <para>4. 安全区域暂停计时， buff 在安全区域时暂停倒计时</para>
+		/// </summary>
+		public BuffProperty Properties
         {
             get { return Info.Properties; }
         }
-
+        /// <summary>
+		/// 构造函数
+		/// </summary>
+		/// <param name="type">buff的类型</param>
         public Buff(BuffType type)
         {
             Info = Envir.GetBuffInfo(type);
             Stats = new Stats();
             Data = new Dictionary<string, object>();
         }
-
+        /// <summary>
+		/// 从二进制流加载 Buff。
+		/// </summary>
+		/// <param name="reader">二进制读取器</param>
+		/// <param name="version">文件格式版本</param>
+		/// <param name="customVersion">自定义版本号</param>
         public Buff(BinaryReader reader, int version, int customVersion)
         {
             var type = (BuffType)reader.ReadByte();
@@ -207,6 +294,10 @@ namespace Server.MirDatabase
             }
         }
 
+		/// <summary>
+		/// 保存 Buff 到二进制流。
+		/// </summary>
+		/// <param name="writer">二进制写入器</param>
         public void Save(BinaryWriter writer)
         {
             writer.Write((byte)Type);
@@ -252,8 +343,11 @@ namespace Server.MirDatabase
         {
             Data[key] = val;
         }
-
-        public ClientBuff ToClientBuff()
+		/// <summary>
+		/// 生成用于客户端显示的 Buff 快照。
+		/// 仅包含展示所需数据，不暴露任何服务端逻辑或运行时状态。
+		/// </summary>
+		public ClientBuff ToClientBuff()
         {
             return new ClientBuff
             {

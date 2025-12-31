@@ -364,3 +364,12 @@ FodyWeavers.xsd
 /Build
 /.idea/.idea.Legend of Mir/.idea
 /.idea/config
+
+Maps
+# Configs
+# Envir/Drops
+# Envir/NPCs
+*.txt
+*.bmp
+*.msd
+*.ini

@@ -17,47 +17,99 @@ namespace Server.MirEnvir
         {
             get { return MessageQueue.Instance; }
         }
-
+        /// <summary>
+        /// 地图蓝图
+        /// </summary>
         public MapInfo Info;
-
+        /// <summary>
+        /// 地图所在的线程
+        /// </summary>
         public int Thread = 0;
 
         public int Width, Height;
+        /// <summary>
+        /// 地图的格子数组
+        /// <para>数组数量等于地图的总坐标</para>
+        /// </summary>
         public Cell[,] Cells;
+        /// <summary>
+        /// 可以行走的格子
+        /// </summary>
         public List<Point> WalkableCells;
+        /// <summary>
+        /// 地图中的物理门数组
+        /// <para>数组数量等于地图的总坐标</para>
+        /// </summary>
         public Door[,] DoorIndex;
+        /// <summary>
+        /// 跟 DoorIndex 存储的是一个对象实例
+        /// <para>用于统一处理当前地图的物理门逻辑</para>
+        /// <para>例如：打开门一段后时间自动关闭</para>
+        /// </summary>
         public List<Door> Doors = new List<Door>();
+
+        /// <summary>
+        /// 矿点数组，个格子数组数组一样，这里用于存放矿点
+        /// </summary>
         public MineSpot[,] Mine;
         public long LightningTime, FireTime;
         public int MonsterCount;
-
+        /// <summary>
+        /// NPC 集合
+        /// </summary>
         public List<NPCObject> NPCs = new List<NPCObject>();
         public List<SpellObject> Spells = new List<SpellObject>();
+        /// <summary>
+        /// 玩家集合
+        /// </summary>
         public List<PlayerObject> Players = new List<PlayerObject>();
+
+        /// <summary>
+        /// 当前地图怪物重生点的集合
+        /// </summary>
         public List<MapRespawn> Respawns = new List<MapRespawn>();
         public List<DelayedAction> ActionList = new List<DelayedAction>();
         public List<HeroObject> Heroes = new List<HeroObject>();
-
+        /// <summary>
+        /// 征战区域坐标集合
+        /// </summary>
         public List<ConquestObject> Conquest = new List<ConquestObject>();
+        /// <summary>
+		/// 存放临时征战区域
+		/// </summary>
         public ConquestObject tempConquest;
-
+        /// <summary>
+        /// 创建Map实例
+        /// </summary>
+        /// <param name="info">地图蓝图</param>
         public Map(MapInfo info)
         {
+            // 把蓝图赋值给Info
             Info = info;
+            // 随机取一个地图线程
             Thread = Envir.Random.Next(Settings.ThreadLimit);
         }
-
+        /// <summary>
+        /// 添加门到 Doors 中
+        /// </summary>
+        /// <param name="DoorIndex">地图坐标里的值</param>
+        /// <param name="location">当前坐标</param>
+        /// <returns></returns>
         public Door AddDoor(byte DoorIndex, Point location)
         {
+            // 把最高位设置为0
             DoorIndex = (byte)(DoorIndex & 0x7F);
             for (int i = 0; i < Doors.Count; i++)
                 if (Doors[i].index == DoorIndex)
                     return Doors[i];
+            // 如果没有添加则创建新的DoorInfo
             Door DoorInfo = new Door() { index = DoorIndex, Location = location };
+            // 添加到Doors
             Doors.Add(DoorInfo);
+            // 返回添加的实例
             return DoorInfo;
         }
-        
+
         public bool OpenDoor(byte DoorIndex)
         {
             for (int i = 0; i < Doors.Count; i++)
@@ -69,7 +121,11 @@ namespace Server.MirEnvir
                 }
             return false;
         }
-
+        /// <summary>
+        /// 根据读取的文件字节找到对应的加载器
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         private byte FindType(byte[] input)
         {
             //c# custom map format
@@ -108,14 +164,23 @@ namespace Server.MirEnvir
                 return 7;
             return 0;
         }
-
+        /// <summary>
+        /// 默认地图
+        /// </summary>
+        /// <param name="fileBytes">文件字节流</param>
         private void LoadMapCellsv0(byte[] fileBytes)
         {
+            // 手动控制偏移量
             int offSet = 0;
+            // 读取宽度
             Width = BitConverter.ToInt16(fileBytes, offSet);
+            // 偏移量 + 2
             offSet += 2;
+            // 读取高度
             Height = BitConverter.ToInt16(fileBytes, offSet);
+            // 创建格子的数组
             Cells = new Cell[Width, Height];
+            // 创建门的数组
             DoorIndex = new Door[Width, Height];
 
             offSet = 52;
@@ -124,11 +189,11 @@ namespace Server.MirEnvir
                 for (int y = 0; y < Height; y++)
                 {//total 12
                     if ((BitConverter.ToInt16(fileBytes, offSet) & 0x8000) != 0)
-                        Cells[x, y] = Cell.HighWall; //Can Fire Over.
+                        Cells[x, y] = Cell.HighWall; //Can Fire Over. 可以越过障碍射击
 
                     offSet += 2;
                     if ((BitConverter.ToInt16(fileBytes, offSet) & 0x8000) != 0)
-                        Cells[x, y] = Cell.LowWall; //Can't Fire Over.
+                        Cells[x, y] = Cell.LowWall; //Can't Fire Over. 不能越过障碍射击
 
                     offSet += 2;
 
@@ -138,7 +203,7 @@ namespace Server.MirEnvir
                     if (Cells[x, y] == null) Cells[x, y] = new Cell { Attribute = CellAttribute.Walk };
 
                     offSet += 4;
-
+                    // 添加门
                     if (fileBytes[offSet] > 0)
                         DoorIndex[x, y] = AddDoor(fileBytes[offSet], new Point(x, y));
 
@@ -150,7 +215,10 @@ namespace Server.MirEnvir
                         Cells[x, y].FishingAttribute = (sbyte)(light - 100);
                 }
         }
-        
+        /// <summary>
+        /// Wemade(娱美德) 2010年地图格式
+        /// </summary>
+        /// <param name="fileBytes">文件字节</param>
         private void LoadMapCellsv1(byte[] fileBytes)
         {
             int offSet = 21;
@@ -191,7 +259,10 @@ namespace Server.MirEnvir
                     offSet += 1;
                 }
         }
-
+        /// <summary>
+        /// 盛大早期地图格式
+        /// </summary>
+        /// <param name="fileBytes">文件字节</param>
         private void LoadMapCellsv2(byte[] fileBytes)
         {
             int offSet = 0;
@@ -232,7 +303,10 @@ namespace Server.MirEnvir
                     offSet += 2;
                 }
         }
-
+        /// <summary>
+        /// 盛大2012年地图格式
+        /// </summary>
+        /// <param name="fileBytes">文件字节</param>
         private void LoadMapCellsv3(byte[] fileBytes)
         {
             int offSet = 0;
@@ -272,7 +346,10 @@ namespace Server.MirEnvir
                     offSet += 17;
                 }
         }
-
+        /// <summary>
+        /// Wemade(娱美德)防黑客地图格式
+        /// </summary>
+        /// <param name="fileBytes">文件字节</param>
         private void LoadMapCellsv4(byte[] fileBytes)
         {
             int offSet = 31;
@@ -305,7 +382,10 @@ namespace Server.MirEnvir
                     offSet += 6;
                 }
         }
-
+        /// <summary>
+        /// Wemade(娱美德) Mir3地图格式
+        /// </summary>
+        /// <param name="fileBytes">文件字节</param>
         private void LoadMapCellsv5(byte[] fileBytes)
         {
             int offSet = 22;
@@ -333,7 +413,10 @@ namespace Server.MirEnvir
                         Cells[x, y].FishingAttribute = (sbyte)(light - 100);
                 }
         }
-
+        /// <summary>
+        /// 盛大Mir3地图格式
+        /// </summary>
+        /// <param name="fileBytes">文件字节</param>
         private void LoadMapCellsv6(byte[] fileBytes)
         {
             int offSet = 16;
@@ -357,7 +440,10 @@ namespace Server.MirEnvir
                     offSet += 20;
                 }
         }
-
+        /// <summary>
+        /// 3/4 Heroes地图格式
+        /// </summary>
+        /// <param name="fileBytes">文件字节</param>
         private void LoadMapCellsv7(byte[] fileBytes)
         {
             int offSet = 21;
@@ -392,7 +478,10 @@ namespace Server.MirEnvir
                     offSet += 2;
                 }
         }
-
+        /// <summary>
+        /// C#自定义地图格式
+        /// </summary>
+        /// <param name="Bytes">文件字节</param>
         private void LoadMapCellsV100(byte[] Bytes)
         {
             int offset = 4;
@@ -418,24 +507,27 @@ namespace Server.MirEnvir
                     if (Cells[x, y] == null) Cells[x, y] = new Cell { Attribute = CellAttribute.Walk };
                     offset += 2;
                     if (Bytes[offset] > 0)
-                        DoorIndex[x, y] = AddDoor(Bytes[offset], new Point(x, y));
-                    offset += 11;
-
+                        DoorIndex[x, y] = AddDoor(Bytes[offset], new Point(x, y)); // 添加到地图中的物理门数组
+                    offset += 11; // 增加偏移量
+                    // 取light
                     byte light = Bytes[offset++];
-
+                    // 当前格子是否可以钓鱼
                     if (light >= 100 && light <= 119)
                         Cells[x, y].FishingAttribute = (sbyte)(light - 100);
                 }
-                
+
         }
 
         public bool Load()
         {
             try
             {
+                // 根据蓝图的文件名+扩展名查找地图文件
                 string fileName = Path.Combine(Settings.MapPath, Info.FileName + ".map");
+                // 文件存在
                 if (File.Exists(fileName))
                 {
+                    // 直接读取整个文件
                     byte[] fileBytes = File.ReadAllBytes(fileName);
                     switch(FindType(fileBytes))
                     {
@@ -467,14 +559,17 @@ namespace Server.MirEnvir
                             LoadMapCellsV100(fileBytes);
                             break;
                     }
-
+                    // 初始化可以行走的格子
                     GetWalkableCells();
-                    
+
                     for (int i = 0; i < Info.Respawns.Count; i++)
                     {
                         MapRespawn info = new MapRespawn(Info.Respawns[i]);
+                        // 如果蓝图里没有当前怪物，则不创建
                         if (info.Monster == null) continue;
+                        // 记录当前所在地图
                         info.Map = this;
+                        // 当前怪物重生的地点
                         info.WalkableCells = WalkableCells.Where(x =>
                         x.X <= info.Info.Location.X + info.Info.Spread &&
                         x.X >= info.Info.Location.X - info.Info.Spread &&
@@ -482,22 +577,23 @@ namespace Server.MirEnvir
                         x.Y >= info.Info.Location.Y - info.Info.Spread).ToList();
 
                         Respawns.Add(info);
-
+                        // 如果需要保存重生点，则添加到保存列表中
                         if ((info.Info.SaveRespawnTime) && (info.Info.RespawnTicks != 0))
                             Envir.SavedSpawns.Add(info);
                     }
-
+                    // 添加当前地图的npc
                     for (int i = 0; i < Info.NPCs.Count; i++)
                     {
                         NPCInfo info = Info.NPCs[i];
+                        // 如果npc坐标不在地图范围内，则不创建
                         if (!ValidPoint(info.Location)) continue;
-
+                        // 添加NPC到对应的坐标
                         AddObject(new NPCObject(info) { CurrentMap = this });
                     }
 
                     for (int i = 0; i < Info.SafeZones.Count; i++)
                         CreateSafeZone(Info.SafeZones[i]);
-
+                    // 创建矿区
                     CreateMine();
 
                     return true;
@@ -505,6 +601,7 @@ namespace Server.MirEnvir
             }
             catch (Exception ex)
             {
+                // 找不到文件放入到消息列表中
                 MessageQueue.Enqueue(ex);
             }
 
@@ -512,7 +609,10 @@ namespace Server.MirEnvir
             MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.Filename) + Info.FileName);
             return false;
         }
-
+        /// <summary>
+        /// 获取可移动的单元格坐标
+        /// <para> 通过 Attribute == CellAttribute.Walk判断是否可以移动 </para>
+        /// </summary>
         public void GetWalkableCells()
         {
             if (WalkableCells == null)
@@ -525,9 +625,13 @@ namespace Server.MirEnvir
                             WalkableCells.Add(new Point(x, y));
             }
         }
-
+        /// <summary>
+        /// 创建安全区
+        /// </summary>
+        /// <param name="info">安全区蓝图</param>
         private void CreateSafeZone(SafeZoneInfo info)
         {
+            // 如果显示边框
             if (Settings.SafeZoneBorder)
             {
                 for (int y = info.Location.Y - info.Size; y <= info.Location.Y + info.Size; y++)
@@ -556,7 +660,7 @@ namespace Server.MirEnvir
                     }
                 }
             }
-
+            // 如果安全区可以自动恢复生命
             if (Settings.SafeZoneHealing)
             {
                 for (int y = info.Location.Y - info.Size; y <= info.Location.Y + info.Size; y++)
@@ -578,7 +682,7 @@ namespace Server.MirEnvir
                                 CurrentLocation = new Point(x, y),
                                 CurrentMap = this
                             };
-
+                        // 给当前单元格添加回复法术效果的，过期时间 long.MaxValue
                         Cells[x, y].Add(spell);
 
                         spell.Spawned();
@@ -588,10 +692,14 @@ namespace Server.MirEnvir
 
 
         }
-
+        /// <summary>
+        /// 创建矿产资源
+        /// </summary>
         private void CreateMine()
         {
+            // 如果该地图没有矿 && 没有矿物类型则return
             if ((Info.MineIndex == 0) && (Info.MineZones.Count == 0)) return;
+            // 根据当前地图宽高创建矿点数组，跟地图格子一一对应
             Mine = new MineSpot[Width, Height];
             for (int i = 0; i < Width; i++)
                 for (int j = 0; j < Height; j++)
@@ -623,7 +731,11 @@ namespace Server.MirEnvir
                 }
             }
         }
-
+        /// <summary>
+        /// 根据坐标获取单元格
+        /// </summary>
+        /// <param name="location">当前坐标</param>
+        /// <returns></returns>
         public Cell GetCell(Point location)
         {
             return Cells[location.X, location.Y];
@@ -633,7 +745,11 @@ namespace Server.MirEnvir
         {
             return Cells[x, y];
         }
-
+        /// <summary>
+		/// 验证是否在当前地图的区域里，并且是可以行走的坐标上
+		/// </summary>
+		/// <param name="location">要校验的坐标</param>
+		/// <returns></returns>
         public bool ValidPoint(Point location)
         {
             return location.X >= 0 && location.X < Width && location.Y >= 0 && location.Y < Height && GetCell(location).Valid;
@@ -673,7 +789,7 @@ namespace Server.MirEnvir
                     Point location;
                     if (Envir.Random.Next(4) == 0)
                     {
-                        location = player.CurrentLocation;          
+                        location = player.CurrentLocation;
                     }
                     else
                         location = new Point(player.CurrentLocation.X - 10 + Envir.Random.Next(20), player.CurrentLocation.Y - 10 + Envir.Random.Next(20));
@@ -1486,7 +1602,7 @@ namespace Server.MirEnvir
                             AddObject(ob);
                             ob.Spawned();
                         }
-                    } 
+                    }
 
                     break;
 
@@ -1682,7 +1798,7 @@ namespace Server.MirEnvir
                             AddObject(ob);
                             ob.Spawned();
                         }
-                    } 
+                    }
 
                     break;
 
@@ -1779,7 +1895,7 @@ namespace Server.MirEnvir
                                 {
                                     centerTarget = (MonsterObject)target;
                                 }
-                                
+
                                 switch (target.Race)
                                 {
                                     case ObjectType.Monster:
@@ -2178,7 +2294,7 @@ namespace Server.MirEnvir
 
                 #region Portal
 
-                case Spell.Portal:                  
+                case Spell.Portal:
                     value = (int)data[2];
                     location = (Point)data[3];
                     value2 = (int)data[4];
@@ -2357,18 +2473,25 @@ namespace Server.MirEnvir
                 player.LevelMagic(magic);
 
         }
-
+        /// <summary>
+        /// 添加对象到当前地图
+        /// </summary>
+        /// <param name="ob">地图对象</param>
         public void AddObject(MapObject ob)
         {
+            // 如果是玩家
             if (ob.Race == ObjectType.Player)
             {
+                // 添加玩家到
                 Players.Add((PlayerObject)ob);
             }
-
+            // 如果是npc或商人 添加到npc集合
             if (ob.Race == ObjectType.Merchant) NPCs.Add((NPCObject)ob);
+            // 如果是法术对象 则添加到法术对象结合中
             if (ob.Race == ObjectType.Spell) Spells.Add((SpellObject)ob);
+            // yong
             if (ob.Race == ObjectType.Hero) Heroes.Add((HeroObject)ob);
-
+            // 获取单元格并添加到单元格中
             GetCell(ob.CurrentLocation).Add(ob);
         }
 
@@ -2382,7 +2505,11 @@ namespace Server.MirEnvir
             GetCell(ob.CurrentLocation).Remove(ob);
         }
 
-
+        /// <summary>
+        /// 根据坐标获取是否是安全区
+        /// </summary>
+        /// <param name="location">当前坐标</param>
+        /// <returns></returns>
         public SafeZoneInfo GetSafeZone(Point location)
         {
             for (int i = 0; i < Info.SafeZones.Count; i++)
@@ -2408,7 +2535,15 @@ namespace Server.MirEnvir
 
             return spellObjects;
         }
-
+        /// <summary>
+        /// 获取是否在征战区域
+        /// <para>根据坐标判断是否在当前地图的征战区域内。</para>
+        /// <para>判断成立的依据是：</para>
+        /// <para>1. swi.WarIsOn(必须是开启状态)</para>
+        /// <para>2. swi.Info.FullMap(全图是否都是征战区域) 或者 location(当前坐标)在征战区域范围内</para>
+        /// </summary>
+        /// <param name="location">当前坐标</param>
+        /// <returns>返回当前坐标所在的征战区域对象或者 null(表示不在正在范围内)</returns>
         public ConquestObject GetConquest(Point location)
         {
             for (int i = 0; i < Conquest.Count; i++)
@@ -2433,7 +2568,11 @@ namespace Server.MirEnvir
         //    }
         //    return null;
         //}
-
+        /// <summary>
+		/// 视觉事件通知
+		/// </summary>
+		/// <param name="p">要发送的数据包</param>
+		/// <param name="location">目标位置</param>
         public void Broadcast(Packet p, Point location)
         {
             if (p == null) return;
@@ -2443,7 +2582,7 @@ namespace Server.MirEnvir
                 PlayerObject player = Players[i];
 
                 if (Functions.InRange(location, player.CurrentLocation, Globals.DataRange))
-                    player.Enqueue(p);                   
+                    player.Enqueue(p);
             }
         }
 
@@ -2469,23 +2608,40 @@ namespace Server.MirEnvir
             if (Functions.InRange(location, Player.CurrentLocation, Globals.DataRange))
             {
                 Player.Enqueue(p);
-            }    
+            }
         }
     }
+
+    /// <summary>
+    /// 格子
+    /// </summary>
     public class Cell
     {
         public static Cell LowWall { get { return new Cell { Attribute = CellAttribute.LowWall }; } }
         public static Cell HighWall { get { return new Cell { Attribute = CellAttribute.HighWall }; } }
-
+        /// <summary>
+        /// 是否可以行走
+        /// </summary>
         public bool Valid
         {
             get { return Attribute == CellAttribute.Walk; }
         }
-
+        /// <summary>
+        /// 当前单元格里有哪些对象
+        /// </summary>
         public List<MapObject> Objects = new List<MapObject>();
+        /// <summary>
+        /// 单元格类型
+        /// </summary>
         public CellAttribute Attribute;
+        /// <summary>
+        /// 与钓鱼系统相关的属性值，默认为-1（表示不可钓鱼）
+        /// </summary>
         public sbyte FishingAttribute = -1;
-
+        /// <summary>
+        /// 给单元格添加对象
+        /// </summary>
+        /// <param name="mapObject">对象</param>
         public void Add(MapObject mapObject)
         {
             if (mapObject == null)
@@ -2529,31 +2685,76 @@ namespace Server.MirEnvir
             }
         }
     }
+
+    /// <summary>
+    /// 怪物的重生管理类
+    /// <para>负责将RespawnInfo配置信息（相当于DNA）转化为实际的怪物重生行为（相当于蛋白表达过程）</para>
+    /// <para>管理单个怪物类型在特定地图位置的重生逻辑和状态</para>
+    /// </summary>
     public class MapRespawn
     {
+        /// <summary>
+        /// 获取当前游戏环境实例
+        /// </summary>
         protected static Envir Envir
         {
             get { return Envir.Main; }
         }
 
+        /// <summary>
+        /// 重生配置信息（DNA蓝图）
+        /// </summary>
         public RespawnInfo Info;
+        /// <summary>
+        /// 怪物蓝图
+        /// </summary>
         public MonsterInfo Monster;
+        /// <summary>
+        /// 所属地图实例
+        /// </summary>
         public Map Map;
+        /// <summary>
+        /// 当前已生成的怪物数量
+        /// </summary>
         public int Count;
+        /// <summary>
+        /// 下次重生时间（时间戳）
+        /// </summary>
         public long RespawnTime;
+        /// <summary>
+        /// 下次重生的全局时钟计数器值
+        /// </summary>
         public ulong NextSpawnTick;
+        /// <summary>
+        /// 重生失败计数，用于避免无限重试
+        /// </summary>
         public byte ErrorCount = 0;
 
+        /// <summary>
+        /// 怪物行走路线信息列表
+        /// </summary>
         public List<RouteInfo> Route;
+        /// <summary>
+        /// 重生点周围的可行走单元格列表
+        /// </summary>
         public List<Point> WalkableCells;
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="info">重生配置信息（DNA蓝图）</param>
         public MapRespawn(RespawnInfo info)
         {
             Info = info;
+            // 根据怪物的重生蓝图中的怪物索引找到怪物蓝图
             Monster = Envir.GetMonsterInfo(info.MonsterIndex);
-
+            // 加载怪物行走路径
             LoadRoutes();
         }
+        /// <summary>
+        /// 执行怪物重生操作
+        /// </summary>
+        /// <returns>是否成功重生</returns>
         public bool Spawn()
         {
             MonsterObject ob = MonsterObject.GetMonster(Monster);
@@ -2567,6 +2768,9 @@ namespace Server.MirEnvir
             return ob.Spawn(this);
         }
 
+        /// <summary>
+        /// 加载怪物行走路线
+        /// </summary>
         public void LoadRoutes()
         {
             Route = new List<RouteInfo>();

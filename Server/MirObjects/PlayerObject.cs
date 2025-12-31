@@ -15,12 +15,14 @@ namespace Server.MirObjects
         private long NextGroupInviteTime;
 
         public string GMPassword = Settings.GMPassword;
-        public bool GMLogin, EnableGroupRecall, EnableGuildInvite, AllowMarriage, AllowLoverRecall, AllowMentor, HasMapShout, HasServerShout; //TODO - Remove        
+        public bool GMLogin, EnableGroupRecall, EnableGuildInvite, AllowMarriage, AllowLoverRecall, AllowMentor, HasMapShout, HasServerShout; //TODO - Remove
 
         public long LastRecallTime, LastTeleportTime, LastProbeTime;
         public long NextMailTime;
         public long MenteeEXP;
-
+        /// <summary>
+        /// 当前玩家是否PVP地图，或是否在公会争夺环境
+        /// </summary>
         public bool WarZone = false;
 
         public int CurrentHeroIndex;
@@ -53,6 +55,10 @@ namespace Server.MirObjects
         public HeroObject Hero;
 
         protected AccountInfo account;
+
+        /// <summary>
+        /// 账户
+        /// </summary>
         public virtual AccountInfo Account
         {
             get { return account; }
@@ -95,12 +101,17 @@ namespace Server.MirObjects
             get { return Info.PKPoints; }
             set { Info.PKPoints = value; }
         }
-
+        /// <summary>
+        /// 复活点地图
+        /// </summary>
         public int BindMapIndex
         {
             get { return Info.BindMapIndex; }
             set { Info.BindMapIndex = value; }
         }
+        /// <summary>
+        /// 复活点坐标
+        /// </summary>
         public Point BindLocation
         {
             get { return Info.BindLocation; }
@@ -145,7 +156,6 @@ namespace Server.MirObjects
         public bool RequestedGuildBuffInfo = false;
 
         public bool CanCreateHero = false;
-
         public bool AllowGroup
         {
             get { return Info.AllowGroup; }
@@ -201,45 +211,59 @@ namespace Server.MirObjects
         public PlayerObject() { }
 
         public PlayerObject(CharacterInfo info, MirConnection connection) : base(info, connection) { }
+
+        /// <summary>
+        /// 初始化 Player
+        /// </summary>
+        /// <param name="info">角色</param>
+        /// <param name="connection">MirConnection</param>
+        /// <exception cref="InvalidOperationException">异常</exception>
         protected override void Load(CharacterInfo info, MirConnection connection)
         {
             if (info.Player != null)
             {
                 throw new InvalidOperationException("Player.Info not Null.");
             }
-
+            // 角色玩家
             info.Player = this;
+            // 角色.坐骑
             info.Mount = new MountInfo(this);
-
+            // TCP 连接对象
             Connection = connection;
+            // 角色
             Info = info;
+            // 账户
             Account = Connection.Account;
-
+            // 人物属性
             Stats = new Stats();
-
+            // 日志跟踪
             Report = new Reporting(this);
-
+            // 是不是管理员
             if (Account.AdminAccount)
             {
                 IsGM = true;
                 MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.NowGM), Name));
             }
-
+            // 等级如果 = 0 创建角色
             if (Level == 0) NewCharacter();
-
+            // 有公会
             if (Info.GuildIndex != -1)
             {
+                // 拿到公会信息
                 MyGuild = Envir.GetGuild(Info.GuildIndex);
             }
-
+            // 是否英雄
             if (info.CurrentHeroIndex > 0)
                 CurrentHero = Envir.GetHeroInfo(info.CurrentHeroIndex);
-
+            // 刷新 Stats
             RefreshStats();
-
+            // 如果 HP 为0
             if (HP == 0)
             {
+                // 设置 HP
+                // Stats[Stat.HP] 最大生命值
                 SetHP(Stats[Stat.HP]);
+                // MP
                 SetMP(Stats[Stat.MP]);
 
                 CurrentLocation = BindLocation;
@@ -463,12 +487,17 @@ namespace Server.MirObjects
                     return GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.UserLoggedOutUnknownReason), Name);
             }
         }
+
+        /// <summary>
+        /// 初始化角色
+        /// </summary>
         protected override void NewCharacter()
         {
+            // 游戏环境还没起始点则返回
             if (Envir.StartPoints.Count == 0) return;
-
+            // 绑定复活点地图和复活点坐标
             SetBind();
-
+            // 新角色
             base.NewCharacter();
         }
         public override void Process()
@@ -563,62 +592,78 @@ namespace Server.MirObjects
                     break;
             }
         }
+        /// <summary>
+        /// 角色在移动时要做的校验
+        /// </summary>
         protected override void Moved()
         {
             base.Moved();
+            // 检测是否进入或离开征战区域
             CheckConquest();
-            if (TradePartner != null)
-                TradeCancel();
+            if (TradePartner != null) // 如果交易对象不为空
+                TradeCancel(); // 取消交易
 
-            if (ItemRentalPartner != null)
-                CancelItemRental();
+            if (ItemRentalPartner != null) // 如果物品出租对象不为空
+                CancelItemRental(); // 取消物品出租
         }
         public override void Die()
         {
+            // 当前角色是否有复活物品
             if (SpecialMode.HasFlag(SpecialItemMode.Revival) && Envir.Time > LastRevivalTime)
             {
-                LastRevivalTime = Envir.Time + 300000;
-
+                LastRevivalTime = Envir.Time + 300000; // 5分钟冷却
+                // 遍历左右戒指
                 for (var i = (int)EquipmentSlot.RingL; i <= (int)EquipmentSlot.RingR; i++)
                 {
+                    // 取出装备
                     var item = Info.Equipment[i];
-
+                    // 没取到继续取下一个
                     if (item == null) continue;
+                    // 戒指没有复活属性 || 持久小于 1000（1点持久）
                     if (!(item.Info.Unique.HasFlag(SpecialItemMode.Revival)) || item.CurrentDura < 1000) continue;
+                    // 设置成最大生命（相当于复活一次）
                     SetHP(Stats[Stat.HP]);
+                    // 装备持久减少 1000（1点持久）
                     item.CurrentDura = (ushort)(item.CurrentDura - 1000);
+                    // 发送给客户端
                     Enqueue(new S.DuraChanged { UniqueID = item.UniqueID, CurrentDura = item.CurrentDura });
+                    // 刷新属性列表
                     RefreshStats();
                     ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.SecondChanceAtLife), ChatType.System);
                     return;
                 }
             }
-
+            // 如果最后攻击者是玩家
             if (LastHitter != null && LastHitter.Race == ObjectType.Player)
             {
+                // 强转成玩家
                 PlayerObject hitter = (PlayerObject)LastHitter;
-
+                // 是否是PVP地图或公会战争 || 当前玩家是否在PVP环境
                 if (AtWar(hitter) || WarZone)
                 {
                     hitter.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.ProtectedByLaw), ChatType.System);
                 }
+                // 当前角色不是灰名并且pk值小于200
                 else if (Envir.Time > BrownTime && PKPoints < 200)
                 {
+                    // 取出攻击者的武器
                     UserItem weapon = hitter.Info.Equipment[(byte)EquipmentSlot.Weapon];
-
+                    // 攻击者的pk值+100
                     hitter.PKPoints = Math.Min(int.MaxValue, LastHitter.PKPoints + 100);
                     hitter.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.MurderPlayer), Name), ChatType.System);
+                    // 给攻击者发消息: 你杀了{name},已经计入谋杀，设置为系统通知
                     ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.MurderedByPlayer), LastHitter.Name), ChatType.System);
-
+                    // 攻击者的武器有一定的几率被诅咒（4分之1的几率被诅咒）
                     if (weapon != null && weapon.AddedStats[Stat.Luck] > (Settings.MaxLuck * -1) && Envir.Random.Next(4) == 0)
                     {
                         weapon.AddedStats[Stat.Luck]--;
+                        // 告诉客户端武器被诅咒了
                         hitter.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.WeaponHasBeenCursed), ChatType.System);
                         hitter.Enqueue(new S.RefreshItem { Item = weapon });
                     }
                 }
             }
-
+            // 解散智能宝宝
             UnSummonIntelligentCreature(SummonedCreatureType);
 
             if (HeroSpawned)
@@ -1052,11 +1097,16 @@ namespace Server.MirObjects
             Enqueue(new S.NewMapInfo { MapIndex = mapInfo.Index, Info = info });
             Connection.SentMapInfo.Add(mapInfo);
         }
+        /// <summary>
+        /// 随机绑定复活点地图和复活点坐标
+        /// </summary>
         private void SetBind()
         {
+            // 随机起始点
             SafeZoneInfo szi = Envir.StartPoints[Envir.Random.Next(Envir.StartPoints.Count)];
-
+            // 绑定复活点
             BindMapIndex = szi.Info.Index;
+            // 绑定坐标
             BindLocation = szi.Location;
         }
         protected override void SetBindSafeZone(SafeZoneInfo szi)
@@ -1066,6 +1116,7 @@ namespace Server.MirObjects
         }
         public void StartGame()
         {
+            // 获取当前地图实例
             Map temp = Envir.GetMap(CurrentMapIndex);
 
             if (temp != null && temp.Info.NoReconnect)
@@ -1829,59 +1880,76 @@ namespace Server.MirObjects
                 Stats.Add(buff.Info.Stats);
             }
         }
-
+        /// <summary>
+        /// 刷新当前角色的名字颜色
+        /// </summary>
         public override void RefreshNameColour()
         {
+            // 缓存之前的名字
             var prevColor = NameColour;
+            // 获取自己的名字颜色
             NameColour = GetNameColour(this);
-
+            // 如果名字没有改变颜色则不通知
             if (prevColor == NameColour) return;
-
+            // 放入通知队列
             Enqueue(new S.ColourChanged { NameColour = NameColour });
+            // 刚播给其他玩家
             BroadcastColourChange();
         }
-
+        /// <summary>
+        /// 获取名字颜色
+        /// <para>以当前角色的视角看对方的名字</para>
+        /// </summary>
+        /// <param name="human">要获取的对象</param>
+        /// <returns>名字的颜色</returns>
         public override Color GetNameColour(HumanObject human)
         {
+            // 如何 human 传 null 则返回当前名字的颜色
             if (human == null) return NameColour;
-
+            // 如果是玩家
             if (human is PlayerObject player)
             {
+                // 玩家 PK 值大于200 返回红色
                 if (player.PKPoints >= 200)
                     return Color.Red;
-
+                // 如果玩家棕名标记没有超时则返回棕色
                 if (Envir.Time < player.BrownTime)
                     return Color.SaddleBrown;
-
+                // 如果在 PVP 区域
                 if (player.WarZone)
                 {
+                    // 玩家没有公会返回绿色
                     if (player.MyGuild == null)
                         return Color.Green;
-
+                    // 玩家跟我在一个公会返回绿色
                     if (player.MyGuild == MyGuild)
                         return Color.Green;
                     else
-                        return Color.Orange;
+                        return Color.Orange; // 其余人都是橙色
                 }
-
+                // 如果我有公会
                 if (MyGuild != null)
                 {
+                    // 当前公会是否在宣战中
                     if (MyGuild.IsAtWar())
                     {
+                        // 传入的玩家也有公会
                         if (player.MyGuild != null)
                         {
+                            // 如果我们是一个会的则显示绿名
                             if (player.MyGuild == MyGuild)
                                 return Color.Blue;
+                            // 如果我们是敌对关系则显示橙名
                             if (MyGuild.IsEnemy(player.MyGuild))
                                 return Color.Orange;
                         }
                     }
                 }
-
+                // 如果pk值大于等于 100 返回黄名
                 if (player.PKPoints >= 100)
                     return Color.Yellow;
             }
-
+            // 其他都不是返回白名
             return Color.White;
         }
         public void Chat(string message, List<ChatItem> linkedItems = null)
@@ -2163,7 +2231,7 @@ namespace Server.MirObjects
                     72, // siege gate
                     73, // gate west
                     80, // archer
-                    81, // gate 
+                    81, // gate
                     82  // wall
                 };
 
@@ -5967,7 +6035,7 @@ namespace Server.MirObjects
                                 return;
                             }
                             break;
-                        case 12://LotteryTicket                                                                                    
+                        case 12://LotteryTicket
                             if (Envir.Random.Next(item.Info.Effect * 32) == 1) // 1st prize : 1,000,000
                             {
                                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.FirstPrizeGoldReward), ChatType.Hint);
@@ -7295,7 +7363,7 @@ namespace Server.MirObjects
             Enqueue(resp);
         }
 
-        //Gems granting multiple stat types are not compatible with this method.        
+        //Gems granting multiple stat types are not compatible with this method.
         public void DropItem(ulong id, ushort count, bool isHeroItem)
         {
             S.DropItem p = new S.DropItem { UniqueID = id, Count = count, HeroItem = isHeroItem, Success = false };
@@ -10226,17 +10294,19 @@ namespace Server.MirObjects
                 MyGuild.SendServerPacket(new S.GuildStorageGoldChange() { Type = 2, Name = Info.Name, Amount = Settings.Guild_WarCost });
             }
         }
-
+        /// 攻击者是否处于公会战争或PVP地图
         public override bool AtWar(HumanObject attacker)
         {
+            // 是否是PVP地图
             if (CurrentMap.Info.Fight) return true;
-
+            // 是否有公会
             if (MyGuild == null) return false;
-
+            // 如果攻击者是玩家
             if (attacker is PlayerObject playerAttacker)
             {
+                // 攻击者没有公会
                 if (attacker == null || playerAttacker.MyGuild == null) return false;
-
+                // 攻击者不在宣战公会中
                 if (!MyGuild.WarringGuilds.Contains(playerAttacker.MyGuild)) return false;
             }
 
@@ -10858,7 +10928,7 @@ namespace Server.MirObjects
             }
         }
 
-        #endregion        
+        #endregion
 
         #region Fishing
 
@@ -11153,7 +11223,7 @@ namespace Server.MirObjects
         {
             bool canAccept = true;
 
-            if (CurrentQuests.Exists(e => e.Index == index)) return; //e.Info.NpcIndex == npcIndex && 
+            if (CurrentQuests.Exists(e => e.Index == index)) return; //e.Info.NpcIndex == npcIndex &&
 
             QuestInfo info = Envir.QuestInfoList.FirstOrDefault(d => d.Index == index);
 
@@ -11962,15 +12032,21 @@ namespace Server.MirObjects
             //update client
             GetCreaturesInfo();
         }
-
+        /// <summary>
+        /// 解散智能宠物
+        /// </summary>
+        /// <param name="pType">智能宠物类型</param>
+        /// <param name="doUpdate">是否要更新客户端, 默认为true</param>
         public void UnSummonIntelligentCreature(IntelligentCreatureType pType, bool doUpdate = true)
         {
+            // 没有智能宠物
             if (pType == IntelligentCreatureType.None) return;
-
+            // 遍历 Pets
             for (int i = 0; i < Pets.Count; i++)
             {
+                // 找到智能生物
                 if (Pets[i].Race != ObjectType.Creature) continue;
-
+                // 转成 IntelligentCreatureObject 类型
                 var pet = (IntelligentCreatureObject)Pets[i];
                 if (pet.PetType != pType) continue;
                 if (doUpdate) ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CreatureDismissed), pet.CustomName), ChatType.System);
@@ -13844,39 +13920,52 @@ namespace Server.MirObjects
             }
         }
 
-        #endregion
+		#endregion
 
-        #region ConquestWall
-        public void CheckConquest(bool checkPalace = false)
+		#region ConquestWall
+		/// <summary>
+		/// 攻城区域状态检测。
+		/// <para>根据玩家当前坐标，判定其是否处于沙巴克或领地战争范围内，并同步更新战场状态。</para>
+		/// </summary>
+		/// <param name="checkPalace">是否同时执行皇宫占领判定。若为 true 且在皇宫地图内，会尝试触发领地易主逻辑。</param>
+		public void CheckConquest(bool checkPalace = false)
         {
+            // 如果没有缓存征战区域，并且当前地图有征战区域
             if (CurrentMap.tempConquest == null && CurrentMap.Conquest != null)
             {
+                // 获取征战区域
                 ConquestObject swi = CurrentMap.GetConquest(CurrentLocation);
                 if (swi != null)
-                    EnterSabuk();
+                    EnterSabuk(); // 进入区域
                 else
-                    LeaveSabuk();
+                    LeaveSabuk(); // 离开区域
             }
             else if (CurrentMap.tempConquest != null)
             {
+                // 触发领地易主逻辑
                 if (checkPalace && CurrentMap.Info.Index == CurrentMap.tempConquest.PalaceMap.Info.Index && CurrentMap.tempConquest.GameType == ConquestGame.CapturePalace)
                     CurrentMap.tempConquest.TakeConquest(this);
 
                 EnterSabuk();
             }
         }
+        /// <summary>
+        /// 进入沙巴克
+        /// </summary>
         public void EnterSabuk()
         {
-            if (WarZone) return;
-            WarZone = true;
-            RefreshNameColour();
+            if (WarZone) return; // 在 PVP 区域则不处理
+            WarZone = true; // 标记为在
+            RefreshNameColour(); // 刷新角色名字
         }
-
+        /// <summary>
+        /// 离开沙巴克
+        /// </summary>
         public void LeaveSabuk()
         {
-            if (!WarZone) return;
-            WarZone = false;
-            RefreshNameColour();
+            if (!WarZone) return; // 不在PVP区域则不处理
+            WarZone = false; // 标记为不在
+            RefreshNameColour(); // 刷新角色名字
         }
         #endregion
 

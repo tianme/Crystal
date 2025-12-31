@@ -3,13 +3,31 @@ using System.Drawing;
 
 namespace Server.MirDatabase
 {
+    /// <summary>
+    /// 征战区域蓝图
+    /// </summary>
     public class ConquestInfo
     {
         public int Index;
+        /// <summary>
+        /// 全图是否是征战区域
+        /// </summary>
         public bool FullMap;
+        /// <summary>
+        /// 中心点
+        /// </summary>
         public Point Location;
+        /// <summary>
+        /// 以 Location为中心的正方形范围
+        /// </summary>
         public ushort Size;
+        /// <summary>
+        /// 名字
+        /// </summary>
         public string Name;
+        /// <summary>
+        /// 地图索引
+        /// </summary>
         public int MapIndex;
         public int PalaceIndex;
 

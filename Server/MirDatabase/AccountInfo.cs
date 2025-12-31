@@ -6,67 +6,158 @@ using C = ClientPackets;
 namespace Server.MirDatabase
 {
     public class AccountInfo
-    {       
+    {
+
         protected static Envir Envir
         {
             get { return Envir.Main; }
         }
+        /// <summary>
+        /// 消息队列，用于记录服务器日志
+        /// </summary>
         protected static MessageQueue MessageQueue => MessageQueue.Instance;
-
+        // 索引
         public int Index;
-
+        /// <summary>
+        /// 账号ID默认空字符串
+        /// </summary>
         public string AccountID = string.Empty;
-
+        /// <summary>
+        /// 密码字段默认空字符串
+        /// </summary>
         private string password = string.Empty;
+        /// <summary>
+        /// 密码属性，set自动hash自动加盐
+        /// </summary>
         public string Password
         {
             get { return password; }
             set
-            {                
+            {
                 Salt = Crypto.GenerateSalt();
                 password = Crypto.HashPassword(value, Salt);
-                
+
             }
         }
-
+        /// <summary>
+        /// 盐（用于记录当前密码所用的盐）
+        /// </summary>
         public byte[] Salt = new byte[24];
-
+        /// <summary>
+        /// 用户名
+        /// </summary>
         public string UserName = string.Empty;
+        /// <summary>
+        /// 生日
+        /// </summary>
         public DateTime BirthDate;
+        /// <summary>
+        /// 密保问题
+        /// </summary>
         public string SecretQuestion = string.Empty;
+        /// <summary>
+        /// 密保答案
+        /// </summary>
         public string SecretAnswer = string.Empty;
-        public string EMailAddress = string.Empty;
 
+        /// <summary>
+        /// 邮件地址
+        /// </summary>
+        public string EMailAddress = string.Empty;
+        /// <summary>
+        /// 创建IP
+        /// </summary>
         public string CreationIP = string.Empty;
+
+        /// <summary>
+        /// 创建日期
+        /// </summary>
         public DateTime CreationDate;
 
+        /// <summary>
+        /// 是否禁用
+        /// </summary>
         public bool Banned;
+
+        /// <summary>
+        /// 需要修改密码
+        /// </summary>
         public bool RequirePasswordChange;
+
+        /// <summary>
+        /// 禁用的原因
+        /// </summary>
         public string BanReason = string.Empty;
+
+        /// <summary>
+        /// 过期时间
+        /// </summary>
         public DateTime ExpiryDate;
+
+        /// <summary>
+        /// 密码错误计数
+        /// </summary>
         public int WrongPasswordCount;
 
+        /// <summary>
+        /// 最后登录IP
+        /// </summary>
         public string LastIP = string.Empty;
+
+        /// <summary>
+        /// 最后登录时间
+        /// </summary>
         public DateTime LastDate;
 
+        /// <summary>
+        /// 角色集合
+        /// </summary>
         public List<CharacterInfo> Characters = new List<CharacterInfo>();
 
+        /// <summary>
+        /// 仓库
+        /// </summary>
         public UserItem[] Storage = new UserItem[80];
+
+        /// <summary>
+        /// 是否有扩展仓库
+        /// </summary>
         public bool HasExpandedStorage;
+        /// <summary>
+        /// 扩展仓库的过期时间
+        /// </summary>
         public DateTime ExpandedStorageExpiryDate;
+
+        /// <summary>
+        /// 金币
+        /// </summary>
         public uint Gold;
+
+        /// <summary>
+        /// 点券 / 代币 / 游戏币
+        /// </summary>
         public uint Credit;
 
+        /// <summary>
+        /// TCP 连接对象 + 玩家绑定 + 网络收发逻辑
+        /// </summary>
         public MirConnection Connection;
-        
+
+        /// <summary>
+        /// 拍卖行
+        /// </summary>
         public LinkedList<AuctionInfo> Auctions = new LinkedList<AuctionInfo>();
+
+        /// <summary>
+        /// 是否是管理员
+        /// </summary>
         public bool AdminAccount;
 
         public AccountInfo()
         {
 
         }
-
+        // 创建账户
         public AccountInfo(C.NewAccount p)
         {
             AccountID = p.AccountID;
@@ -80,42 +171,56 @@ namespace Server.MirDatabase
             BirthDate = p.BirthDate;
             CreationDate = Envir.Now;
         }
+
+        /// <summary>
+        /// 初始化账户信息
+        /// </summary>
+        /// <param name="reader"></param>
         public AccountInfo(BinaryReader reader)
         {
-            Index = reader.ReadInt32();
+
+            Index = reader.ReadInt32(); // 读取索引
 
             AccountID = reader.ReadString();
             if (Envir.LoadVersion < 94)
-                Password = reader.ReadString();
+                Password = reader.ReadString();// 明文密码
             else
-                password = reader.ReadString();
+                password = reader.ReadString();// 读取密码（加盐后的）
 
             if (Envir.LoadVersion > 93)
-                Salt = reader.ReadBytes(reader.ReadInt32());
+                Salt = reader.ReadBytes(reader.ReadInt32()); // 读取盐
 
             if (Envir.LoadVersion > 97)
-                RequirePasswordChange = reader.ReadBoolean();
-
+                RequirePasswordChange = reader.ReadBoolean(); // 是否需要修改密码
+            // 用户名
             UserName = reader.ReadString();
+            // 生日
             BirthDate = DateTime.FromBinary(reader.ReadInt64());
+            // 密保问题
             SecretQuestion = reader.ReadString();
+            // 密保答案
             SecretAnswer = reader.ReadString();
+            // 邮件地址
             EMailAddress = reader.ReadString();
-
+            // 创建IP
             CreationIP = reader.ReadString();
+            // 创建日期
             CreationDate = DateTime.FromBinary(reader.ReadInt64());
-
+            // 是否被禁用
             Banned = reader.ReadBoolean();
+            // 被禁原因
             BanReason = reader.ReadString();
             ExpiryDate = DateTime.FromBinary(reader.ReadInt64());
-
+            // 最后登录IP
             LastIP = reader.ReadString();
+            // 最后登录日期
             LastDate = DateTime.FromBinary(reader.ReadInt64());
-
+            // 一共有多少个角色
             int count = reader.ReadInt32();
-
+            // 初始化角色信息
             for (int i = 0; i < count; i++)
             {
+                // 创建角色实例
                 var info = new CharacterInfo(reader, Envir.LoadVersion, Envir.LoadCustomVersion) { AccountInfo = this };
 
                 if (info.Deleted && info.DeleteDate.AddMonths(Settings.ArchiveDeletedCharacterAfterMonths) <= Envir.Now)
@@ -131,7 +236,7 @@ namespace Server.MirDatabase
                     Envir.SaveArchivedCharacter(info);
                     continue;
                 }
-                
+
                 if (info.LastLoginDate > DateTime.MinValue && info.LastLoginDate.AddMonths(Settings.ArchiveInactiveCharacterAfterMonths) <= Envir.Now)
                 {
                     MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.PlayerArchivedAfterInactivityMonths), info.Name, Settings.ArchiveInactiveCharacterAfterMonths));
@@ -147,7 +252,7 @@ namespace Server.MirDatabase
                 HasExpandedStorage = reader.ReadBoolean();
                 ExpandedStorageExpiryDate = DateTime.FromBinary(reader.ReadInt64());
             }
-            
+
             Gold = reader.ReadUInt32();
             if (Envir.LoadVersion >= 63) Credit = reader.ReadUInt32();
 

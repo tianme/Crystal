@@ -1,8 +1,14 @@
 ﻿public class BaseStats
 {
+    /// <summary>
+    /// 职业
+    /// </summary>
     public MirClass Job;
     public List<BaseStat> Stats = new List<BaseStat>();
-
+    /// <summary>
+	/// 限制属性上限
+	///
+	/// </summary>
     public Stats Caps = new Stats();
 
     public BaseStats(MirClass job)
@@ -87,15 +93,23 @@
                 break;
                 #endregion
         }
-
+        // 最大魔法躲避20%
         Caps[Stat.MagicResist] = 2;
+        // 最大毒抵抗60%
         Caps[Stat.PoisonResist] = 6;
+        // 最大暴击率18%
         Caps[Stat.CriticalRate] = 18;
+        // 最大暴击伤害100%
         Caps[Stat.CriticalDamage] = 10;
+        // 最大冰冻抵抗60%
         Caps[Stat.Freezing] = 6;
+        // 最大中毒伤害60%
         Caps[Stat.PoisonAttack] = 6;
+        // 最大生命值恢复8点/秒
         Caps[Stat.HealthRecovery] = 8;
+        // 最大魔法值恢复8点/秒
         Caps[Stat.SpellRecovery] = 8;
+        // 最大中毒恢复6点/秒
         Caps[Stat.PoisonRecovery] = 6;
     }
 
@@ -137,25 +151,50 @@
         Caps.Save(writer);
     }
 }
-
+/// <summary>
+/// 基础属性的最小单位
+/// </summary>
 public class BaseStat
 {
+    /// <summary>
+    /// 公式类型(生命、魔法、负重、基础属性)
+    /// </summary>
     public StatFormula FormulaType;
+    /// <summary>
+    /// 属性类型
+    /// </summary>
     public Stat Type;
+    /// <summary>
+    /// 基础值
+    /// </summary>
     public int Base;
+    /// <summary>
+    /// 增长系数
+    /// </summary>
     public float Gain;
+    /// <summary>
+    /// 额外增长率
+    /// </summary>
     public float GainRate;
+    /// <summary>
+    /// 限制计算公式结果的，最大值限制，大部分Stat是无限制的
+    /// </summary>
     public int Max;
 
     public BaseStat(Stat type)
     {
         Type = type;
     }
-
+    /// <summary>
+    /// 根据职业计算HP、MP、Weight等
+    /// </summary>
+    /// <param name="job">职业</param>
+    /// <param name="level">等级</param>
+    /// <returns>计算后的值</returns>
     public int Calculate(MirClass job, int level)
     {
         if (Gain == 0) return Base;
-
+        // 如果是生命值战士有特殊加成
         if (FormulaType == StatFormula.Health)
         {
             return job switch
@@ -163,7 +202,7 @@ public class BaseStat
                 MirClass.Warrior => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + (level / Gain + GainRate + level / 20F) * level),
                 _ => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + (level / Gain + GainRate) * level),
             };
-        }
+        }  // 如果是魔法，法师和道士有特殊加成
         else if (FormulaType == StatFormula.Mana)
         {
             return job switch
@@ -175,11 +214,12 @@ public class BaseStat
         }
         else
         {
+            // 负重有特殊加成
             return FormulaType switch
             {
                 StatFormula.Weight => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + ((level / Gain) * level)),
                 _ => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + (level / Gain)),
             };
-        }  
+        }
     }
 }

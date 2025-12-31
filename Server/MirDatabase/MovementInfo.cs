@@ -3,13 +3,47 @@ using System.Drawing;
 
 namespace Server.MirDatabase
 {
+    /// <summary>
+    /// 地图传送点
+    /// <para> 比如: 比奇传送到毒蛇山谷的坐标点 </para>
+    /// </summary>
     public class MovementInfo
     {
+        /// <summary>
+        /// 地图索引
+        /// </summary>
         public int MapIndex;
-        public Point Source, Destination;
-        public bool NeedHole, NeedMove, ShowOnBigMap;
-        public int ConquestIndex, Icon;
-
+        /// <summary>
+        /// 传送起始点
+        /// </summary>
+        public Point Source;
+        /// <summary>
+        /// 传送点的目标位置坐标
+        /// </summary>
+        public Point Destination;
+        /// <summary>
+        /// 标识该传送点是否需要洞穴/通道才能使用
+        /// </summary>
+        public bool NeedHole;
+        /// <summary>
+        /// 标识是否需要玩家主动移动才能触发传送
+        /// </summary>
+        public bool NeedMove;
+        /// <summary>
+        /// 标识该传送点是否在游戏大地图上显示
+        /// </summary>
+        public bool ShowOnBigMap;
+        /// <summary>
+        /// 征服区域索引，与游戏中的攻城/征服系统相关
+        /// </summary>
+        public int ConquestIndex;
+        /// <summary>
+        /// 传送点图标索引，用于在大地图上显示特定图标
+        /// </summary>
+        public int Icon;
+        /// <summary>
+        /// TODO: 这可能是为地图编辑器或数据管理界面提供的功能，方便用户在编辑地图时动态添加新的传送点配置。
+        /// </summary>
         public MovementInfo()
         {
 

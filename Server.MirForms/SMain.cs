@@ -409,9 +409,10 @@ namespace Server
             MagicInfoForm form = new MagicInfoForm();
             form.ShowDialog();
         }
-
+        // 
         private void SMain_Load(object sender, EventArgs e)
         {
+            // 加载数据库
             var loaded = EditEnvir.LoadDB();
 
             if (loaded)

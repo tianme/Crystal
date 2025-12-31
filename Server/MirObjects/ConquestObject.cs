@@ -12,7 +12,9 @@ namespace Server.MirObjects
         }
 
         public ConquestGuildInfo GuildInfo;
-
+        /// <summary>
+        /// 征战蓝图
+        /// </summary>
         public ConquestInfo Info
         {
             get { return GuildInfo.Info; }
@@ -59,7 +61,10 @@ namespace Server.MirObjects
 
         public Map ConquestMap;
         public Map PalaceMap;
-
+        /// <summary>
+        /// 征战是否开启的标记
+        /// <para>默认: false (未开启)</para>
+        /// </summary>
         private bool AtWar = false;
 
         public DateTime WarStartTime;
@@ -208,7 +213,9 @@ namespace Server.MirObjects
             LoadNPCs();
             LoadControlPoints();
         }
-
+        /// <summary>
+        /// 是否开启了征战
+        /// </summary>
         public bool WarIsOn
         {
             get
@@ -284,7 +291,7 @@ namespace Server.MirObjects
                         PalaceMap.NPCs[i].Conq = this;
                         ConquestNPCs.Add(ConquestMap.NPCs[i]);
                     }
-                }                    
+                }
             }
 
             Map temp;
@@ -301,7 +308,7 @@ namespace Server.MirObjects
                         ConquestNPCs.Add(temp.NPCs[j]);
                     }
                 }
-                        
+
             }
         }
 
@@ -323,7 +330,7 @@ namespace Server.MirObjects
                     WarEndTime = WarStartTime.AddMinutes(Info.WarLength);
                     GameType = Info.Game;
                 }
-                
+
                 NPCVisibility(true);
 
                 switch (GameType)
@@ -472,7 +479,7 @@ namespace Server.MirObjects
             {
                 EndWar(Info.Game);
             }
-            
+
             if (StartType != ConquestType.Forced)
             {
                 if (WarIsOn && (now > start && finish <= now))
@@ -607,7 +614,7 @@ namespace Server.MirObjects
                         key.ChangeOwner(Guild);
                         ControlPoints[key] = new Dictionary<GuildObject, int>();
                     }
-                    
+
                     break;
             }
 
@@ -669,7 +676,7 @@ namespace Server.MirObjects
         private void CreateZone(bool create = true)
         {
             if (create)
-            { 
+            {
                 WarEffects.Clear();
                 for (int y = Info.KingLocation.Y - Info.KingSize; y <= Info.KingLocation.Y + Info.KingSize; y++)
                 {
@@ -705,8 +712,8 @@ namespace Server.MirObjects
                     //{
                         WarEffects[i].Despawn();
                         ConquestMap.RemoveObject(WarEffects[i]);
-                    //}                
-                        
+                    //}
+
                 }
 
                 WarEffects.Clear();
@@ -898,7 +905,7 @@ namespace Server.MirObjects
                     }
 
                     break;
-                
+
                 default:
                     return;
             }

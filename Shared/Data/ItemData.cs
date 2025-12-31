@@ -1,54 +1,176 @@
 ﻿using System.Text.RegularExpressions;
 
+/// <summary>
+/// 物品信息类，包含物品的静态配置数据
+/// </summary>
 public class ItemInfo
 {
+    /// <summary>
+    /// 物品索引
+    /// </summary>
     public int Index;
+    /// <summary>
+    /// 物品名称
+    /// </summary>
     public string Name = string.Empty;
+    /// <summary>
+    /// 物品类型
+    /// </summary>
     public ItemType Type;
+    /// <summary>
+    /// 物品品质
+    /// </summary>
     public ItemGrade Grade;
+    /// <summary>
+    /// 需求类型
+    /// </summary>
     public RequiredType RequiredType = RequiredType.Level;
+    /// <summary>
+    /// 需求职业
+    /// </summary>
     public RequiredClass RequiredClass = RequiredClass.None;
+    /// <summary>
+    /// 需求性别
+    /// </summary>
     public RequiredGender RequiredGender = RequiredGender.None;
+    /// <summary>
+    /// 物品套装
+    /// </summary>
     public ItemSet Set;
 
+    /// <summary>
+    /// 物品形状
+    /// </summary>
     public short Shape;
-    public byte Weight, Light, RequiredAmount;
+    /// <summary>
+    /// 物品重量
+    /// </summary>
+    public byte Weight;
+    /// <summary>
+    /// 物品亮度
+    /// </summary>
+    public byte Light;
+    /// <summary>
+    /// 需求数量
+    /// </summary>
+    public byte RequiredAmount;
 
-    public ushort Image, Durability;
+    /// <summary>
+    /// 物品图像ID
+    /// </summary>
+    public ushort Image;
+    /// <summary>
+    /// 物品耐久性
+    /// </summary>
+    public ushort Durability;
 
+    /// <summary>
+    /// 物品价格
+    /// </summary>
     public uint Price;
+    /// <summary>
+    /// 物品堆叠大小
+    /// </summary>
     public ushort StackSize = 1;
 
+    /// <summary>
+    /// 是否为初始物品
+    /// </summary>
     public bool StartItem;
+    /// <summary>
+    /// 物品效果
+    /// 0: 经验加成
+    /// 1: 掉落率加成
+    /// 2: HP加成
+    /// 3: MP加成
+    /// 4: AC加成
+    /// 5: MAC加成
+    /// </summary>
     public byte Effect;
 
-    public bool NeedIdentify, ShowGroupPickup, GlobalDropNotify;
+    /// <summary>
+    /// 是否需要鉴定
+    /// </summary>
+    public bool NeedIdentify;
+    /// <summary>
+    /// 是否显示组队拾取
+    /// </summary>
+    public bool ShowGroupPickup;
+    /// <summary>
+    /// 是否全局掉落通知
+    /// </summary>
+    public bool GlobalDropNotify;
+    /// <summary>
+    /// 是否基于职业
+    /// </summary>
     public bool ClassBased;
+    /// <summary>
+    /// 是否基于等级
+    /// </summary>
     public bool LevelBased;
+    /// <summary>
+    /// 是否可以挖掘
+    /// </summary>
     public bool CanMine;
+    /// <summary>
+    /// 是否可以快速奔跑
+    /// </summary>
     public bool CanFastRun;
+    /// <summary>
+    /// 是否可以觉醒
+    /// </summary>
     public bool CanAwakening;
 
+    /// <summary>
+    /// 绑定模式
+    /// </summary>
     public BindMode Bind = BindMode.None;
 
+    /// <summary>
+    /// 特殊物品模式
+    /// </summary>
     public SpecialItemMode Unique = SpecialItemMode.None;
+    /// <summary>
+    /// 随机属性ID
+    /// </summary>
     public byte RandomStatsId;
+    /// <summary>
+    /// 随机属性
+    /// </summary>
     public RandomItemStat RandomStats;
+    /// <summary>
+    /// 物品提示信息
+    /// </summary>
     public string ToolTip = string.Empty;
 
+    /// <summary>
+    /// 物品插槽数量
+    /// </summary>
     public byte Slots;
 
+    /// <summary>
+    /// 物品属性
+    /// </summary>
     public Stats Stats;
-
+    /// <summary>
+	/// 是否为消耗品
+	/// 包括药水、卷轴、食物、转换物品、脚本物品、封印英雄
+	/// </summary>
     public bool IsConsumable
     {
         get { return Type == ItemType.Potion || Type == ItemType.Scroll || Type == ItemType.Food || Type == ItemType.Transform || Type == ItemType.Script || Type == ItemType.SealedHero; }
     }
+    /// <summary>
+	/// 是否为钓鱼竿
+	/// </summary>
     public bool IsFishingRod
     {
         get { return Globals.FishingRodShapes.Contains(Shape); }
     }
-
+    /// <summary>
+	/// 物品友好名称
+	/// 移除物品名称中的数字和方括号
+	/// </summary>
     public string FriendlyName
     {
         get
@@ -274,67 +396,155 @@ public class ItemInfo
 
 }
 
+/// <summary>
+/// 用户物品类，包含物品的实例化数据
+/// </summary>
 public class UserItem
 {
+    /// <summary>
+    /// 物品唯一标识
+    /// </summary>
     public ulong UniqueID;
+    /// <summary>
+    /// 物品索引
+    /// </summary>
     public int ItemIndex;
 
+    /// <summary>
+    /// 物品信息蓝图(模版)
+    /// </summary>
     public ItemInfo Info;
+    /// <summary>
+    /// 当前耐久度和最大耐久度
+    /// </summary>
     public ushort CurrentDura, MaxDura;
+    /// <summary>
+    /// 物品数量和宝石数量
+    /// </summary>
     public ushort Count = 1,
         GemCount = 0;
 
+    /// <summary>
+    /// 精炼值
+    /// </summary>
     public RefinedValue RefinedValue = RefinedValue.None;
+    /// <summary>
+    /// 精炼附加属性
+    /// </summary>
     public byte RefineAdded = 0;
+    /// <summary>
+    /// 精炼成功率
+    /// </summary>
     public int RefineSuccessChance = 0;
 
+    /// <summary>
+    /// 耐久度是否已改变
+    /// </summary>
     public bool DuraChanged;
+    /// <summary>
+    /// 绑定ID，-1表示未绑定
+    /// </summary>
     public int SoulBoundId = -1;
+    /// <summary>
+    /// 是否已鉴定
+    /// </summary>
     public bool Identified = false;
+    /// <summary>
+    /// 是否已诅咒
+    /// </summary>
     public bool Cursed = false;
 
+    /// <summary>
+    /// 结婚戒指标识
+    /// </summary>
     public int WeddingRing = -1;
 
+    /// <summary>
+    /// 物品插槽
+    /// </summary>
     public UserItem[] Slots = new UserItem[0];
 
+    /// <summary>
+    /// 回购过期日期
+    /// </summary>
     public DateTime BuybackExpiryDate;
 
+    /// <summary>
+    /// 过期信息
+    /// </summary>
     public ExpireInfo ExpireInfo;
+    /// <summary>
+    /// 租赁信息
+    /// </summary>
     public RentalInformation RentalInformation;
+    /// <summary>
+    /// 封印信息
+    /// </summary>
     public SealedInfo SealedInfo;
 
+    /// <summary>
+    /// 是否为商店物品
+    /// </summary>
     public bool IsShopItem;
 
+    /// <summary>
+    /// 觉醒属性
+    /// </summary>
     public Awake Awake = new Awake();
 
+    /// <summary>
+    /// 附加属性
+    /// </summary>
     public Stats AddedStats;
 
+    /// <summary>
+    /// 物品是否已添加额外属性或插槽
+    /// </summary>
     public bool IsAdded
     {
         get { return AddedStats.Count > 0 || Slots.Length > Info.Slots; }
     }
 
+    /// <summary>
+    /// 物品重量
+    /// </summary>
     public int Weight
     {
         get { return (Info.Type == ItemType.Amulet || Info.Type == ItemType.Bait) ? Info.Weight : Info.Weight * Count; }
     }
 
+    /// <summary>
+    /// 友好显示名称
+    /// </summary>
     public string FriendlyName
     {
         get { return Count > 1 ? string.Format("{0} ({1})", Info.FriendlyName, Count) : Info.FriendlyName; }
     }
 
+    /// <summary>
+    /// 是否为GM制造物品
+    /// </summary>
     public bool GMMade { get; set; }
 
+    /// <summary>
+    /// 使用ItemInfo初始化UserItem
+    /// </summary>
+    /// <param name="info">物品信息</param>
     public UserItem(ItemInfo info)
     {
         SoulBoundId = -1;
         ItemIndex = info.Index;
         Info = info;
         AddedStats = new Stats();
-        
+
         SetSlotSize();
     }
+    /// <summary>
+    /// 从BinaryReader反序列化UserItem
+    /// </summary>
+    /// <param name="reader">BinaryReader对象</param>
+    /// <param name="version">版本</param>
+    /// <param name="customVersion">自定义版本</param>
     public UserItem(BinaryReader reader, int version = int.MaxValue, int customVersion = int.MaxValue)
     {
         UniqueID = reader.ReadUInt64();
@@ -457,6 +667,10 @@ public class UserItem
         }
     }
 
+    /// <summary>
+    /// 将UserItem序列化为二进制数据
+    /// </summary>
+    /// <param name="writer">BinaryWriter对象</param>
     public void Save(BinaryWriter writer)
     {
         writer.Write(UniqueID);
@@ -508,11 +722,20 @@ public class UserItem
         writer.Write(GMMade);
     }
 
+    /// <summary>
+    /// 获取物品的总属性值（基础属性+附加属性）
+    /// </summary>
+    /// <param name="type">属性类型</param>
+    /// <returns>总属性值</returns>
     public int GetTotal(Stat type)
     {
         return AddedStats[type] + Info.Stats[type];
     }
 
+    /// <summary>
+    /// 计算物品的价格
+    /// </summary>
+    /// <returns>物品价格</returns>
     public uint Price()
     {
         if (Info == null) return 0;
@@ -540,6 +763,10 @@ public class UserItem
 
         return p * Count;
     }
+    /// <summary>
+    /// 计算物品的修理费用
+    /// </summary>
+    /// <returns>修理费用</returns>
     public uint RepairPrice()
     {
         if (Info == null || Info.Durability == 0)
@@ -562,6 +789,10 @@ public class UserItem
         return cost * 2;
     }
 
+    /// <summary>
+    /// 计算物品的品质
+    /// </summary>
+    /// <returns>物品品质</returns>
     public uint Quality()
     {
         uint q = (uint)(AddedStats.Count + Awake.GetAwakeLevel() + 1);
@@ -569,6 +800,10 @@ public class UserItem
         return q;
     }
 
+    /// <summary>
+    /// 计算物品的觉醒费用
+    /// </summary>
+    /// <returns>觉醒费用</returns>
     public uint AwakeningPrice()
     {
         if (Info == null) return 0;
@@ -580,6 +815,10 @@ public class UserItem
         return p;
     }
 
+    /// <summary>
+    /// 计算物品的分解价格
+    /// </summary>
+    /// <returns>分解价格</returns>
     public uint DisassemblePrice()
     {
         if (Info == null) return 0;
@@ -591,6 +830,10 @@ public class UserItem
         return p;
     }
 
+    /// <summary>
+    /// 计算物品的降级价格
+    /// </summary>
+    /// <returns>降级价格</returns>
     public uint DowngradePrice()
     {
         if (Info == null) return 0;
@@ -602,6 +845,10 @@ public class UserItem
         return p;
     }
 
+    /// <summary>
+    /// 计算物品的重置价格
+    /// </summary>
+    /// <returns>重置价格</returns>
     public uint ResetPrice()
     {
         if (Info == null) return 0;
@@ -612,6 +859,10 @@ public class UserItem
 
         return p;
     }
+    /// <summary>
+    /// 设置物品插槽大小
+    /// </summary>
+    /// <param name="size">插槽大小</param>
     public void SetSlotSize(int? size = null)
     {
         if (size == null)
@@ -638,6 +889,9 @@ public class UserItem
         Array.Resize(ref Slots, size ?? Info.Slots);
     }
 
+    /// <summary>
+    /// 物品图像ID
+    /// </summary>
     public ushort Image
     {
         get
@@ -676,6 +930,10 @@ public class UserItem
         }
     }
 
+    /// <summary>
+    /// 克隆UserItem对象
+    /// </summary>
+    /// <returns>克隆的UserItem对象</returns>
     public UserItem Clone()
     {
         UserItem item = new UserItem(Info)
@@ -708,30 +966,67 @@ public class UserItem
 
 }
 
+/// <summary>
+/// 过期信息类，包含物品的过期日期
+/// </summary>
 public class ExpireInfo
 {
+    /// <summary>
+    /// 过期日期
+    /// </summary>
     public DateTime ExpiryDate;
 
+    /// <summary>
+    /// 初始化ExpireInfo类
+    /// </summary>
     public ExpireInfo() { }
 
+    /// <summary>
+    /// 从BinaryReader反序列化ExpireInfo
+    /// </summary>
+    /// <param name="reader">BinaryReader对象</param>
+    /// <param name="version">版本</param>
+    /// <param name="Customversion">自定义版本</param>
     public ExpireInfo(BinaryReader reader, int version = int.MaxValue, int Customversion = int.MaxValue)
     {
         ExpiryDate = DateTime.FromBinary(reader.ReadInt64());
     }
 
+    /// <summary>
+    /// 将ExpireInfo序列化为二进制数据
+    /// </summary>
+    /// <param name="writer">BinaryWriter对象</param>
     public void Save(BinaryWriter writer)
     {
         writer.Write(ExpiryDate.ToBinary());
     }
 }
 
+/// <summary>
+/// 封印信息类，包含物品的封印过期日期和下次封印日期
+/// </summary>
 public class SealedInfo
 {
+    /// <summary>
+    /// 封印过期日期
+    /// </summary>
     public DateTime ExpiryDate;
+    /// <summary>
+    /// 下次封印日期
+    /// </summary>
     public DateTime NextSealDate;
 
+    /// <summary>
+    /// 初始化SealedInfo类
+    /// </summary>
     public SealedInfo() { }
 
+    /// <summary>
+    /// 从BinaryReader反序列化SealedInfo
+    /// </summary>
+    /// <param name="reader">BinaryReader对象</param>
+    /// <param name="version">版本</param>
+    /// <param name="Customversion">自定义版本</param>
     public SealedInfo(BinaryReader reader, int version = int.MaxValue, int Customversion = int.MaxValue)
     {
         ExpiryDate = DateTime.FromBinary(reader.ReadInt64());
@@ -742,6 +1037,10 @@ public class SealedInfo
         }
     }
 
+    /// <summary>
+    /// 将SealedInfo序列化为二进制数据
+    /// </summary>
+    /// <param name="writer">BinaryWriter对象</param>
     public void Save(BinaryWriter writer)
     {
         writer.Write(ExpiryDate.ToBinary());
@@ -749,15 +1048,39 @@ public class SealedInfo
     }
 }
 
+/// <summary>
+/// 租赁信息类，包含物品的租赁相关信息
+/// </summary>
 public class RentalInformation
 {
+    /// <summary>
+    /// 所有者名称
+    /// </summary>
     public string OwnerName;
+    /// <summary>
+    /// 绑定标志
+    /// </summary>
     public BindMode BindingFlags = BindMode.None;
+    /// <summary>
+    /// 租赁过期日期
+    /// </summary>
     public DateTime ExpiryDate;
+    /// <summary>
+    /// 租赁锁定状态
+    /// </summary>
     public bool RentalLocked;
 
+    /// <summary>
+    /// 初始化RentalInformation类
+    /// </summary>
     public RentalInformation() { }
 
+    /// <summary>
+    /// 从BinaryReader反序列化RentalInformation
+    /// </summary>
+    /// <param name="reader">BinaryReader对象</param>
+    /// <param name="version">版本</param>
+    /// <param name="CustomVersion">自定义版本</param>
     public RentalInformation(BinaryReader reader, int version = int.MaxValue, int CustomVersion = int.MaxValue)
     {
         OwnerName = reader.ReadString();
@@ -766,6 +1089,10 @@ public class RentalInformation
         RentalLocked = reader.ReadBoolean();
     }
 
+    /// <summary>
+    /// 将RentalInformation序列化为二进制数据
+    /// </summary>
+    /// <param name="writer">BinaryWriter对象</param>
     public void Save(BinaryWriter writer)
     {
         writer.Write(OwnerName);
@@ -987,7 +1314,7 @@ public class Awake
 
     public int UpgradeAwake(UserItem item, AwakeType type, out bool[] isHit)
     {
-        //return -1 condition error, -1 = dont upgrade, 0 = failed, 1 = Succeed,  
+        //return -1 condition error, -1 = dont upgrade, 0 = failed, 1 = Succeed,
         isHit = null;
         if (CheckAwakening(item, type) != true)
             return -1;
@@ -1179,7 +1506,11 @@ public class ItemSets
 
 public class RandomItemStat
 {
-    public byte MaxDuraChance, MaxDuraStatChance, MaxDuraMaxStat;
+	/// <summary>
+	/// 物品耐久性相关
+	/// MaxDuraChance: 最大耐久度概率
+	/// </summary>
+	public byte MaxDuraChance, MaxDuraStatChance, MaxDuraMaxStat;
     public byte MaxAcChance, MaxAcStatChance, MaxAcMaxStat, MaxMacChance, MaxMacStatChance, MaxMacMaxStat, MaxDcChance, MaxDcStatChance, MaxDcMaxStat, MaxMcChance, MaxMcStatChance, MaxMcMaxStat, MaxScChance, MaxScStatChance, MaxScMaxStat;
     public byte AccuracyChance, AccuracyStatChance, AccuracyMaxStat, AgilityChance, AgilityStatChance, AgilityMaxStat, HpChance, HpStatChance, HpMaxStat, MpChance, MpStatChance, MpMaxStat, StrongChance, StrongStatChance, StrongMaxStat;
     public byte MagicResistChance, MagicResistStatChance, MagicResistMaxStat, PoisonResistChance, PoisonResistStatChance, PoisonResistMaxStat;

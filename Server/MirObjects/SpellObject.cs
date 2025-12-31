@@ -5,6 +5,9 @@ using S = ServerPackets;
 
 namespace Server.MirObjects
 {
+    /// <summary>
+    /// 法术对象
+    /// </summary>
     public class SpellObject : MapObject
     {
         public override ObjectType Race
@@ -208,7 +211,7 @@ namespace Server.MirObjects
                         {
                             if (player.Account.AdminAccount && player.Observer) return;
                             player.Struck(Value, DefenceType.MAC);
-                        }                 
+                        }
                     }
                     break;
                 case Spell.MapQuake1:
@@ -566,11 +569,14 @@ namespace Server.MirObjects
         {
             throw new NotSupportedException();
         }
-
+        /// <summary>
+        /// 激活法术对象
+        /// </summary>
         public override void Spawned()
         {
+            // 调用父类的激活法术对象
             base.Spawned();
-
+            // 把法术对象放到法术集合里
             Envir.Spells.Add(this);
         }
 
@@ -599,7 +605,7 @@ namespace Server.MirObjects
             if (Spell == Spell.Portal && Caster != null)
             {
                 var portal = Envir.Spells.SingleOrDefault(ob => ob.Node != null && ob != this
-                    && ob.Spell == Spell.Portal    
+                    && ob.Spell == Spell.Portal
                     && ob.Caster == Caster);
 
                 if (portal != null)

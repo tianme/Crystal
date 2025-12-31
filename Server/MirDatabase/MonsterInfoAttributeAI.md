@@ -1,0 +1,162 @@
+### 已实现的AI值（1-255）
+基础怪物类型（1-50） ：
+
+- 1-2: Deer（鹿）
+- 3: Tree（树）
+- 4: SpittingSpider（吐毒蜘蛛）
+- 5: CannibalPlant（食人花）
+- 6, 58: Guard（守卫）
+- 7: CaveMaggot（洞穴蛆虫）
+- 8: AxeSkeleton（骷髅斧手）
+- 9: HarvestMonster（可挖肉怪物）
+- 10: FlamingWooma（火焰沃玛）
+- 11: WoomaTaurus（沃玛教主）
+- 12: BugBagMaggot（虫袋蛆虫）
+- 13: RedMoonEvil（红月恶魔）
+- 14: EvilCentipede（邪恶蜈蚣）
+- 15-17: Zuma系列怪物
+- 18: Shinsu（神兽）
+- 19: KingScorpion（蝎子王）
+- 20: DarkDevil（暗黑恶魔）
+- 21-26: 僵尸系列
+- 27: Khazard（哈扎德）
+- 28: ToxicGhoul（毒尸）
+- 29: BoneSpearman（骷髅枪兵）
+- 30: BoneLord（骨魔）
+- 31-32: 左右护法
+- 33: MinotaurKing（牛头怪王）
+- 34: FrostTiger（冰虎）
+- 35: SandWorm（沙虫）
+- 36: Yimoogi（伊莫吉）
+- 37: CrystalSpider（水晶蜘蛛）
+- 38: HolyDeva（圣神）
+- 39: RootSpider（根须蜘蛛）
+- 40: BombSpider（爆炸蜘蛛）
+- 41-42: YinDevilNode（阴魔节点）
+- 43: OmaKing（奥玛王）
+- 44-46: 狐狸人系列
+- 47: TrapRock（陷阱岩石）
+- 48: GuardianRock（守卫岩石）
+- 49: ThunderElement（雷元素）
+- 50: GreatFoxSpirit（巨狐精灵）
+中级怪物类型（51-100） ：
+
+- 51: HedgeKekTal（刺猬怪）
+- 52-53: EvilMir系列
+- 54: DragonStatue（龙雕像）
+- 55: HumanWizard（人类法师）
+- 56: Trainer（训练师）
+- 57: TownArcher（城镇弓箭手）
+- 59: HumanAssassin（人类刺客）
+- 60: VampireSpider（吸血蜘蛛）
+- 61: SpittingToad（吐痰蟾蜍）
+- 62: SnakeTotem（蛇图腾）
+- 63: CharmedSnake（魅惑蛇）
+- 64: IntelligentCreatureObject（智能生物）
+- 65-66: Manworm系列
+- 67: DarkDevourer（暗黑吞噬者）
+- 68: Football（足球）
+- 69-70: Hugger系列
+- 71: Behemoth（比蒙巨兽）
+- 72-74: 海龟系列
+- 75: WitchDoctor（巫医）
+- 76-79: 地狱系列怪物
+- 80: ConquestArcher（征服弓箭手）
+- 81: Gate（门）
+- 82: Wall（墙）
+- 83: Tornado（龙卷风）
+- 84: WingedTigerLord（飞虎王）
+- 85: FlamingMutant（火焰变异体）
+- 86-88: Manectric系列
+- 89: IcePillar（冰柱）
+- 90-91: Troll系列
+- 92-96: 火焰系列怪物
+- 97-99: 地狱骑士系列
+- 100: VenomSpider（毒蜘蛛）
+高级怪物类型（101-150） ：
+
+- 101: AncientBringer（古代使者）
+- 102-105: 守卫系列
+- 106: DeathCrawler（死亡爬虫）
+- 107-108: 僵尸系列
+- 109: HardenRhino（硬皮犀牛）
+- 110: DemonWolf（恶魔狼）
+- 111: WhiteMammoth（白猛犸象）
+- 112: DarkBeast（暗黑野兽）
+- 113: ArcherGuard（弓箭手守卫）
+- 114: Mandrill（山魈）
+- 115: SandSnail（沙蜗牛）
+- 116-118: 猫系列怪物
+- 119-120: Jar系列
+- 121: SeedingsGeneral（播种将军）
+- 122: RestlessJar（不安的罐子）
+- 123: GeneralMeowMeow（喵喵将军）
+- 124-125: Armadillo系列
+- 126-128: Tucson系列
+- 129-131: 沼泽系列怪物
+- 132: GasToad（毒气蟾蜍）
+- 133: Mantis（螳螂）
+- 134: AssassinBird（刺客鸟）
+- 135-136: 雕像系列
+- 137-138: 犀牛人系列
+- 139-140: Golem系列
+- 141-142: 树系列怪物
+- 143: PeacockSpider（孔雀蜘蛛）
+- 144-148: Oma系列怪物
+- 149: PowerBead（能量珠）
+- 150: DarkOmaKing（暗黑奥玛王）
+特殊怪物类型（151-255） ：
+
+- 151: CaveStatue（洞穴雕像）
+- 152: PlagueCrab（瘟疫蟹）
+- 153: CreeperPlant（爬行者植物）
+- 154: Nadz（纳兹）
+- 155-156: 复仇系列怪物
+- 157: AxePlant（斧头植物）
+- 158: WoodBox（木箱）
+- 159: DarkCaptain（暗黑队长）
+- 160: BlueSoul（蓝魂）
+- 161: SackWarrior（麻袋战士）
+- 162: KingHydrax（海德拉王）
+- 163-165: 角系列怪物
+- 166: FloatingRock（浮石）
+- 167: ScalyBeast（鳞兽）
+- 168: WereTiger（虎人）
+- 169: HornedSorceror（角魔法师）
+- 170: BoulderSpirit（巨石精灵）
+- 171: HornedCommander（角指挥官）
+- 173: TurtleGrass（海龟草）
+- 174: ManTree（人树）
+- 175: ChieftainArcher（酋长弓箭手）
+- 177: FrozenKnight（冰冻骑士）
+- 178: IcePhantom（冰幻影）
+- 179-180: 雪狼系列
+- 181: WaterDragon（水龙）
+- 182: BlackTortoise（玄武）
+- 184: DragonWarrior（龙战士）
+- 186: Kirin（麒麟）
+- 187-190: 冰冻系列怪物
+- 191: IceCrystalSoldier（冰晶战士）
+- 192: DarkWraith（暗黑幽灵）
+- 196: AntCommander（蚂蚁指挥官）
+- 197-203: 冰川系列怪物
+- 210: HoodedSummonerScrolls（蒙面召唤师卷轴）
+- 211: HoodedSummoner（蒙面召唤师）
+- 212: PurpleFaeFlower（紫色精灵花）
+- 213: Siege（攻城武器）
+- 214-223: Sep系列怪物（战士、法师、道士、刺客、弓箭手及其高级形态）
+- 255: StoneTrap（石头陷阱）
+### 未实现/注释掉的AI值
+- 172: MoonSunLightningStone
+- 176: ChieftainSword
+- 183: Manticore
+- 185: DragonArcher
+- 193: CrystalBeast
+- 194: RedOrb
+- 195: FatalLotus
+### 特殊用途的AI值（在DeadDelay属性中）
+- 64: 智能生物，DeadDelay = 0（立即消失）
+- 81-82: 门和墙，DeadDelay = int.MaxValue（永久存在）
+- 252: 特殊AI，DeadDelay = 5000毫秒（5秒）
+- 其他所有AI: 默认DeadDelay = 180000毫秒（3分钟）
+每个AI值都对应一个特定的怪物类，通过GetMonster方法根据AI值创建对应的怪物实例。这些AI值定义了游戏中所有怪物的行为模式和特性。

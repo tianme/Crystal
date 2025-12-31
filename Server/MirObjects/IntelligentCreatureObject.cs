@@ -11,7 +11,9 @@ namespace Server.MirObjects
         public string CustomName { get { return CreatureInfo.CustomName; } set { CreatureInfo.CustomName = value; } }
 
         public UserIntelligentCreature CreatureInfo;
-
+        /// <summary>
+        /// 智能宠物类型
+        /// </summary>
         public IntelligentCreatureType PetType = IntelligentCreatureType.None;
 
         public ItemGrade GradeFilter = ItemGrade.None;
@@ -187,7 +189,7 @@ namespace Server.MirObjects
 
         public void ProcessAnimVariant()
         {
-            
+
             if (Envir.Time > AnimvariantTicker)
             {
                 AnimvariantTicker = Envir.Time + AnimvariantDelay;
@@ -266,8 +268,8 @@ namespace Server.MirObjects
                 ProcessRoam();
             }
             ProcessTarget();
-        }      
-        
+        }
+
         protected override void ProcessSearch()
         {
             if (Target == null)
@@ -298,7 +300,7 @@ namespace Server.MirObjects
                     if (Envir.Random.Next(100) >= 60) ProcessAnimVariant();//random anims
             }
         }
-        
+
         protected override void ProcessTarget()
         {
             if (Target == null || !CanAttack) return;
@@ -315,7 +317,7 @@ namespace Server.MirObjects
                 return;
             }
         }
-        
+
         protected override void FindTarget()
         {
             if (Dead) return;
@@ -837,13 +839,16 @@ namespace Server.MirObjects
 
         public override void Die()
         {
+            // 如果已经死亡则直接返回
             if (Dead) return;
-
+            // 强制怪物死亡
             base.Die();
-
+            // 如果怪物死亡
             if (Dead)
             {
+                // 从当前地图移除
                 CurrentMap.RemoveObject(this);
+                // 解除
                 Despawn();
                 return;
             }

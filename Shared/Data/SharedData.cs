@@ -30,13 +30,31 @@ public class SelectInfo
         writer.Write(LastAccess.ToBinary());
     }
 }
-
+/// <summary>
+/// 物理门
+/// <para>类似：沙巴克城门</para>
+/// </summary>
 public class Door
 {
+    /// <summary>
+    /// 索引
+    /// </summary>
     public byte index;
+    /// <summary>
+    /// 门的状态
+    /// </summary>
     public DoorState DoorState;
+    /// <summary>
+    /// 图片
+    /// </summary>
     public byte ImageIndex;
+    /// <summary>
+    /// 开门时记录时间
+    /// </summary>
     public long LastTick;
+    /// <summary>
+    /// 门的位置
+    /// </summary>
     public Point Location;
 }
 

@@ -1,4 +1,7 @@
-﻿public class BaseStats
+﻿/// <summary>
+/// 基础属性表
+/// </summary>
+public class BaseStats
 {
     /// <summary>
     /// 职业
@@ -200,6 +203,7 @@ public class BaseStat
             return job switch
             {
                 MirClass.Warrior => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + (level / Gain + GainRate + level / 20F) * level),
+                // 生命默认加成
                 _ => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + (level / Gain + GainRate) * level),
             };
         }  // 如果是魔法，法师和道士有特殊加成
@@ -209,6 +213,7 @@ public class BaseStat
             {
                 MirClass.Wizard => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + ((level / Gain + 2F) * 2.2F * level) + (level * GainRate)),
                 MirClass.Taoist => (int)Math.Min(Max > 0 ? Max : int.MaxValue, (Base + level / Gain * 2.2F * level) + (level * GainRate)),
+                // 魔法值默认加成
                 _ => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + (level * Gain) + (level * GainRate)),
             };
         }
@@ -218,6 +223,7 @@ public class BaseStat
             return FormulaType switch
             {
                 StatFormula.Weight => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + ((level / Gain) * level)),
+                // 默认加成
                 _ => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + (level / Gain)),
             };
         }

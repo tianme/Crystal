@@ -2,25 +2,34 @@
 {
     public SortedDictionary<Stat, int> Values { get; set; } = new SortedDictionary<Stat, int>();
     public int Count => Values.Sum(pair => Math.Abs(pair.Value));
-
+    /// <summary>
+    /// 实现索引器访问
+    /// </summary>
+    /// <param name="stat">属性枚举类型</param>
+    /// <returns>属性的值</returns>
     public int this[Stat stat]
     {
         get
         {
+            // 取值：尝试取stat，如果取到并尝试转换成int如果成功则返回转换好的值，不成功返回0
             return !Values.TryGetValue(stat, out int result) ? 0 : result;
         }
         set
         {
+            // 赋值：如果值为0
+            //
             if (value == 0)
             {
+                // 检查到有这个key
                 if (Values.ContainsKey(stat))
                 {
+                    // 删除这个key
                     Values.Remove(stat);
                 }
 
                 return;
             }
-
+            // 赋值
             Values[stat] = value;
         }
     }
@@ -40,7 +49,10 @@
         for (int i = 0; i < count; i++)
             Values[(Stat)reader.ReadByte()] = reader.ReadInt32();
     }
-
+    /// <summary>
+    /// 叠加属性，会根据传入的属性实例遍历Values全部叠加到当前属性表中
+    /// </summary>
+    /// <param name="stats">属性实例</param>
     public void Add(Stats stats)
     {
         foreach (KeyValuePair<Stat, int> pair in stats.Values)
@@ -57,12 +69,18 @@
             writer.Write(pair.Value);
         }
     }
-
+    /// <summary>
+    /// 清空当前属性表
+    /// </summary>
     public void Clear()
     {
         Values.Clear();
     }
-
+    /// <summary>
+    /// 比较传入的属性表里的值跟当前的属性表里的值是否相等
+    /// </summary>
+    /// <param name="other">属性表</param>
+    /// <returns></returns>
     public bool Equals(Stats other)
     {
         if (Values.Count != other.Values.Count) return false;
@@ -102,19 +120,19 @@ public enum StatFormula : byte
 public enum Stat : byte
 {
     /// <summary>
-    /// 最小物理攻击
+    /// 最小物理防御
     /// </summary>
     MinAC = 0,
     /// <summary>
-    /// 最大物理攻击
+    /// 最大物理防御
     /// </summary>
     MaxAC = 1,
     /// <summary>
-    /// 最小魔法攻击
+    /// 最小魔法防御
     /// </summary>
     MinMAC = 2,
     /// <summary>
-    /// 最大魔法攻击
+    /// 最大魔法防御
     /// </summary>
     MaxMAC = 3,
     /// <summary>
@@ -134,11 +152,11 @@ public enum Stat : byte
     /// </summary>
     MaxMC = 7,
     /// <summary>
-    /// 最小神圣攻击
+    /// 最小道术攻击
     /// </summary>
     MinSC = 8,
     /// <summary>
-    /// 最大神圣攻击
+    /// 最大道术攻击
     /// </summary>
     MaxSC = 9,
 
@@ -237,15 +255,15 @@ public enum Stat : byte
     /// </summary>
     MaxMACRatePercent = 41,
     /// <summary>
-    /// 最大道术攻击百分比加成
+    /// 最大攻击百分比加成
     /// </summary>
     MaxDCRatePercent = 42,
     /// <summary>
-    /// 最大魔攻百分比加成
+    /// 最大魔法百分比加成
     /// </summary>
     MaxMCRatePercent = 43,
     /// <summary>
-    /// 最大神圣攻击百分比加成
+    /// 最大道术攻击百分比加成
     /// </summary>
     MaxSCRatePercent = 44,
     /// <summary>

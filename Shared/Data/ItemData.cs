@@ -50,8 +50,30 @@ public class ItemInfo
     /// 物品亮度
     /// </summary>
     public byte Light;
+
     /// <summary>
-    /// 需求数量
+    /// 与 RequiredType 配套使用的需求数值。
+    ///
+    /// <para>
+    /// 该字段的具体含义由 RequiredType 决定，本身不具备独立语义。
+    /// </para>
+    ///
+    /// <para>
+    /// 示例说明：
+    /// </para>
+    ///
+    /// <para>
+    /// RequiredType = Level ：RequiredAmount 表示所需等级
+    /// </para>
+    ///
+    /// <para>
+    /// RequiredType = DC ：RequiredAmount 表示所需攻击力（DC 值）
+    /// </para>
+    ///
+    /// <para>
+    /// RequiredType = MC / SC 等时，
+    /// RequiredAmount 分别表示对应属性的需求值。
+    /// </para>
     /// </summary>
     public byte RequiredAmount;
 
@@ -101,11 +123,11 @@ public class ItemInfo
     /// </summary>
     public bool GlobalDropNotify;
     /// <summary>
-    /// 是否基于职业
+    /// 是否有职业要求
     /// </summary>
     public bool ClassBased;
     /// <summary>
-    /// 是否基于等级
+    /// 是否有等级要求
     /// </summary>
     public bool LevelBased;
     /// <summary>
@@ -494,6 +516,7 @@ public class UserItem
 
     /// <summary>
     /// 附加属性
+    /// <para>通过镶嵌宝石，强化装备获得的额外属性</para>
     /// </summary>
     public Stats AddedStats;
 
@@ -1499,8 +1522,8 @@ public class ItemSets
         get
         {
             return Count >= Amount;
+        }
     }
-}
 }
 
 

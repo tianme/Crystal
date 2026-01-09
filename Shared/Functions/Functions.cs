@@ -352,16 +352,40 @@ public static class Functions
                 return dir;
         }
     }
+
+    /// <summary>
+    /// 获取当前角色条件下的“实际生效”的 ItemInfo
+    /// <para>
+    /// 某些物品并不是固定效果，而是会根据角色的等级和职业，
+    /// 被解析为不同的物品变体（例如：同一把武器在 5 级和 15 级时
+    /// 可能对应不同的属性版本，或在不同职业下具备不同效果）。
+    /// 本方法用于根据角色的等级和职业，从所有物品变体中选择
+    /// 当前最合适的一项。
+    /// </para>
+    /// </summary>
+    /// <param name="Origin">当前物品的蓝图</param>
+    /// <param name="Level">角色等级</param>
+    /// <param name="job">职业</param>
+    /// <param name="ItemList">所有物品列表</param>
+    /// <returns></returns>
     public static ItemInfo GetRealItem(ItemInfo Origin, ushort Level, MirClass job, List<ItemInfo> ItemList)
     {
+        // 当前物品是否有职业要求并且有等级限制
         if (Origin.ClassBased && Origin.LevelBased)
             return GetClassAndLevelBasedItem(Origin, job, Level, ItemList);
-        if (Origin.ClassBased)
+        if (Origin.ClassBased) // 是否有职业限制
             return GetClassBasedItem(Origin, job, ItemList);
-        if (Origin.LevelBased)
+        if (Origin.LevelBased) // 是否有等级限制
             return GetLevelBasedItem(Origin, Level, ItemList);
-        return Origin;
+        return Origin; // 既没有职业限制，也没有登记限制，直接返回
     }
+    /// <summary>
+    /// 根据物品蓝图获取有等级限制的真实物品蓝图
+    /// </summary>
+    /// <param name="Origin">原物品蓝图</param>
+    /// <param name="level">角色等级</param>
+    /// <param name="ItemList">所有物品的列表</param>
+    /// <returns></returns>
     public static ItemInfo GetLevelBasedItem(ItemInfo Origin, ushort level, List<ItemInfo> ItemList)
     {
         ItemInfo output = Origin;
@@ -374,6 +398,13 @@ public static class Functions
         }
         return output;
     }
+    /// <summary>
+    /// 根据物品蓝图获取有职业限制的真实物品蓝图
+    /// </summary>
+    /// <param name="Origin">当前物品的蓝图</param>
+    /// <param name="job">职业</param>
+    /// <param name="ItemList">物品蓝图的集合</param>
+    /// <returns></returns>
     public static ItemInfo GetClassBasedItem(ItemInfo Origin, MirClass job, List<ItemInfo> ItemList)
     {
         for (int i = 0; i < ItemList.Count; i++)
@@ -385,17 +416,34 @@ public static class Functions
         }
         return Origin;
     }
-
+    /// <summary>
+    /// 获取职业和等级需求的物品
+    /// </summary>
+    /// <param name="Origin">物品蓝图</param>
+    /// <param name="job">职业</param>
+    /// <param name="level">等级</param>
+    /// <param name="ItemList">物品蓝图的集合</param>
+    /// <returns></returns>
     public static ItemInfo GetClassAndLevelBasedItem(ItemInfo Origin, MirClass job, ushort level, List<ItemInfo> ItemList)
     {
+        // 生命一个 ItemInfo 类型的变量 output 默认等于 Origin
         ItemInfo output = Origin;
+        // 遍历 ItemList
         for (int i = 0; i < ItemList.Count; i++)
         {
+            // 拿到物品
             ItemInfo info = ItemList[i];
+            // 用蓝图集合里的物品名字来匹配要查找的物品名字（要起始名字匹配， 不是任意名字匹配）
             if (info.Name.StartsWith(Origin.Name))
+                // 匹配到职业 MirClass 的 0~4 正好对应 RequiredClass 的位标志 1,2,4,8,16
                 if ((byte)info.RequiredClass == (1 << (byte)job))
+                    // 等级匹配规则：
+                    // 1. 该物品是等级需求类型
+                    // 2. 需求等级 <= 当前角色等级
+                    // 3. 在满足条件的物品中，选择需求等级最高的那一件
+                    // 4. 性别必须一致
                     if ((info.RequiredType == RequiredType.Level) && (info.RequiredAmount <= level) && (output.RequiredAmount <= info.RequiredAmount) && (Origin.RequiredGender == info.RequiredGender))
-                        output = info;
+                        output = info; // 把当前的找到的物品作为最终物品蓝图
         }
         return output;
     }

@@ -491,8 +491,8 @@ namespace Server.MirObjects
         public bool CreatureSummoned;
         /// <summary>
         /// 特殊物品枚举
-        /// 比如: 复活戒指等
-        /// 通过位运算允许多特殊效果共存
+        /// <para>比如: 复活戒指等</para>
+        /// <para>通过位运算允许多特殊效果共存</para>
         /// </summary>
         public SpecialItemMode SpecialMode;
         /// <summary>
@@ -2206,9 +2206,11 @@ namespace Server.MirObjects
             }
             // 清除属性表
             Stats.Clear();
-
+            // 刷新基础属性
             RefreshLevelStats();
+            // 刷新背包
             RefreshBagWeight();
+            // 刷新装备属性
             RefreshEquipmentStats();
             RefreshItemSetStats();
             RefreshMirSetStats();
@@ -2244,7 +2246,7 @@ namespace Server.MirObjects
 		/// </summary>
         public virtual void RefreshMaxExperience() { }
         /// <summary>
-		/// 刷新等级属性
+		/// 刷新等级和基础属性表
 		/// </summary>
         protected virtual void RefreshLevelStats()
         {
@@ -2252,9 +2254,14 @@ namespace Server.MirObjects
             // 重新计算基础属性
             foreach (var stat in Settings.ClassBaseStats[(byte)Class].Stats)
             {
+                // 重新计算基础属性
                 Stats[stat.Type] = stat.Calculate(Class, Level);
             }
         }
+        /// <summary>
+        /// 刷新背包负重
+        /// <para>遍历背包物品，把每个物品的重量累加</para>
+        /// </summary>
         public void RefreshBagWeight()
         {
             CurrentBagWeight = 0;
@@ -2270,67 +2277,90 @@ namespace Server.MirObjects
         }
         private void RefreshEquipmentStats()
         {
+            // 记录当前的武器外观ID
             short OldLooks_Weapon = Looks_Weapon;
+            // 记录当前的武器效果ID
             short OldLooks_WeaponEffect = Looks_WeaponEffect;
+            // 记录当前的盔甲效果ID
             short OldLooks_Armour = Looks_Armour;
+            // 当前的坐骑ID
             short Old_MountType = Mount.MountType;
+            // 当前的翅膀ID
             byte OldLooks_Wings = Looks_Wings;
+            // 当前的光照ID
             byte OldLight = Light;
 
             Looks_Armour = 0;
+            // 初始化武器外观ID
             Looks_Weapon = -1;
+            // 初始化当前的武器效果ID
             Looks_WeaponEffect = 0;
+            // 初始化翅膀ID
             Looks_Wings = 0;
+            // 初始化光照
             Light = 0;
+            // 初始化当前的穿戴负重
             CurrentWearWeight = 0;
+            // 初始化手持物品的总重量
             CurrentHandWeight = 0;
+            // 初始化坐骑类型
             Mount.MountType = -1;
-
+            // 初始化特殊物品的枚举
             SpecialMode = SpecialItemMode.None;
-
+            // 初始化 FastRun 为 false
             FastRun = false;
-
+            // 初始化技能经验倍率
             Stats[Stat.SkillGainMultiplier] = 1;
-
+            // 需要添加的集合
             var skillsToAdd = new List<string>();
+            // 要删除技能的集合
             var skillsToRemove = new List<string> { Settings.HealRing, Settings.FireRing, Settings.BlinkSkill };
-
+            // 清除套装属性
             ItemSets.Clear();
+            // 清除判定套装的槽位
             MirSet.Clear();
-
+            // 遍历装备槽位
             for (int i = 0; i < Info.Equipment.Length; i++)
             {
+                // 取到当前装备
                 UserItem temp = Info.Equipment[i];
+                // 如果当前装备槽位为空，则直接取下一个
                 if (temp == null) continue;
+                // 根据当前的 item.info(物品蓝图)、Info.Level(角色等级)、Info.Class(角色职业)、Envir.ItemInfoList(物品蓝图集合)
                 ItemInfo realItem = Functions.GetRealItem(temp.Info, Info.Level, Info.Class, Envir.ItemInfoList);
-
+                // 如果是武器或火把
                 if (realItem.Type == ItemType.Weapon || realItem.Type == ItemType.Torch)
+                    // 重量加到手腕上
                     CurrentHandWeight = (int)Math.Min(int.MaxValue, CurrentHandWeight + temp.Weight);
                 else
+                    // 否则加到人物总重量上
                     CurrentWearWeight = (int)Math.Min(int.MaxValue, CurrentWearWeight + temp.Weight);
-
+                // 如果持久为 0 则进行下一个物品的遍历，也就是不加属性了
                 if (temp.CurrentDura == 0 && temp.Info.Durability > 0) continue;
-
+                // 如果是盔甲
                 if (realItem.Type == ItemType.Armour)
                 {
+                    // 设置盔甲和翅膀的外观
                     Looks_Armour = realItem.Shape;
                     Looks_Wings = realItem.Effect;
                 }
-
+                // 如果是武器
                 if (realItem.Type == ItemType.Weapon)
                 {
+                    // 设置武器外观和武器效果
                     Looks_Weapon = realItem.Shape;
                     Looks_WeaponEffect = realItem.Effect;
                 }
-
+                // 如果是坐骑
                 if (realItem.Type == ItemType.Mount)
                 {
+                    // 设置坐骑外观
                     Mount.MountType = realItem.Shape;
                     //RealItem.Effect;
                 }
-
+                // 如果是鱼竿则不继续添加属性了,则直接遍历下一个装备
                 if (temp.Info.IsFishingRod) continue;
-
+                // 直接添加物品属性表到玩家属性表
                 Stats.Add(realItem.Stats);
                 Stats.Add(temp.AddedStats);
 
@@ -2350,15 +2380,17 @@ namespace Server.MirObjects
                 Stats[Stat.MP] += temp.Awake.GetHPMP();
 
                 if (realItem.Light > Light) Light = realItem.Light;
+                // 如果装备有特殊效果
                 if (realItem.Unique != SpecialItemMode.None)
                 {
+                    // 开始特殊效果
                     SpecialMode |= realItem.Unique;
-
+                    // 如果是火焰戒指、治疗戒指、Blink(TODO: 法师技能)，则需要给当前角色增加技能
                     if (realItem.Unique.HasFlag(SpecialItemMode.Flame)) skillsToAdd.Add(Settings.FireRing);
                     if (realItem.Unique.HasFlag(SpecialItemMode.Healing)) skillsToAdd.Add(Settings.HealRing);
                     if (realItem.Unique.HasFlag(SpecialItemMode.Blink)) skillsToAdd.Add(Settings.BlinkSkill);
                 }
-
+                // 如果装备的CanFastRun 为 true 则能直接跑步则设置 FastRun = true;
                 if (realItem.CanFastRun)
                 {
                     FastRun = true;

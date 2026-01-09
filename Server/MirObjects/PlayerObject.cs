@@ -9593,8 +9593,13 @@ namespace Server.MirObjects
 
             Enqueue(new S.NewHero { Result = 10 });
         }
+        /// <summary>
+        /// 根据当前状态重新计算最大经验值。
+        /// </summary>
         public override void RefreshMaxExperience()
         {
+            // Count 最大 500，也就是说 < 500 需要满足经验值要求， > 500 经验需要 0
+            // TODO: 存疑：如果角色大于500级后所需经验会变成0可能会导致异常升级?
             MaxExperience = Level < Settings.ExperienceList.Count ? Settings.ExperienceList[Level - 1] : 0;
         }
         public HeroObject GetHero()

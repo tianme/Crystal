@@ -283,7 +283,9 @@ namespace Server
         public static uint GoodsBuyBackTime = 60;
         public static uint GoodsBuyBackMaxStored = 20;
         public static bool GoodsHideAddedStats = true;
-
+        /// <summary>
+        /// 所有角色的基础属性
+        /// </summary>
         public static BaseStats[] ClassBaseStats = new BaseStats[5] { new BaseStats(MirClass.Warrior), new BaseStats(MirClass.Wizard), new BaseStats(MirClass.Taoist), new BaseStats(MirClass.Assassin), new BaseStats(MirClass.Archer) };
         public static BaseStats[] HeroBaseStats = new BaseStats[5] { new BaseStats(MirClass.Warrior), new BaseStats(MirClass.Wizard), new BaseStats(MirClass.Taoist), new BaseStats(MirClass.Assassin), new BaseStats(MirClass.Archer) };
 

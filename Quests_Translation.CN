@@ -1,0 +1,5076 @@
+# 游戏任务翻译
+
+总任务数：161
+
+---
+
+## 任务 999.txt
+
+**文件路径：** `999.txt`
+
+### 任务要求
+
+
+### 任务奖励
+
+
+### NPC信息
+
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `AncientCaves/OmaCavern/1.txt`
+
+### 任务描述
+
+一块神秘的石头……上面刻着未知的古代符号。
+肯定有办法破解这些符号。
+
+### 任务目标
+
+在{奥玛洞穴/Yellow}搜索{古代镰刀/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：AncientScyther 1
+
+### 任务奖励
+
+- 经验值：3500
+
+### NPC信息
+
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `AncientCaves/OmaCavern/2.txt`
+
+### 任务描述
+
+这把镰刀似乎有某种规律……
+也许{比奇城/Yellow}里有人能破解这些古代符号。
+
+### 任务目标
+
+返回{比奇城/Yellow}询问关于符号的信息。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：3900
+
+### NPC信息
+
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `BichonProvince/1.txt`
+
+### 任务描述
+
+模板。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 金币：// 接取 - Teleport_Jason 0 292 216
+// 交付 - Teleport_Kyle 0 371 314
+
+### NPC信息
+
+- 接取NPC：Teleport_Jason 0 292 216
+- 交付NPC：Teleport_Kyle 0 371 314
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `BichonProvince/BichonWall/1.txt`
+
+### 任务描述
+
+我收到报告说{森林雪人/Crimson}最近专门攻击新手战士。
+你觉得你能帮上忙吗？
+
+### 任务目标
+
+消灭5个{森林雪人/Crimson}。
+
+### 任务要求
+
+- 击杀任务：ForestYeti 5
+
+### 任务奖励
+
+- 经验值：200
+- 金币：50
+- 固定奖励：PrecisionPendant (准确项链)
+
+### NPC信息
+
+
+---
+
+## 任务 10.txt
+
+**文件路径：** `BichonProvince/BichonWall/10.txt`
+
+### 任务描述
+
+你好，旅行者，我有件事想请你帮忙。
+我在{奥玛洞穴/Yellow}打猎时弄丢了我妹妹的戒指。
+
+### 任务目标
+
+在{奥玛洞穴/Yellow}找到{奥利维亚的戒指/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：OliviasRing 1
+
+### 任务奖励
+
+- 经验值：1400
+- 金币：1400
+
+### NPC信息
+
+
+---
+
+## 任务 11.txt
+
+**文件路径：** `BichonProvince/BichonWall/11.txt`
+
+### 任务描述
+
+你去过{比奇/Yellow}附近的地牢吗？
+那里有{骷髅/Crimson}。地牢附近的守卫报告说，
+最近{骷髅/Crimson}的数量在增加。
+为了{比奇/Yellow}的安全，你能不能去消灭25个{骷髅/Crimson}？
+
+### 任务目标
+
+消灭25个{骷髅/Crimson}。
+
+### 任务要求
+
+- 击杀任务：Skeleton 25
+
+### 任务奖励
+
+- 经验值：1500
+- 金币：375
+
+// 接取 - Teleport_Jason 0 292 216
+// 交付 - Teleport_Jason 0 292 216
+- 固定奖励：SuperiorMagicHelmet (高级魔法头盔)
+
+### NPC信息
+
+- 接取NPC：Teleport_Jason 0 292 216
+- 交付NPC：Teleport_Jason 0 292 216
+
+---
+
+## 任务 12.txt
+
+**文件路径：** `BichonProvince/BichonWall/12.txt`
+
+### 任务描述
+
+你知道{食人花茶/LightSteelBlue}吗？那是最好喝的茶。
+我想喝一点，但这东西很难弄到。
+你能让{制造师/LimeGreen}帮我做一些{食人花茶/LightSteelBlue}吗？
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：439
+- 金币：580
+
+// 接取 -
+// 交付 - CraftsLady_Alice 0 321 265
+
+### NPC信息
+
+- 交付NPC：CraftsLady_Alice 0 321 265
+
+---
+
+## 任务 13.txt
+
+**文件路径：** `BichonProvince/BichonWall/13.txt`
+
+### 任务描述
+
+你是想让我帮你做{食人花茶/LightSteelBlue}吗？嗯……
+我的材料用光了。你能不能帮我从{食人花/Crimson}身上
+弄10个{食人花叶/LightSteelBlue}和10个{食人花果实/LightSteelBlue}？
+
+### 任务目标
+
+从{食人花/Crimson}身上收集10个{食人花叶/LightSteelBlue}和{食人花果实/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：CannibalLeaf 10
+CannibalSeed 10
+
+### 任务奖励
+
+- 金币：// 接取 - CraftsLady_Alice 0 321 265
+// 交付 - CraftsLady_Alice 0 321 265
+
+### NPC信息
+
+- 接取NPC：CraftsLady_Alice 0 321 265
+- 交付NPC：CraftsLady_Alice 0 321 265
+
+---
+
+## 任务 14.txt
+
+**文件路径：** `BichonProvince/BichonWall/14.txt`
+
+### 任务描述
+
+这是你要的茶。请趁热送过去。
+
+### 任务目标
+
+将{食人花茶/LightSteelBlue}送达给{向导/LimeGreen}。
+
+### 任务要求
+
+- 携带物品：CanniTea 2
+
+### 任务奖励
+
+- 经验值：439
+- 金币：145
+
+// 接取 - CraftsLady_Alice 0 321 265
+// 交付 -
+- 固定奖励：SteelBuckle (钢手镯)
+
+### NPC信息
+
+- 接取NPC：CraftsLady_Alice 0 321 265
+
+---
+
+## 任务 15.txt
+
+**文件路径：** `BichonProvince/BichonWall/15.txt`
+
+### 任务描述
+
+我制造武器所需的材料可以在{废矿入口/Yellow}找到，
+但那个区域到处都是{僵尸/Crimson}。
+
+### 任务目标
+
+在{矿区/Yellow}消灭每种{僵尸/Crimson}各5个。
+
+### 任务要求
+
+- 击杀任务：Zombie5 5
+Zombie2 5
+Zombie3 5
+Zombie4 5
+Zombie1 5
+
+### 任务奖励
+
+- 经验值：2700
+- 金币：675
+
+// 接取 - Blacksmith_Bill 0 302 221
+// 交付 - Blacksmith_Bill 0 302 221
+- 可选奖励：OldNagaNecklace (旧娜迦项链)
+AmberPendant (琥珀项链)
+WornBeadofPhoenix (磨损的凤凰珠)
+
+### NPC信息
+
+- 接取NPC：Blacksmith_Bill 0 302 221
+- 交付NPC：Blacksmith_Bill 0 302 221
+
+---
+
+## 任务 16.txt
+
+**文件路径：** `BichonProvince/BichonWall/16.txt`
+
+### 任务描述
+
+你能帮帮我吗？我需要补充库存。
+请你从{比奇/Yellow}附近的{洞穴/Yellow}里帮我找些材料好吗？
+
+### 任务目标
+
+请从{奥玛洞穴/Yellow}收集5个{蝙蝠牙齿/LightSteelBlue}和{骷髅头骨/LightSteelBlue}，
+并从{比奇废矿/Yellow}收集{僵尸眼睛/LightSteelBlue}。
+
+### 完成条件
+
+非常感谢你，勇敢的旅行者。
+
+### 任务要求
+
+- 物品任务：BatTeeth 5
+Skull 5
+ZombieEye 5
+
+### 任务奖励
+
+- 经验值：2550
+- 金币：2550
+
+// 接取 - CraftsLady_Alice 0 321 265
+// 交付 - CraftsLady_Alice 0 321 265
+
+### NPC信息
+
+- 接取NPC：CraftsLady_Alice 0 321 265
+- 交付NPC：CraftsLady_Alice 0 321 265
+
+---
+
+## 任务 17.txt
+
+**文件路径：** `BichonProvince/BichonWall/17.txt`
+
+### 任务描述
+
+你尝过{蝙蝠翅膀/LightSteelBlue}吗？那可是美味佳肴。
+我最近卖了很多。你能不能帮我再弄些翅膀来？
+
+### 任务目标
+
+收集10个{蝙蝠翅膀/LightSteelBlue}并返回{Sarah/LimeGreen}处。
+
+### 任务要求
+
+- 物品任务：BatWings 10
+
+### 任务奖励
+
+- 经验值：2500
+- 金币：2500
+
+// 接取 - Merchant_Sarah 0 313 271
+// 交付 - Merchant_Sarah 0 313 271
+
+### NPC信息
+
+- 接取NPC：Merchant_Sarah 0 313 271
+- 交付NPC：Merchant_Sarah 0 313 271
+
+---
+
+## 任务 18.txt
+
+**文件路径：** `BichonProvince/BichonWall/18.txt`
+
+### 任务描述
+
+嗯……这个情报似乎提到了{骷髅精灵/Crimson}。
+你能帮我们猎杀这只怪物吗？
+既然我们也受到了攻击，我们就不能离开城镇。
+
+### 任务目标
+
+请消灭{骷髅精灵/Crimson}并带回它的{头骨/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：SkeletonHead 1
+
+### 任务奖励
+
+- 经验值：2500
+- 金币：2500
+
+// 接取 - Teleport_Kyle 0 371 314
+// 交付 - Teleport_Kyle 0 371 314
+
+### NPC信息
+
+- 接取NPC：Teleport_Kyle 0 371 314
+- 交付NPC：Teleport_Kyle 0 371 314
+
+---
+
+## 任务 19.txt
+
+**文件路径：** `BichonProvince/BichonWall/19.txt`
+
+### 任务描述
+
+我正在用{高品质铜矿/LightSteelBlue}制作特殊护甲。
+你可以从{废矿/Yellow}里的{僵尸/Crimson}身上找到这些矿石。
+
+### 任务目标
+
+通过猎杀{僵尸/Crimson}找到10个{高品质铜矿/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：RareCopperOre 10
+
+### 任务奖励
+
+- 经验值：3000
+- 金币：3000
+
+// 接取 - Blacksmith_Bill 0 302 221
+// 交付 - Blacksmith_Bill 0 302 221
+
+### NPC信息
+
+- 接取NPC：Blacksmith_Bill 0 302 221
+- 交付NPC：Blacksmith_Bill 0 302 221
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `BichonProvince/BichonWall/2.txt`
+
+### 任务描述
+
+在{比奇城/Yellow}和其他城镇外有一种叫{半兽人/Crimson}的生物。
+它们非常强壮且残暴，一直在袭击商人。
+嘿，你能帮我们消除这个危险吗？
+
+### 任务目标
+
+请猎杀{半兽人/Crimson}并带回10个{半兽人的牙齿/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：OmaTeeth 10
+
+### 任务奖励
+
+- 经验值：300
+- 金币：83
+- 可选奖励：BronzeShortSword (青铜短剑)
+BronzeHoaSword (青铜斧)
+ElkWoodenBow (麋鹿木弓)
+
+### NPC信息
+
+
+---
+
+## 任务 20.txt
+
+**文件路径：** `BichonProvince/BichonWall/20.txt`
+
+### 任务描述
+
+{比奇/Yellow}附近有个小农场。这个农场正遭受昆虫的袭击。
+报告说这些昆虫生活在{昆虫洞/Yellow}里。
+你能替我去{昆虫洞/Yellow}猎杀它们吗？
+
+### 任务目标
+
+沿路向北前往{沃玛森林/Yellow}，
+在{昆虫洞/Yellow}消灭25个{蜘蛛蛙/Crimson}。
+
+### 任务要求
+
+- 击杀任务：SpiderFrog 25
+
+### 任务奖励
+
+- 经验值：3100
+- 金币：3100
+
+// 接取 - Examiner_Tony 0 340 257
+// 交付 - Examiner_Tony 0 340 257
+
+### NPC信息
+
+- 接取NPC：Examiner_Tony 0 340 257
+- 交付NPC：Examiner_Tony 0 340 257
+
+---
+
+## 任务 21.txt
+
+**文件路径：** `BichonProvince/BichonWall/21.txt`
+
+### 任务描述
+
+那具尸体似乎就是{Vincent/LimeGreen}正在寻找的。
+项链与{Vincent/LimeGreen}给出的描述相符。
+
+### 任务目标
+
+将{旧项链/LightSteelBlue}归还给{Vincent/LimeGreen}。
+
+### 任务要求
+
+- 携带物品：OldNecklace 1
+
+### 任务奖励
+
+- 经验值：3616
+- 金币：935
+
+// 接取 - OldSkeleton D404 104 101
+// 交付 -
+- 可选奖励：ToughGlove (坚固手套)
+MagicBangle (魔法手镯)
+
+### NPC信息
+
+- 接取NPC：OldSkeleton D404 104 101
+
+---
+
+## 任务 22.txt
+
+**文件路径：** `BichonProvince/BichonWall/22.txt`
+
+### 任务描述
+
+在{沃玛森林/Yellow}的{屠夫/LimeGreen}刚开了一家新店。他请求我帮忙。
+
+### 任务目标
+
+通过击杀{沃玛战士/Crimson}收集10个{牛肉排/LightSteelBlue}，
+并送给{沃玛森林/Yellow}的{屠夫/LimeGreen}。
+
+### 任务要求
+
+- 物品任务：BeefRib 10
+
+### 任务奖励
+
+- 经验值：8200
+- 金币：8200
+
+// 接取 -
+// 交付 - Merchant_Hans 1 328 86
+
+### NPC信息
+
+- 交付NPC：Merchant_Hans 1 328 86
+
+---
+
+## 任务 23.txt
+
+**文件路径：** `BichonProvince/BichonWall/23.txt`
+
+### 任务描述
+
+哦，你好旅行者。
+你听说过{盟重省/Yellow}吗？
+他们需要帮助。
+
+### 任务目标
+
+与{盟重省/Yellow}的{Edwin/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：2534
+- 金币：4750
+
+// 接取 - Teleport_Harrison 0 291 296
+// 交付 - Transport_Edwin 3 365 340
+
+### NPC信息
+
+- 接取NPC：Teleport_Harrison 0 291 296
+- 交付NPC：Transport_Edwin 3 365 340
+
+---
+
+## 任务 24.txt
+
+**文件路径：** `BichonProvince/BichonWall/24.txt`
+
+### 任务描述
+
+与{道馆/Yellow}的{洞穴向导/LimeGreen}交谈。
+
+### 任务目标
+
+前往{道馆/Yellow}西边，与{洞穴向导/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：4144
+- 金币：7750
+
+// 接取 - Examiner_Tony 0 340 257
+// 交付 - CaveGuide_Paddy 11 119 293
+
+### NPC信息
+
+- 接取NPC：Examiner_Tony 0 340 257
+- 交付NPC：CaveGuide_Paddy 11 119 293
+
+---
+
+## 任务 25.txt
+
+**文件路径：** `BichonProvince/BichonWall/25.txt`
+
+### 任务描述
+
+我的老师让我寻找制药的材料。这些材料只能从{浪人尸鬼/Crimson}身上获得，
+但我无法靠近它们。
+你能帮我弄些{尸魔花/LightSteelBlue}吗？
+
+### 任务目标
+
+前往般若岛，通过猎杀{浪人尸鬼/Crimson}收集10朵{尸魔花/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：CorpsFlower 10
+
+### 任务奖励
+
+- 经验值：18500
+- 金币：18500
+
+// 接取 - Alchemist_Samuel 324 291
+// 交付 - Alchemist_Samuel 324 291
+
+### NPC信息
+
+- 接取NPC：Alchemist_Samuel 324 291
+- 交付NPC：Alchemist_Samuel 324 291
+
+---
+
+## 任务 26.txt
+
+**文件路径：** `BichonProvince/BichonWall/26.txt`
+
+### 任务描述
+
+{国王/LIMEGREEN}受我保护。
+城市的士气令人担忧。证明你的价值吧。
+
+### 任务目标
+
+在城里传播关于{国王/LIMEGREEN}的良好士气。
+我会陪你去向他汇报当前的士气状况。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：550
+
+### NPC信息
+
+
+---
+
+## 任务 3.txt
+
+**文件路径：** `BichonProvince/BichonWall/3.txt`
+
+### 任务描述
+
+{铁匠Jang/LimeGreen}请求帮助。
+请你去跟他谈谈，他在{沃玛森林/Yellow}。
+如果你沿着路向北走，就能到达{沃玛森林/Yellow}城镇。
+
+### 任务目标
+
+前往{沃玛森林/Yellow}并与{Jang/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：120
+- 金币：200
+
+### NPC信息
+
+
+---
+
+## 任务 4.txt
+
+**文件路径：** `BichonProvince/BichonWall/4.txt`
+
+### 任务描述
+
+城镇周围{喷毒蜘蛛/Crimson}的数量不断增加。
+这种怪物有毒，解毒剂只能用{毒囊/LightSteelBlue}制作。
+
+### 任务目标
+
+请通过猎杀{喷毒蜘蛛/Crimson}寻找{毒囊/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：PoisonSack 10
+
+### 任务奖励
+
+- 经验值：500
+- 金币：125
+
+// 接取 -
+// 交付 - MirGuide_Peter 0 328 258
+- 固定奖励：StrongLeatherBelt (结实的皮带)
+
+### NPC信息
+
+- 交付NPC：MirGuide_Peter 0 328 258
+
+---
+
+## 任务 5.txt
+
+**文件路径：** `BichonProvince/BichonWall/5.txt`
+
+### 任务描述
+
+你来得正是时候。{盟重斥候/LimeGreen}早些时候来过，
+给你留了个口信。请去{酒馆/Yellow}一趟。
+
+### 任务目标
+
+去{酒馆/Yellow}与{盟重斥候/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：1104
+- 金币：1200
+
+// 接取 -
+// 交付 - MongchonScout_Brian 0100 4 10
+
+### NPC信息
+
+- 交付NPC：MongchonScout_Brian 0100 4 10
+
+---
+
+## 任务 6.txt
+
+**文件路径：** `BichonProvince/BichonWall/6.txt`
+
+### 任务描述
+
+你好，旅行者。你在这附近很有名。
+你也能帮帮我吗？
+药品的需求量一直在增加，而我们缺少制药的原料。
+我们特别缺{蜘蛛网/LightSteelBlue}，这可以从{喷毒蜘蛛/Crimson}身上找到，
+请你帮我弄一些来好吗？
+
+### 任务目标
+
+请从{喷毒蜘蛛/Crimson}身上收集10个{蜘蛛网/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：Web 10
+
+### 任务奖励
+
+- 经验值：500
+- 金币：500
+
+// 接取 - Alchemist_Samuel 0 324 291
+// 交付 - Alchemist_Samuel 0 324 291
+
+### NPC信息
+
+- 接取NPC：Alchemist_Samuel 0 324 291
+- 交付NPC：Alchemist_Samuel 0 324 291
+
+---
+
+## 任务 7.txt
+
+**文件路径：** `BichonProvince/BichonWall/7.txt`
+
+### 任务描述
+
+能帮我个忙吗？你能把这些送给{毒蛇山谷/Yellow}的{Bradly/LimeGreen}吗？
+他的{修复油/LightSteelBlue}用完了。但他需要它们来修理武器。
+请尽快送达。
+
+### 任务目标
+
+将{修复油/LightSteelBlue}送达给{Bradly/LimeGreen}。
+
+### 任务要求
+
+- 携带物品：RepairOil 2
+
+### 任务奖励
+
+- 经验值：411
+- 金币：600
+
+// 接取 - Blacksmith_Bill 0 302 221
+// 交付 - Merchant_Bradley 0120 7 8
+
+### NPC信息
+
+- 接取NPC：Blacksmith_Bill 0 302 221
+- 交付NPC：Merchant_Bradley 0120 7 8
+
+---
+
+## 任务 8.txt
+
+**文件路径：** `BichonProvince/BichonWall/8.txt`
+
+### 任务描述
+
+你好年轻的玛法勇士，我计划经常去{盟重省/Yellow}，
+但我还没离开这个镇子，因为路上有蛇。
+你觉得你能去消灭一些蛇吗？
+
+### 任务目标
+
+消灭15个{红蛇/Crimson}和{虎蛇/Crimson}。
+
+### 任务要求
+
+- 击杀任务：RedViper 15
+TigerViper 15
+
+### 任务奖励
+
+- 经验值：1200
+- 金币：300
+
+// 接取 - Merchant_Bradley 0120 7 8
+// 交付 - Merchant_Bradley 0120 7 8
+- 固定奖励：SolidBronzeAxe (坚固青铜斧)
+
+### NPC信息
+
+- 接取NPC：Merchant_Bradley 0120 7 8
+- 交付NPC：Merchant_Bradley 0120 7 8
+
+---
+
+## 任务 9.txt
+
+**文件路径：** `BichonProvince/BichonWall/9.txt`
+
+### 任务描述
+
+{奥玛洞穴/Yellow}位于{比奇省/Yellow}的西部。
+这个洞穴里充满了强大的怪物。里面非常黑，简直像个迷宫。
+你准备好展示你的勇气了吗？
+
+### 任务目标
+
+在{奥玛洞穴/Yellow}杀死{骷髅/Crimson}并收集{骷髅骨/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：SkeletonBone 15
+
+### 任务奖励
+
+- 经验值：1400
+- 金币：350
+- 可选奖励：SharpSword (利剑)
+SharpTrident (利三叉戟)
+SharpScimitar (利弯刀)
+SharpSabre (利军刀)
+ToughBow (强弓)
+
+### NPC信息
+
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `BichonProvince/BichonWall/Board/1.txt`
+
+### 任务描述
+
+比奇城悬赏，已提交。
+
+### 任务目标
+
+收集5个{金栗子/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：GoldChestnut 5
+
+### 任务奖励
+
+- 经验值：1500
+- 金币：10000
+
+// 接取 - BichonWall_Board 0 334 259
+// 交付 - BichonWall_Board 0 334 259
+
+### NPC信息
+
+- 接取NPC：BichonWall_Board 0 334 259
+- 交付NPC：BichonWall_Board 0 334 259
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `BichonProvince/BichonWall/Board/2.txt`
+
+### 任务描述
+
+比奇城悬赏，已提交。
+
+### 任务目标
+
+前往{奥玛洞穴/Yellow}并收集{骷髅骨/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：SkeletonBone 15
+
+### 任务奖励
+
+- 经验值：6500
+- 金币：5000
+
+// 接取 - BichonWall_Board 0 334 259
+// 交付 - BichonWall_Board 0 334 259
+
+### NPC信息
+
+- 接取NPC：BichonWall_Board 0 334 259
+- 交付NPC：BichonWall_Board 0 334 259
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `BichonProvince/BorderVillage/1.txt`
+
+### 任务描述
+
+欢迎来到{边界村/Yellow}，年轻的旅行者。
+在你开始旅程之前，能请你帮我一个小忙吗？
+
+### 任务目标
+
+将{食人花叶/LightSteelBlue}运送给{制造师/LimeGreen}。
+
+### 任务要求
+
+- 携带物品：CannibalLeaves 5
+
+### 任务奖励
+
+- 经验值：10
+- 金币：// 接取 - Assistant_Jane 0 284 606
+// 交付 - CraftsLady_Jude 0 294 619
+- 固定奖励：(HP)DrugSmall (金创药(小))
+
+### NPC信息
+
+- 接取NPC：Assistant_Jane 0 284 606
+- 交付NPC：CraftsLady_Jude 0 294 619
+
+---
+
+## 任务 10.txt
+
+**文件路径：** `BichonProvince/BorderVillage/10.txt`
+
+### 任务描述
+
+你好，旅行者。你听说过这个地区的法师导师吗？
+他是所有法师的大师。我听说他最近在寻找新徒弟。
+这可能只是个传言。
+
+### 任务目标
+
+在坐标314:474与{大法师/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：48
+- 金币：60
+
+// 接取 - Assistant_Jane 0 284 606
+// 交付 - ArchMage_Robert 0 8 11
+
+### NPC信息
+
+- 接取NPC：Assistant_Jane 0 284 606
+- 交付NPC：ArchMage_Robert 0 8 11
+
+---
+
+## 任务 11.txt
+
+**文件路径：** `BichonProvince/BorderVillage/11.txt`
+
+### 任务描述
+
+是{助手Jane/LimeGreen}派你来的？
+我不能拒绝她推荐的人，但我不能随便收徒弟。
+你必须通过我的测试。
+
+### 任务目标
+
+消灭10个{半兽人/Crimson}和{钉耙猫/Crimson}。
+
+### 任务要求
+
+- 击杀任务：Oma 10
+RakingCat 10
+
+### 任务奖励
+
+- 经验值：180
+- 金币：45
+
+// 接取 - ArchMage_Robert 0 8 11
+// 交付 - ArchMage_Robert 0 8 11
+- 固定奖励：OldLoafer (旧布鞋)
+FireBall (火球术)
+
+### NPC信息
+
+- 接取NPC：ArchMage_Robert 0 8 11
+- 交付NPC：ArchMage_Robert 0 8 11
+
+---
+
+## 任务 12.txt
+
+**文件路径：** `BichonProvince/BorderVillage/12.txt`
+
+### 任务描述
+
+你现在看起来更像一个训练有素的法师了。
+我已经让Peter给你安排了一些工作。
+奖励应该对你很有帮助。
+
+### 任务目标
+
+在坐标328:258与{向导Peter/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：48
+- 金币：60
+
+// 接取 - ArchMage_Robert 0 8 11
+// 交付 - MirGuide_Peter 0 328 258
+
+### NPC信息
+
+- 接取NPC：ArchMage_Robert 0 8 11
+- 交付NPC：MirGuide_Peter 0 328 258
+
+---
+
+## 任务 13.txt
+
+**文件路径：** `BichonProvince/BorderVillage/13.txt`
+
+### 任务描述
+
+你好，旅行者。你听说过这个地区的道士导师吗？
+他是所有道士的大师。我听说他最近在寻找新徒弟。
+这可能只是个传言。
+
+### 任务目标
+
+与{高级道士/LimeGreen}交谈，他最后出现在坐标546:559，但他正往西北方向走。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：48
+- 金币：60
+
+// 接取 - Assistant_Jane 0 284 606
+// 交付 - HighPriest_Jude 0 429 475
+
+### NPC信息
+
+- 接取NPC：Assistant_Jane 0 284 606
+- 交付NPC：HighPriest_Jude 0 429 475
+
+---
+
+## 任务 14.txt
+
+**文件路径：** `BichonProvince/BorderVillage/14.txt`
+
+### 任务描述
+
+是{助手Jane/LimeGreen}派你来的？
+我不能拒绝她推荐的人，但我不能随便收徒弟。
+你必须通过我的测试。
+
+### 任务目标
+
+消灭10个{半兽人/Crimson}和{钉耙猫/Crimson}。
+
+### 任务要求
+
+- 击杀任务：Oma 10
+RakingCat 10
+
+### 任务奖励
+
+- 经验值：180
+- 金币：45
+
+// 接取 - HighPriest_Jude 0 429 475
+// 交付 - HighPriest_Jude 0 429 475
+- 固定奖励：OldLoafer (旧布鞋)
+Healing (治愈术)
+
+### NPC信息
+
+- 接取NPC：HighPriest_Jude 0 429 475
+- 交付NPC：HighPriest_Jude 0 429 475
+
+---
+
+## 任务 15.txt
+
+**文件路径：** `BichonProvince/BorderVillage/15.txt`
+
+### 任务描述
+
+你现在看起来更像一个训练有素的道士了。
+我已经让Peter给你安排了一些工作。
+奖励应该对你很有帮助。
+
+### 任务目标
+
+在坐标328:258与{向导Peter/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：48
+- 金币：60
+
+// 接取 - HighPriest_Jude 0 429 475
+// 交付 - MirGuide_Peter 0 328 258
+
+### NPC信息
+
+- 接取NPC：HighPriest_Jude 0 429 475
+- 交付NPC：MirGuide_Peter 0 328 258
+
+---
+
+## 任务 16.txt
+
+**文件路径：** `BichonProvince/BorderVillage/16.txt`
+
+### 任务描述
+
+你好，旅行者。你听说过这个地区的刺客导师吗？
+他是所有刺客的大师。我听说他最近在寻找新徒弟。
+这可能只是个传言。
+
+### 任务目标
+
+在坐标101:411与{Cloud/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：48
+- 金币：60
+
+// 接取 - Assistant_Jane 0 284 606
+// 交付 - HighAssassin_Cloud 0 101 411
+
+### NPC信息
+
+- 接取NPC：Assistant_Jane 0 284 606
+- 交付NPC：HighAssassin_Cloud 0 101 411
+
+---
+
+## 任务 17.txt
+
+**文件路径：** `BichonProvince/BorderVillage/17.txt`
+
+### 任务描述
+
+是助手Jane派你来的？
+我不能拒绝她推荐的人，但我不能随便收徒弟。
+你必须通过我的测试。
+
+### 任务目标
+
+消灭10个{半兽人/Crimson}和{钉耙猫/Crimson}。
+
+### 任务要求
+
+- 击杀任务：Oma 10
+RakingCat 10
+
+### 任务奖励
+
+- 经验值：180
+- 金币：45
+
+// 接取 - HighAssassin_Cloud 0 101 411
+// 交付 - HighAssassin_Cloud 0 101 411
+- 固定奖励：OldLoafer (旧布鞋)
+FatalSword (暴击术)
+
+### NPC信息
+
+- 接取NPC：HighAssassin_Cloud 0 101 411
+- 交付NPC：HighAssassin_Cloud 0 101 411
+
+---
+
+## 任务 18.txt
+
+**文件路径：** `BichonProvince/BorderVillage/18.txt`
+
+### 任务描述
+
+你现在看起来更像一个训练有素的刺客了。
+我已经让Peter给你安排了一些工作。
+奖励应该对你很有帮助。
+
+### 任务目标
+
+在坐标328:258与{向导Peter/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：48
+- 金币：60
+
+// 接取 - HighAssassin_Cloud 0 101 411
+// 交付 - MirGuide_Peter 0 328 258
+
+### NPC信息
+
+- 接取NPC：HighAssassin_Cloud 0 101 411
+- 交付NPC：MirGuide_Peter 0 328 258
+
+---
+
+## 任务 19.txt
+
+**文件路径：** `BichonProvince/BorderVillage/19.txt`
+
+### 任务描述
+
+你好，旅行者。你听说过最近保卫这个地区的弓箭手队长吗？
+传言说他们正在寻找徒弟来协助战争。
+
+### 任务目标
+
+在坐标320:476与{Jerald/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：48
+- 金币：60
+
+// 接取 - Assistant_Jane 0 284 606
+// 交付 - Captain_Jerald 0 320 476
+
+### NPC信息
+
+- 接取NPC：Assistant_Jane 0 284 606
+- 交付NPC：Captain_Jerald 0 320 476
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `BichonProvince/BorderVillage/2.txt`
+
+### 任务描述
+
+你能帮我也做个忙吗？我想送一份礼物给{Jane/LimeGreen}以表达我的感激之情。
+但我现在不能离开这里。
+
+### 任务目标
+
+从{稻草人/Crimson}身上找到{姜茶/LightSteelBlue}并送给{边界村/Yellow}的{助手Jane/LimeGreen}。
+
+### 任务要求
+
+- 物品任务：GingerTea 1
+
+### 任务奖励
+
+- 经验值：30
+- 金币：200
+
+// 接取 - CraftsLady_Jude 0 294 619
+// 交付 - Assistant_Jane 0 284 606
+- 固定奖励：GoldenPendant (金项链)
+CopperRing (铜戒指)
+
+### NPC信息
+
+- 接取NPC：CraftsLady_Jude 0 294 619
+- 交付NPC：Assistant_Jane 0 284 606
+
+---
+
+## 任务 20.txt
+
+**文件路径：** `BichonProvince/BorderVillage/20.txt`
+
+### 任务描述
+
+一封推荐信……这是头一回。
+我们需要所有能在这场战争中帮忙的人。
+不管他们是否加入护卫队。
+请你协助我做件事。
+
+### 任务目标
+
+消灭10个{半兽人/Crimson}和{钉耙猫/Crimson}。
+
+### 任务要求
+
+- 击杀任务：Oma 10
+RakingCat 10
+
+### 任务奖励
+
+- 经验值：180
+- 金币：45
+
+// 接取 - Captain_Jerald 0 320 476
+// 交付 - Captain_Jerald 0 320 476
+- 固定奖励：OldLoafer (旧布鞋)
+Focus (精神集中)
+
+### NPC信息
+
+- 接取NPC：Captain_Jerald 0 320 476
+- 交付NPC：Captain_Jerald 0 320 476
+
+---
+
+## 任务 21.txt
+
+**文件路径：** `BichonProvince/BorderVillage/21.txt`
+
+### 任务描述
+
+你现在看起来更像一个训练有素的弓箭手了。
+我已经让{Peter/LimeGreen}给你安排了一些工作。
+奖励应该对你很有帮助。
+
+### 任务目标
+
+在坐标328:258与{向导Peter/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：48
+- 金币：60
+
+// 接取 - Captain_Jerald 0 320 476
+// 交付 - MirGuide_Peter 0 328 258
+
+### NPC信息
+
+- 接取NPC：Captain_Jerald 0 320 476
+- 交付NPC：MirGuide_Peter 0 328 258
+
+---
+
+## 任务 22.txt
+
+**文件路径：** `BichonProvince/BorderVillage/22.txt`
+
+### 任务描述
+
+{边界村/Yellow}有麻烦了！随着怪物的频繁袭击，
+越来越多的守卫受伤了。{Ruben/LimeGreen}请求收集{遗物/LightSteelBlue}来帮助伤者。
+
+### 任务目标
+
+通过猎杀{洞蛆/Crimson}收集10个{遗物/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：Relics 10
+
+### 任务奖励
+
+- 经验值：1700
+- 金币：1700
+
+// 接取 - Alchemist_Samuel 0 324 291
+// 交付 - Merchant_Ruben 0 288 608
+
+### NPC信息
+
+- 接取NPC：Alchemist_Samuel 0 324 291
+- 交付NPC：Merchant_Ruben 0 288 608
+
+---
+
+## 任务 3.txt
+
+**文件路径：** `BichonProvince/BorderVillage/3.txt`
+
+### 任务描述
+
+你好旅行者……
+{屠夫John/LimeGreen}正在寻求帮助。
+我想那是件急事。
+
+### 任务目标
+
+在坐标293:603与{屠夫John/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：10
+- 金币：// 接取 - Assistant_Jane 0 284 606
+// 交付 - Merchant_John 0 292 604
+- 可选奖励：SharpDagger (匕首)
+ToughHoaSword (青铜斧)
+StiffWoodenBow (木弓)
+
+### NPC信息
+
+- 接取NPC：Assistant_Jane 0 284 606
+- 交付NPC：Merchant_John 0 292 604
+
+---
+
+## 任务 4.txt
+
+**文件路径：** `BichonProvince/BorderVillage/4.txt`
+
+### 任务描述
+
+你就是{Jane/LimeGreen}推荐的那个旅行者。
+请你去猎杀{鹿/Crimson}并带给我一些{鹿肉/LightSteelBlue}。
+如果你想了解更多关于割肉的信息，请按 "H"。
+
+### 任务目标
+
+通过猎杀{鹿/Crimson}收集{鹿肉/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：DeerMeat 5
+
+### 任务奖励
+
+- 经验值：80
+- 金币：20
+
+// 接取 - Merchant_John 0 292 604
+// 交付 - Merchant_John 0 292 604
+- 固定奖励：OldCopperRing (旧铜戒指)
+
+### NPC信息
+
+- 接取NPC：Merchant_John 0 292 604
+- 交付NPC：Merchant_John 0 292 604
+
+---
+
+## 任务 5.txt
+
+**文件路径：** `BichonProvince/BorderVillage/5.txt`
+
+### 任务描述
+
+年轻的旅行者，我叫{Smith/LimeGreen}。
+村子外面有太多怪物了，
+我不知道我该怎么去{比奇城/Yellow}。
+你能帮帮我吗？
+
+### 任务目标
+
+消灭10个{鹿/Crimson}和{稻草人/Crimson}。
+
+### 任务要求
+
+- 击杀任务：Deer 10
+Scarecrow 10
+
+### 任务奖励
+
+- 经验值：120
+- 金币：30
+
+// 接取 - Blacksmith_Smith 0 296 613
+// 交付 - Blacksmith_Smith 0 296 613
+- 固定奖励：WornIronBracelet (磨损的铁手镯)
+
+### NPC信息
+
+- 接取NPC：Blacksmith_Smith 0 296 613
+- 交付NPC：Blacksmith_Smith 0 296 613
+
+---
+
+## 任务 6.txt
+
+**文件路径：** `BichonProvince/BorderVillage/6.txt`
+
+### 任务描述
+
+旅行者……我还是觉得外面太危险了。
+你能再帮我个忙吗？
+
+### 任务目标
+
+消灭10个{多钩猫/Crimson}。
+
+### 任务要求
+
+- 击杀任务：HookingCat 10
+
+### 任务奖励
+
+- 经验值：150
+- 金币：38
+
+// 接取 - Blacksmith_Smith 0 296 613
+// 交付 - Blacksmith_Smith 0 296 613
+- 可选奖励：BronzeWarriorSword (青铜剑)
+StrongHoaSword (强力青铜斧)
+StrongWoodenBow (强力木弓)
+
+### NPC信息
+
+- 接取NPC：Blacksmith_Smith 0 296 613
+- 交付NPC：Blacksmith_Smith 0 296 613
+
+---
+
+## 任务 7.txt
+
+**文件路径：** `BichonProvince/BorderVillage/7.txt`
+
+### 任务描述
+
+你好，年轻的旅行者。你听说过这个地区的战士导师吗？
+他是所有战士的大师。我听说他最近在寻找新徒弟。
+这可能只是个传言。
+
+### 任务目标
+
+在坐标110:317与{Master_Wa/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：48
+- 金币：60
+
+// 接取 - Assistant_Jane 0 284 606
+// 交付 - Master_Wa 0 110 317
+
+### NPC信息
+
+- 接取NPC：Assistant_Jane 0 284 606
+- 交付NPC：Master_Wa 0 110 317
+
+---
+
+## 任务 8.txt
+
+**文件路径：** `BichonProvince/BorderVillage/8.txt`
+
+### 任务描述
+
+是{助手Jane/LimeGreen}派你来的？
+我不能拒绝她推荐的人，但我不能随便收徒弟。
+你必须通过我的测试。
+
+### 任务目标
+
+消灭10个{半兽人/Crimson}和{钉耙猫/Crimson}。
+
+### 任务要求
+
+- 击杀任务：Oma 10
+RakingCat 10
+
+### 任务奖励
+
+- 经验值：180
+- 金币：45
+
+// 接取 - Master_Wa 0 110 317
+// 交付 - Master_Wa 0 110 317
+- 固定奖励：OldLoafer (旧布鞋)
+Fencing (基本剑术)
+
+### NPC信息
+
+- 接取NPC：Master_Wa 0 110 317
+- 交付NPC：Master_Wa 0 110 317
+
+---
+
+## 任务 9.txt
+
+**文件路径：** `BichonProvince/BorderVillage/9.txt`
+
+### 任务描述
+
+你现在看起来更像一个训练有素的战士了。
+我已经让Peter给你安排了一些工作。
+奖励应该对你很有帮助。
+
+### 任务目标
+
+在坐标328:258与{向导Peter/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：48
+- 金币：60
+
+// 接取 - Wa_Master 0 110 317
+// 交付 - MirGuide_Peter 0 328 258
+
+### NPC信息
+
+- 接取NPC：Wa_Master 0 110 317
+- 交付NPC：MirGuide_Peter 0 328 258
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `BichonProvince/DeadMine/1.txt`
+
+### 任务描述
+
+你对{比奇/Yellow}的很多人都很有帮助。
+你还有空余时间帮帮我吗？
+很久以前，我有个一起打猎的朋友。
+有一天我们去了{比奇废矿/Yellow}，结果被危险的生物包围了。
+我们试图逃跑，但它们数量太多了。我的朋友在战斗中受伤了，
+他决定留下来断后，让我逃出去求救。
+我想找人帮忙，但没人敢跟我一起去救他。
+虽然已经太迟了，但你能去寻找我朋友的遗骸吗？
+他总是随身带着他的项链。
+
+### 任务目标
+
+试着找到{Vincent的/LimeGreen}朋友，他最后出现在{废矿地下二层/Yellow}。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：1848
+- 金币：2220
+
+// 接取 -
+// 交付 - OldSkeleton D404 104 101
+
+### NPC信息
+
+- 交付NPC：OldSkeleton D404 104 101
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `BichonProvince/DeadMine/2.txt`
+
+### 任务描述
+
+你好旅行者，几天前其中一只{僵尸/Crimson}杀了我的宠物。
+请帮我向{僵尸/Crimson}复仇！
+
+### 任务目标
+
+在{比奇废矿/Yellow}消灭30个{电僵尸/Crimson}。
+
+### 任务要求
+
+- 击杀任务：Zombie1 30
+
+### 任务奖励
+
+- 经验值：3000
+- 金币：3000
+
+### NPC信息
+
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `BichonProvince/OmaCavern/1.txt`
+
+### 任务描述
+
+一块神秘的石头……上面刻着未知的古代符号。
+肯定有办法破解这些符号。
+
+### 任务目标
+
+在{奥玛洞穴/Yellow}搜索{古代镰刀/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：AncientScyther 1
+
+### 任务奖励
+
+- 经验值：3500
+- 金币：// 接取 - MysteriousStone D003 351 234
+// 交付 - MysteriousStone D003 351 234
+
+### NPC信息
+
+- 接取NPC：MysteriousStone D003 351 234
+- 交付NPC：MysteriousStone D003 351 234
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `BichonProvince/OmaCavern/2.txt`
+
+### 任务描述
+
+这把镰刀似乎有某种规律……
+也许{比奇城/Yellow}里有人能破解这些古代符号。
+
+### 任务目标
+
+返回{比奇城/Yellow}
+询问关于符号的信息。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：3900
+- 金币：// 接取 - MysteriousStone D003 351 234
+// 交付 - MysteriousStone D003 351 234
+
+### NPC信息
+
+- 接取NPC：MysteriousStone D003 351 234
+- 交付NPC：MysteriousStone D003 351 234
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `HolySword/1.txt`
+
+### 任务描述
+
+很久以前，一个恶棍偷走了我们的圣剑，那是我们门派最好的剑。
+这把剑如此神圣，传说当它挥动时会刮起风暴，出现龙。
+好吧……谁知道这是不是真的？
+但如果这把剑存在，它的力量将巨大到我们无法估计。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 金币：// 接取 - Apprentice 11 179 309
+// 交付 - Master_Perry 1002 14 13
+
+### NPC信息
+
+- 接取NPC：Apprentice 11 179 309
+- 交付NPC：Master_Perry 1002 14 13
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `HolySword/2.txt`
+
+### 任务描述
+
+前往{丛林迷宫/Yellow}并消灭{天狼蜘蛛/Crimson}，
+然后返回{道馆/Yellow}找{Perry/LimeGreen}。
+
+### 任务要求
+
+- 击杀任务：RootSpider 1 "在丛林迷宫杀死一只天狼蜘蛛"
+
+### 任务奖励
+
+- 金币：// 接取 - Master_Perry 1002 14 13
+// 交付 -
+
+### NPC信息
+
+- 接取NPC：Master_Perry 1002 14 13
+
+---
+
+## 任务 3.txt
+
+**文件路径：** `HolySword/3.txt`
+
+### 任务描述
+
+听{Perry/LimeGreen}讲故事……
+
+### 任务要求
+
+
+### 任务奖励
+
+
+### NPC信息
+
+
+---
+
+## 任务 4.txt
+
+**文件路径：** `HolySword/4.txt`
+
+### 任务描述
+
+穿过{丛林迷宫/Yellow}进入{赤月峡谷/Yellow}。
+
+### 任务目标
+
+通过杀死{黑鄂蜘蛛/Crimson}取回{翡翠水晶/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：JadeCrystal 1
+
+### 任务奖励
+
+- 金币：// 接取 -
+// 交付 - BigTaoist D10061 11 16
+
+### NPC信息
+
+- 交付NPC：BigTaoist D10061 11 16
+
+---
+
+## 任务 5.txt
+
+**文件路径：** `HolySword/5.txt`
+
+### 任务描述
+
+听Abel讲故事。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 金币：// 接取 - BigTaoist D10061 11 16
+// 交付 - BigTaoist D10061 11 16
+
+### NPC信息
+
+- 接取NPC：BigTaoist D10061 11 16
+- 交付NPC：BigTaoist D10061 11 16
+
+---
+
+## 任务 6.txt
+
+**文件路径：** `HolySword/6.txt`
+
+### 任务描述
+
+把{赤月碎片/LightSteelBlue}带给我。
+那是一把不祥的魔剑。
+你应该在别人得到它之前找到它。
+
+### 任务目标
+
+杀死{赤月恶魔/Crimson}找到{赤月碎片/LightSteelBlue}。
+在11:27走向角落，你就能穿过隐藏门。
+
+### 任务要求
+
+- 物品任务：RedMoonChip 1
+
+### 任务奖励
+
+- 金币：// 接取 - BigTaoist D10061 11 16
+// 交付 - BigTaoist D10061 11 16
+
+### NPC信息
+
+- 接取NPC：BigTaoist D10061 11 16
+- 交付NPC：BigTaoist D10061 11 16
+
+---
+
+## 任务 7.txt
+
+**文件路径：** `HolySword/7.txt`
+
+### 任务描述
+
+现在，让我再测试你一次。
+通过我准备的考验并带给我一些恶魔之油。如果你做到了，我就告诉你
+获得赤月剑的方法。
+
+### 完成条件
+
+瓶子里装的是我杀死的赤月恶魔的污血……
+如果你把它涂在衣服上，并拿着一颗恶魔之心，
+把自己伪装成恶魔，你就能得到赤月剑。
+杀死赤月恶魔并铲除恶魔的根源就靠你了。
+你一个人很难杀死赤月恶魔，
+去召集许多其他英雄一起吧……
+
+### 任务要求
+
+- 物品任务：EvilApeOil 1
+
+### 任务奖励
+
+- 金币：// 接取 - BigTaoist D10061 11 16
+// 交付 - BigTaoist D10061 11 16
+
+### NPC信息
+
+- 接取NPC：BigTaoist D10061 11 16
+- 交付NPC：BigTaoist D10061 11 16
+
+---
+
+## 任务 8.txt
+
+**文件路径：** `HolySword/8.txt`
+
+### 任务描述
+
+现在要获得一颗{恶魔之心/LightSteelBlue}，你需要杀死
+{邪恶猿/Crimson}。当你穿过隐藏门时可以找到它们。
+你可以在5层通往{国王房间(赤月恶魔)/Yellow}的路上找到这扇门，
+在182:179走向角落，你就能穿过隐藏门。
+
+### 任务目标
+
+杀死{邪恶猿/Crimson}以获得{恶魔之心/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：EvilHeart 1
+
+### 任务奖励
+
+- 金币：// 接取 - BigTaoist D10061 11 16
+// 交付 - BigTaoist D10061 11 16
+
+### NPC信息
+
+- 接取NPC：BigTaoist D10061 11 16
+- 交付NPC：BigTaoist D10061 11 16
+
+---
+
+## 任务 9.txt
+
+**文件路径：** `HolySword/9.txt`
+
+### 任务描述
+
+深入{赤月峡谷/Yellow}并斩杀
+{赤月恶魔/Crimson}。
+
+### 任务目标
+
+消灭{赤月恶魔/Crimson}。
+
+### 任务要求
+
+- 击杀任务：RedMoonEvil 1
+- 携带物品：EvilApeOil 2
+EvilApeHeart 2
+
+### 任务奖励
+
+- 金币：// 接取 - BigTaoist D10061 11 16
+// 交付 - BigTaoist D10061 11 16
+- 可选奖励：RedMoonSword (赤月剑)
+RedMoonBlades (赤月刀)
+RedMoonBow (赤月弓)
+
+### NPC信息
+
+- 接取NPC：BigTaoist D10061 11 16
+- 交付NPC：BigTaoist D10061 11 16
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `MongchonProvince/Bug Cave/1.txt`
+
+### 任务描述
+
+有人跟你提过{死亡山谷/Yellow}吗？那是
+一个充满悬崖和岩石的地方。那个区域的昆虫
+长得异常巨大。我研究它们多年了。几天前我试图获取一个
+{WhimperingBee/Crimson}的{标本/LightSteelBlue}，但我
+被它们袭击了。
+
+### 任务目标
+
+消灭{WhimperingBee/Crimson}以收集
+{昆虫标本/LightSteelBlue}，这可以在{死亡山谷/Yellow}找到。
+
+### 任务要求
+
+- 物品任务：BugSpecimen 10
+
+### 任务奖励
+
+- 经验值：8800
+- 金币：8800
+
+// 接取 - Merchant_Daniel 3 361 335
+// 交付 - Merchant_Daniel 3 361 335
+
+### NPC信息
+
+- 接取NPC：Merchant_Daniel 3 361 335
+- 交付NPC：Merchant_Daniel 3 361 335
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `MongchonProvince/Bug Cave/2.txt`
+
+### 任务描述
+
+我去{死亡山谷/Yellow}打猎。我遇到了一些
+{钳虫/Crimson}，我以为那是BOSS怪物。
+撤退的时候我弄丢了我心爱的剑。
+
+### 任务目标
+
+前往{死亡山谷/Yellow}，通过杀死{钳虫/Crimson}取回{Charley之剑/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：CharleySword 1
+
+### 任务奖励
+
+- 经验值：9500
+- 金币：9500
+
+### NPC信息
+
+
+---
+
+## 任务 3.txt
+
+**文件路径：** `MongchonProvince/Bug Cave/3.txt`
+
+### 任务描述
+
+你……先生……你……救命，我被困住了。
+
+我最后的记忆是在山谷深处死去。
+然后我就回到了这里。
+
+### 任务目标
+
+调查为什么{灵魂/LimeGreen}会回来。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：3801
+- 金币：7125
+
+// 接取 - LostSoul D601 202 204
+// 交付 - LostSoul D601 202 204
+
+### NPC信息
+
+- 接取NPC：LostSoul D601 202 204
+- 交付NPC：LostSoul D601 202 204
+
+---
+
+## 任务 4.txt
+
+**文件路径：** `MongchonProvince/Bug Cave/4.txt`
+
+### 任务描述
+
+这条项链是我的{生命之石/LightSteelBlue}……这就是为什么我
+回来了。请找到我的{生命之石/LightSteelBlue}。
+
+### 任务目标
+
+猎杀{巨型蠕虫/Crimson}并归还{旧项链/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：OldNecklace 1
+
+### 任务奖励
+
+- 经验值：8000
+- 金币：8000
+
+// 接取 - LostSoul D601 202 204
+// 交付 - LostSoul D601 202 204
+
+### NPC信息
+
+- 接取NPC：LostSoul D601 202 204
+- 交付NPC：LostSoul D601 202 204
+
+---
+
+## 任务 5.txt
+
+**文件路径：** `MongchonProvince/Bug Cave/5.txt`
+
+### 任务描述
+
+请把我的{生命之石/LightSteelBlue}还给我的女儿
+{Rachel/LimeGreen}。她会明白这意味着什么。
+
+感谢你的帮助，我现在可以安息了。
+
+### 任务目标
+
+请将{旧项链/LightSteelBlue}带给{Rachel/LimeGreen}，
+她在{盟重省/Yellow}。
+
+### 任务要求
+
+- 携带物品：OldNecklace 1
+
+### 任务奖励
+
+- 经验值：3801
+- 金币：1781
+
+// 接取 - LostSoul D601 202 204
+// 交付 - Merchant_Rachel 0158 4 21
+- 固定奖励：SolidBlackBoots (坚固黑皮靴)
+- 可选奖励：ClawPendant (魔血项链)
+FireConvexLens (放大镜)
+StrongBambooFlute (竹笛)
+
+### NPC信息
+
+- 接取NPC：LostSoul D601 202 204
+- 交付NPC：Merchant_Rachel 0158 4 21
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `MongchonProvince/MudWall/1.txt`
+
+### 任务描述
+
+请向我在{比奇省/Yellow}的指挥官报告。
+
+### 任务目标
+
+向{讨伐管理员/LimeGreen}报告。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：6688
+- 金币：13000
+
+// 接取 - MongchonDelegate_Michael 3 330 332
+// 交付 - SubjagationManager_James 0 343 182
+- 可选奖励：SolidGreatAxe (大斧)
+SolidBronzeStaff (青铜斧)
+SolidSerpentSword (蛇眼戒指)
+SolidTwinBlades (双刃剑)
+SolidSilverBow (银蛇)
+
+### NPC信息
+
+- 接取NPC：MongchonDelegate_Michael 3 330 332
+- 交付NPC：SubjagationManager_James 0 343 182
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `MongchonProvince/MudWall/Board/1.txt`
+
+### 任务描述
+
+土城悬赏，已提交。
+
+### 任务目标
+
+前往{石墓/Yellow}消灭{红野猪/Crimson}并
+收集{野猪牙/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：BoarTooth 75 "收集野猪牙"
+
+### 任务奖励
+
+- 经验值：10000
+- 金币：25000
+
+// 接取 - MudWall_Board 3 330 325
+// 交付 - MudWall_Board 3 330 325
+
+### NPC信息
+
+- 接取NPC：MudWall_Board 3 330 325
+- 交付NPC：MudWall_Board 3 330 325
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `MongchonProvince/SabukWall/1.txt`
+
+### 任务描述
+
+我是个傻瓜！我把最古老的书弄丢了。
+我去{沙巴克/Yellow}游览，摔倒了，
+接下来我知道的就是我被{僵尸/Crimson}包围了。
+
+### 任务目标
+
+找到{沙巴克/Yellow}的隐藏入口并找到
+{比奇传说/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：BichonTales(3) 1
+
+### 任务奖励
+
+- 经验值：9000
+- 金币：9000
+
+### NPC信息
+
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `MongchonProvince/SabukWall/2.txt`
+
+### 任务描述
+
+你好玛法勇士，我还缺{卷1/LightSteelBlue}和{2/LightSteelBlue}。
+
+### 任务目标
+
+请返回{隐藏入口/Yellow}
+并取回{卷1/LightSteelBlue}和{2/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：BichonTales(1) 1
+BichonTales(2) 1
+
+### 任务奖励
+
+- 经验值：10000
+- 金币：10000
+
+### NPC信息
+
+
+---
+
+## 任务 3.txt
+
+**文件路径：** `MongchonProvince/SabukWall/3.txt`
+
+### 任务描述
+
+请访问{沙巴克/Yellow}并与{王大人/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：1658
+- 金币：3300
+
+// 接取 - MirGuide_James 2 505 483
+// 交付 - Merchant_Mr.Wang 3 663 304
+
+### NPC信息
+
+- 接取NPC：MirGuide_James 2 505 483
+- 交付NPC：Merchant_Mr.Wang 3 663 304
+
+---
+
+## 任务 4.txt
+
+**文件路径：** `MongchonProvince/SabukWall/4.txt`
+
+### 任务描述
+
+这附近有{隐藏入口/Yellow}。
+它们通向某种地牢。传言说
+在每个入口处，都有某种柱子。
+
+### 任务目标
+
+找到{隐藏入口/Yellow}并搜索柱子。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：2764
+- 金币：5500
+
+// 接取 - Merchant_Mr.Wang 3 663 304
+// 交付 - Merchant_Mr.Wang 3 663 304
+
+### NPC信息
+
+- 接取NPC：Merchant_Mr.Wang 3 663 304
+- 交付NPC：Merchant_Mr.Wang 3 663 304
+
+---
+
+## 任务 5.txt
+
+**文件路径：** `MongchonProvince/SabukWall/5.txt`
+
+### 任务描述
+
+看来传言是真的。
+请返回{隐藏入口/Yellow}。
+
+### 任务目标
+
+消灭一些{爬行僵尸/Crimson}。
+
+### 任务要求
+
+- 击杀任务：CrawlerZombie 50 "消灭一些爬行僵尸"
+
+### 任务奖励
+
+- 经验值：11000
+- 金币：2750
+
+// 接取 - Merchant_Mr.Wang 3 663 304
+// 交付 - Merchant_Mr.Wang 3 663 304
+- 固定奖励：ExorcistRing (降妖除魔戒指)
+
+### NPC信息
+
+- 接取NPC：Merchant_Mr.Wang 3 663 304
+- 交付NPC：Merchant_Mr.Wang 3 663 304
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `MongchonProvince/StoneTomb/1.txt`
+
+### 任务描述
+
+你好。最近{盟重省/Yellow}的昆虫太多了。
+晚上因为噪音我睡不着觉。你能
+去猎杀这些昆虫吗？
+
+### 任务目标
+
+前往{石墓/Yellow}并消灭10个
+{黑色恶蛆/Crimson}和{楔蛾/Crimson}。
+
+### 任务要求
+
+- 击杀任务：BlackMaggot 10
+WedgeMoth 10
+
+### 任务奖励
+
+- 经验值：12500
+- 金币：12500
+
+### NPC信息
+
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `MongchonProvince/StoneTomb/2.txt`
+
+### 任务描述
+
+欢迎来到{盟重省/Yellow}。
+我们一直受到长得像野猪的怪物的袭击。
+我们收到的报告称这些怪物来自{地下陵墓/Yellow}。你能
+去那里消灭这些怪物吗？
+
+### 任务目标
+
+在{石墓/Yellow}消灭15个{黑野猪/Crimson}和{红野猪/Crimson}。
+
+### 任务要求
+
+- 击杀任务：BlackBoar 15
+RedBoar 15
+
+### 任务奖励
+
+- 经验值：13500
+- 金币：13500
+
+// 接取 - MonghconDelegate_Michael 3 330 332
+// 交付 - MongchonDelegate_Michael 3 330 332
+
+### NPC信息
+
+- 接取NPC：MonghconDelegate_Michael 3 330 332
+- 交付NPC：MongchonDelegate_Michael 3 330 332
+
+---
+
+## 任务 3.txt
+
+**文件路径：** `MongchonProvince/StoneTomb/3.txt`
+
+### 任务描述
+
+你在{石墓/Yellow}去过多深的地方？
+{白野猪/Crimson}位于深处。
+
+### 任务目标
+
+消灭{白野猪/Crimson}。
+
+### 任务要求
+
+- 击杀任务：WhiteBoar 1
+
+### 任务奖励
+
+- 经验值：13000
+- 金币：13000
+
+// 接取 - MongchonDelegate_Michael 3 330 332
+// 交付 - MongchonDelegate_Michael 3 330 332
+
+### NPC信息
+
+- 接取NPC：MongchonDelegate_Michael 3 330 332
+- 交付NPC：MongchonDelegate_Michael 3 330 332
+
+---
+
+## 任务 4.txt
+
+**文件路径：** `MongchonProvince/StoneTomb/4.txt`
+
+### 任务描述
+
+你好玛法勇士，{石墓/Yellow}内有一种更黑暗的邪恶。
+在层级之中有一块石头，据称有能力
+开启通往{古代层/Yellow}的通道。
+
+### 任务目标
+
+在{石墓/Yellow}内找到石头。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：9612
+- 金币：13600
+
+// 接取 - MonghconDelegate_Michael 3 330 332
+// 交付 - MongchonDelegate_Michael 3 330 332
+
+### NPC信息
+
+- 接取NPC：MonghconDelegate_Michael 3 330 332
+- 交付NPC：MongchonDelegate_Michael 3 330 332
+
+---
+
+## 任务 5.txt
+
+**文件路径：** `MongchonProvince/StoneTomb/5.txt`
+
+### 任务描述
+
+根据流传的谣言，你已经找到了{石墓/Yellow}中的{古代层/Yellow}？
+你能返回并从{石墓/Yellow}的古代层收集{遗物岩石/LightSteelBlue}吗？
+
+### 任务目标
+
+杀死{古代红野猪/Crimson}、{古代黑野猪/Crimson}和
+{古代白野猪/Crimson}以获取{遗物岩石/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：RelicRock 20
+
+### 任务奖励
+
+- 经验值：78000
+- 金币：78000
+
+### NPC信息
+
+
+---
+
+## 任务 6.txt
+
+**文件路径：** `MongchonProvince/StoneTomb/6.txt`
+
+### 任务描述
+
+这是真的吗？你去过{古代层/Yellow}？你能
+回去通过杀死{古代蛇蝎/Crimson}收集17个{血丸/LightSteelBlue}吗？
+
+### 任务要求
+
+- 物品任务：BloodPill 17
+
+### 任务奖励
+
+- 经验值：88500
+- 金币：88500
+
+// 接取 - Merchant_Kevin 3 346 334
+// 交付 - Merchant_Kevin 3 346 334
+
+### NPC信息
+
+- 接取NPC：Merchant_Kevin 3 346 334
+- 交付NPC：Merchant_Kevin 3 346 334
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `PrajnaIsland/PIVillage/1.txt`
+
+### 任务描述
+
+被{红蛇/Crimson}咬了？请告诉{Robert/LimeGreen}，
+{红蛇/Crimson}的牙齿是解药的主要成分。
+你时间不多了。快去杀一些{红蛇/Crimson}获取牙齿。
+
+### 任务目标
+
+收集{红蛇牙齿/LightSteelBlue}用于解药。
+
+### 任务要求
+
+- 物品任务：RedSnakeTeeth 1
+
+### 任务奖励
+
+- 经验值：1200
+- 金币：300
+
+// 接取 -
+// 交付 - Merchant_Robert 2 505 479
+- 固定奖励：BoxofHolyWater(3) (强效太阳水(3))
+
+### NPC信息
+
+- 交付NPC：Merchant_Robert 2 505 479
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `PrajnaIsland/PIVillage/2.txt`
+
+### 任务描述
+
+最近我们受到怪物的攻击越来越多了。
+你觉得你能消除这个威胁吗？
+
+### 任务目标
+
+游历岛屿并消灭15个{剧毒食尸鬼/Crimson}
+和10个{浪人食尸鬼/Crimson}。
+
+### 任务要求
+
+- 击杀任务：ToxicGhoul 15
+RoninGhoul 10
+
+### 任务奖励
+
+- 经验值：18500
+- 金币：18500
+
+### NPC信息
+
+
+---
+
+## 任务 3.txt
+
+**文件路径：** `PrajnaIsland/PIVillage/3.txt`
+
+### 任务描述
+
+{村长/LimeGreen}正在找你。
+
+### 任务目标
+
+与{般若岛/Yellow}的{村长/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：3912
+
+### NPC信息
+
+
+---
+
+## 任务 4.txt
+
+**文件路径：** `PrajnaIsland/PIVillage/4.txt`
+
+### 任务描述
+
+请回到{道馆/Yellow}并与
+{首席教官/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：3912
+- 金币：// 接取 -
+// 交付 - LeadTrainer_Harry 1002 11 8
+
+### NPC信息
+
+- 交付NPC：LeadTrainer_Harry 1002 11 8
+
+---
+
+## 任务 5.txt
+
+**文件路径：** `PrajnaIsland/PIVillage/5.txt`
+
+### 任务描述
+
+请把这{海藻/LightSteelBlue}带到
+{盟重省/Yellow}。
+
+### 任务目标
+
+将{海藻/LightSteelBlue}送给{盟重省/Yellow}的{制造师/LimeGreen}。
+
+### 任务要求
+
+- 携带物品：Algae 2
+
+### 任务奖励
+
+- 经验值：8407
+- 金币：12000
+
+// 接取 -
+// 交付 - CraftsLady_Louise 3 299 371
+
+### NPC信息
+
+- 交付NPC：CraftsLady_Louise 3 299 371
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `PrajnaIsland/PranjaStoneCave/1.txt`
+
+### 任务描述
+
+{般若洞/Yellow}是许多战士在与怪物战斗中
+死去的地方。几年前，
+我们看到这些死去的战士复活了，但它们什么都不记得，
+并攻击每一个进入洞穴的人。
+请帮忙消灭它们。
+
+### 任务目标
+
+向东前往{般若石窟/Yellow}并消灭
+15个{骷髅弓箭手/Crimson}和15个{骷髅长枪兵/Crimson}。
+
+### 任务要求
+
+- 击杀任务：BoneArcher 15
+BoneSpearman 15
+
+### 任务奖励
+
+- 经验值：19500
+- 金币：19500
+
+### NPC信息
+
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `PrajnaIsland/PranjaStoneCave/2.txt`
+
+### 任务描述
+
+墓穴里有更强的怪物。
+{骷髅刀斧手/Crimson}比其他怪物更快。
+请消灭这些怪物。
+
+### 任务目标
+
+请返回洞穴。消灭15个
+{骷髅刀斧手/Crimson}。
+
+### 任务要求
+
+- 击杀任务：BoneBlademan 15
+
+### 任务奖励
+
+- 经验值：19000
+- 金币：19000
+
+### NPC信息
+
+
+---
+
+## 任务 3.txt
+
+**文件路径：** `PrajnaIsland/PranjaStoneCave/3.txt`
+
+### 任务描述
+
+我需要你的帮助。我有一个订单……很奇怪的订单。
+你能去当地的洞穴收集一些
+{干净的头骨/LightSteelBlue}吗？
+
+### 任务目标
+
+通过猎杀{骷髅弓箭手/Crimson}、
+{骷髅刀斧手/Crimson}和{骷髅长枪兵/Crimson}收集20个{干净的头骨/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：CleanSkull 20
+
+### 任务奖励
+
+- 经验值：18500
+- 金币：18500
+
+### NPC信息
+
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `PrajnaIsland/PranjaTemple/1.txt`
+
+### 任务目标
+
+向东南前往{般若神殿/Yellow}并杀死30个
+{牛头怪/Crimson}。
+
+### 任务要求
+
+- 击杀任务：Minotaur 30
+
+### 任务奖励
+
+- 经验值：48000
+- 金币：48000
+
+### NPC信息
+
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `PrajnaIsland/PranjaTemple/2.txt`
+
+### 任务目标
+
+消灭20个{风牛头怪/Crimson}、{电牛头怪/Crimson}、
+{火牛头怪/Crimson}和{冰牛头怪/Crimson}。
+
+### 任务要求
+
+- 击杀任务：ElecMinotaur 20
+FireMinotaur 20
+IceMinotaur 20
+WindMinotaur 20
+
+### 任务奖励
+
+- 经验值：54000
+- 金币：54000
+
+### NPC信息
+
+
+---
+
+## 任务 3.txt
+
+**文件路径：** `PrajnaIsland/PranjaTemple/3.txt`
+
+### 任务目标
+
+消灭30个{左护卫/Crimson}和{右护卫/Crimson}。
+
+### 任务要求
+
+- 击杀任务：LeftGuard 30
+RightGuard 30
+
+### 任务奖励
+
+- 经验值：55000
+- 金币：55000
+
+### NPC信息
+
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `SerpentValley/Serpent Mines/1.txt`
+
+### 任务描述
+
+旅行者，请进入{毒蛇废矿/Yellow}
+并消除威胁。
+
+### 任务目标
+
+消灭10个{幽灵僵尸/Crimson}和{黑暗僧侣僵尸/Crimson}。
+
+### 任务要求
+
+- 击杀任务：GhostZombie 10
+DarkPriestZombie 10
+
+### 任务奖励
+
+- 经验值：4900
+- 金币：4900
+
+// 接取 - VulnerableSon_Alfie 2 562 172
+// 交付 - VulnerableSon_Alfie 2 562 172
+
+### NPC信息
+
+- 接取NPC：VulnerableSon_Alfie 2 562 172
+- 交付NPC：VulnerableSon_Alfie 2 562 172
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `SerpentValley/Serpent Mines/2.txt`
+
+### 任务描述
+
+你听说过{毒蛇废矿/Yellow}吗？我一直
+听到锁链的声音。从矿洞传来的声音
+快把我逼疯了。
+
+### 任务目标
+
+消灭15个{锁链尸鬼/Crimson}。
+
+### 任务要求
+
+- 击杀任务：ChainGhoul 15
+
+### 任务奖励
+
+- 经验值：4800
+- 金币：4800
+
+### NPC信息
+
+
+---
+
+## 任务 3.txt
+
+**文件路径：** `SerpentValley/Serpent Mines/3.txt`
+
+### 任务描述
+
+传言说……在北边的矿洞里有一把非常稀有的剑。
+你能帮我把它带回来吗？
+
+### 任务目标
+
+杀死{毒蛇废矿二层/Yellow}的{高级食尸鬼/Crimson}
+并取回{血色之剑/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：RedDagger 1
+
+### 任务奖励
+
+- 经验值：4700
+- 金币：4700
+
+// 接取 - Merchant_Bradley 0120 7 8
+// 交付 - Merchant_Bradley 0120 7 8
+
+### NPC信息
+
+- 接取NPC：Merchant_Bradley 0120 7 8
+- 交付NPC：Merchant_Bradley 0120 7 8
+
+---
+
+## 任务 4.txt
+
+**文件路径：** `SerpentValley/Serpent Mines/4.txt`
+
+### 任务描述
+
+谢谢你，旅行者。为了归还我儿子的{长袍/LightSteelBlue}，如果你愿意接受挑战，
+我有个任务给你。我儿子当时正在{毒蛇废矿/Yellow}寻找宝藏。
+他的长袍里有一封信说他找到了金子。
+请回去取回{被盗的黄金/LightSteelBlue}。
+
+### 任务目标
+
+杀死位于{毒蛇废矿二层/Yellow}的{腐烂僵尸/Crimson}。
+
+### 任务要求
+
+- 物品任务：StolenGold 1
+
+### 任务奖励
+
+- 经验值：4800
+- 金币：4800
+
+// 接取 - InnKeeper_Robin 0146 5 10
+// 交付 - InnKeeper_Robin 0146 5 10
+- 可选奖励：BlackCrystalRing (黑水晶戒指)
+EyeofGoldenSnake (金蛇之眼)
+BlackPearlRing (黑珍珠戒指)
+
+### NPC信息
+
+- 接取NPC：InnKeeper_Robin 0146 5 10
+- 交付NPC：InnKeeper_Robin 0146 5 10
+
+---
+
+## 任务 5.txt
+
+**文件路径：** `SerpentValley/Serpent Mines/5.txt`
+
+### 任务描述
+
+似乎有一股黑暗邪恶的气息从{矿洞/Yellow}里传出来。
+
+### 任务目标
+
+调查{毒蛇废矿/Yellow}中的邪恶源头。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：5594
+- 金币：6000
+
+// 接取 - Merchant_Dr.Kim 0017 5 9
+// 交付 - SkeletonPile D422 220 89
+
+### NPC信息
+
+- 接取NPC：Merchant_Dr.Kim 0017 5 9
+- 交付NPC：SkeletonPile D422 220 89
+
+---
+
+## 任务 6.txt
+
+**文件路径：** `SerpentValley/Serpent Mines/6.txt`
+
+### 任务描述
+
+一个带有描述的卷轴。一定很重要。
+
+### 任务目标
+
+将{隐藏卷轴/LightSteelBlue}送给{金医生/LimeGreen}。
+
+### 任务要求
+
+- 携带物品：HiddenScroll 2
+
+### 任务奖励
+
+- 经验值：2382
+- 金币：3600
+
+// 接取 - SkeletonPile D2422 220 89
+// 交付 - Merchant_Dr.Kim 0017 5 9
+
+### NPC信息
+
+- 接取NPC：SkeletonPile D2422 220 89
+- 交付NPC：Merchant_Dr.Kim 0017 5 9
+
+---
+
+## 任务 7.txt
+
+**文件路径：** `SerpentValley/Serpent Mines/7.txt`
+
+### 任务描述
+
+旅行者，请返回{毒蛇废矿/Yellow}
+完成{隐藏卷轴/LightSteelBlue}上的任务。
+
+### 任务目标
+
+消灭{腐烂僧侣僵尸/Crimson}并从{高级食尸鬼/Crimson}身上
+取回{死者之心/LightSteelBlue}。
+
+### 任务要求
+
+- 击杀任务：RotShamanZombie 20
+- 物品任务：HeartOfDead 1
+
+### 任务奖励
+
+- 经验值：4800
+- 金币：4800
+
+// 接取 - Merchant_Dr.Kim 0017 5 9
+// 交付 - Merchant_Dr.Kim 0017 5 9
+- 可选奖励：MartialSabre (斩马刀)
+SpearWithHook (钩镰枪)
+KeenKrissSword (降魔)
+BlackIronCrowSwords (玄铁剑)
+ToughLongBow (硬长弓)
+
+### NPC信息
+
+- 接取NPC：Merchant_Dr.Kim 0017 5 9
+- 交付NPC：Merchant_Dr.Kim 0017 5 9
+
+---
+
+## 任务 8.txt
+
+**文件路径：** `SerpentValley/Serpent Mines/8.txt`
+
+### 任务描述
+
+旅行者……旅行者。我急需你的
+帮助……我刚收到关于
+{毒蛇废矿/Yellow}里一种非常稀有生物的消息。
+{白蛇/Crimson}听起来很有趣，
+不是吗？
+
+### 任务目标
+
+在{毒蛇废矿/Yellow}消灭{白蛇/Crimson}。
+
+### 任务要求
+
+- 击杀任务：WhiteSerpent 1
+
+### 任务奖励
+
+- 经验值：5900
+- 金币：5900
+
+### NPC信息
+
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `SerpentValley/Village/1.txt`
+
+### 任务描述
+
+你好，旅行者。我正从{盟重省/Yellow}
+返回{毒蛇山谷/Yellow}。但我被{恶犬/Crimson}袭击了，
+弄丢了我的包。我无价的{翡翠戒指/LightSteelBlue}就在包里。
+
+### 任务目标
+
+从{恶犬/Crimson}身上找回{翡翠戒指/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：JadeRing 1
+
+### 任务奖励
+
+- 经验值：800
+- 金币：800
+
+// 接取 - Merchant_Bradley 0120 7 8
+// 交付 - Merchant_Bradley 0120 7 8
+
+### NPC信息
+
+- 接取NPC：Merchant_Bradley 0120 7 8
+- 交付NPC：Merchant_Bradley 0120 7 8
+
+---
+
+## 任务 10.txt
+
+**文件路径：** `SerpentValley/Village/10.txt`
+
+### 任务描述
+
+我的爷爷住在{沃玛森林/Yellow}。我以前
+经常去看他，但我最近太忙了。
+你能去{沃玛森林/Yellow}看看{Shok大师/LimeGreen}，
+看看他过得怎么样吗？
+
+### 任务目标
+
+拜访{Shok大师/LimeGreen}，坐标312:73，
+{沃玛森林/Yellow}。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：657
+- 金币：900
+
+// 接取 - Merchant_Melissa 2 517 477
+// 交付 - Master_Shok 1 312 73
+
+### NPC信息
+
+- 接取NPC：Merchant_Melissa 2 517 477
+- 交付NPC：Master_Shok 1 312 73
+
+---
+
+## 任务 11.txt
+
+**文件路径：** `SerpentValley/Village/11.txt`
+
+### 任务描述
+
+你知道{毒蛇山谷/Yellow}在哪吗？那是
+这里的西北方的一个小镇。那个镇上的{Robert/LimeGreen}
+正在寻求帮助。
+你有兴趣吗？
+
+### 任务目标
+
+与{毒蛇山谷/Yellow}的{Robert/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：672
+- 金币：925
+
+// 接取 -
+// 交付 - Merchant_Robert 2 505 479
+
+### NPC信息
+
+- 交付NPC：Merchant_Robert 2 505 479
+
+---
+
+## 任务 12.txt
+
+**文件路径：** `SerpentValley/Village/12.txt`
+
+### 任务描述
+
+你是来帮我的吗？你真的打算
+帮忙吗？太感谢你了。我从不在一个地方
+定居，所以我没有邻居可以帮我。
+我的女儿被{红蛇/Crimson}咬了，
+毒性快要她的命了。我听说在{般若岛/Yellow}有一位
+著名的医生{Sandford/LimeGreen}。
+
+### 任务目标
+
+请去拜访{Sandford/LimeGreen}并为我的女儿取回解药。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：807
+- 金币：1110
+
+// 接取 - Merchant_Robert 2 505 479
+// 交付 -
+
+### NPC信息
+
+- 接取NPC：Merchant_Robert 2 505 479
+
+---
+
+## 任务 13.txt
+
+**文件路径：** `SerpentValley/Village/13.txt`
+
+### 任务描述
+
+谢谢你旅行者，感谢你提供的帮助。
+我很高兴我的朋友{Soho/LimeGreen}
+还活着而且很好。我有另一个任务给你。
+
+### 任务目标
+
+将{怪物之血/LightSteelBlue}送给{毒蛇山谷/Yellow}的{金医生/LimeGreen}。
+
+### 任务要求
+
+- 携带物品：MobBlood 2
+
+### 任务奖励
+
+- 经验值：1971
+- 金币：2850
+
+// 接取 - Merchant_Helen 1 292 84
+// 交付 - Merchant_Dr.Kim 0017 5 3
+
+### NPC信息
+
+- 接取NPC：Merchant_Helen 1 292 84
+- 交付NPC：Merchant_Dr.Kim 0017 5 3
+
+---
+
+## 任务 14.txt
+
+**文件路径：** `SerpentValley/Village/14.txt`
+
+### 任务描述
+
+请返回{盟重省/Yellow}的仓库管理员{Robin/LimeGreen}处。
+
+### 任务要求
+
+- 携带物品：OldRobe 1
+
+### 任务奖励
+
+- 经验值：3794
+- 金币：4200
+
+// 接取 - OldSkull D422 97 320
+// 交付 - InnKeeper_Robin 0146 5 10
+
+### NPC信息
+
+- 接取NPC：OldSkull D422 97 320
+- 交付NPC：InnKeeper_Robin 0146 5 10
+
+---
+
+## 任务 15.txt
+
+**文件路径：** `SerpentValley/Village/15.txt`
+
+### 任务描述
+
+很高兴再次见到你，旅行者。请把这个
+订单送给{道馆/Yellow}的布料商{Sam/LimeGreen}。
+
+### 任务目标
+
+向北穿过{沃玛森林/Yellow}，将
+{学徒服/LightSteelBlue}送给{布料商Sam/LimeGreen}。
+
+### 任务要求
+
+- 携带物品：TraineeSuit 2
+
+### 任务奖励
+
+- 经验值：2538
+- 金币：4425
+
+// 接取 - Merchant_Melissa 2 517 477
+// 交付 - Merchant_Sam 1003 13 16
+
+### NPC信息
+
+- 接取NPC：Merchant_Melissa 2 517 477
+- 交付NPC：Merchant_Sam 1003 13 16
+
+---
+
+## 任务 16.txt
+
+**文件路径：** `SerpentValley/Village/16.txt`
+
+### 任务描述
+
+你好年轻的玛法勇士，我计划经常去
+{盟重省/Yellow}，但我还没离开
+这个镇子，因为路上有蛇。
+你觉得你能去消灭一些蛇吗？
+
+### 任务目标
+
+消灭15个{红蛇/Crimson}和{虎蛇/Crimson}。
+
+### 任务要求
+
+- 击杀任务：RedViper 15
+TigerViper 15
+
+### 任务奖励
+
+- 经验值：1200
+- 金币：300
+
+// 接取 - Merchant_Bradley 0120 7 8
+// 交付 - Merchant_Bradley 0120 7 8
+- 固定奖励：SolidBronzeAxe (坚固青铜斧)
+
+### NPC信息
+
+- 接取NPC：Merchant_Bradley 0120 7 8
+- 交付NPC：Merchant_Bradley 0120 7 8
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `SerpentValley/Village/2.txt`
+
+### 任务描述
+
+这枚戒指看起来依然完美。
+请把这枚戒指送给我的女儿
+{Melissa/LimeGreen}。她也需要一些帮助。
+
+### 任务目标
+
+请将{翡翠戒指/LightSteelBlue}带给{Melissa/LimeGreen}。
+
+### 任务要求
+
+- 携带物品：JadeRing 1
+
+### 任务奖励
+
+- 经验值：219
+- 金币：300
+
+// 接取 - Merchant_Bradley 0120 7 8
+// 交付 - Merchant_Melissa 2 517 477
+
+### NPC信息
+
+- 接取NPC：Merchant_Bradley 0120 7 8
+- 交付NPC：Merchant_Melissa 2 517 477
+
+---
+
+## 任务 3.txt
+
+**文件路径：** `SerpentValley/Village/3.txt`
+
+### 任务描述
+
+谢谢，我记得这枚戒指，它曾经
+属于我的祖母。请把这份礼物
+带回给{Bradly/LimeGreen}以表达我的感激之情。
+
+### 任务目标
+
+请把这个{蓝色药丸/LightSteelBlue}带给{Bradly/LimeGreen}。
+
+### 任务要求
+
+- 携带物品：BluePill 1
+
+### 任务奖励
+
+- 经验值：219
+- 金币：75
+
+// 接取 - Merchant_Melissa 2 517 477
+// 交付 - Merchant_Bradley 0120 7 8
+- 可选奖励：BlackCrystalPendant (黑水晶项链)
+EbonyPendant (乌木项链)
+YellowCrystalPendant (黄水晶项链)
+
+### NPC信息
+
+- 接取NPC：Merchant_Melissa 2 517 477
+- 交付NPC：Merchant_Bradley 0120 7 8
+
+---
+
+## 任务 4.txt
+
+**文件路径：** `SerpentValley/Village/4.txt`
+
+### 任务描述
+
+请帮帮我。我最近刚搬来这里，我看到
+到处都是蛇！想到蛇在我床底下爬
+我就睡不着觉。
+
+### 任务目标
+
+请消灭10个{红蛇/Crimson}和{虎蛇/Crimson}。
+
+### 任务要求
+
+- 击杀任务：TigerSnake 10
+RedSnake 10
+
+### 任务奖励
+
+- 经验值：1000
+- 金币：250
+
+// 接取 - Merchant_Robert 2 505 479
+// 交付 - Merchant_Robert 2 505 479
+- 可选奖励：SolidArmour (坚固盔甲)
+
+### NPC信息
+
+- 接取NPC：Merchant_Robert 2 505 479
+- 交付NPC：Merchant_Robert 2 505 479
+
+---
+
+## 任务 5.txt
+
+**文件路径：** `SerpentValley/Village/5.txt`
+
+### 任务描述
+
+你最近要去{比奇/Yellow}吗？如果你
+去那里，能不能把这个{秘方/LightSteelBlue}送给
+{制造师/LimeGreen}？我听说{比奇/Yellow}的{制造师/LimeGreen}
+想要我的{秘方/LightSteelBlue}。我太忙了，没法自己去。
+
+### 任务目标
+
+请将此秘方送给{比奇城/Yellow}的
+{制造师/LimeGreen}。
+
+### 任务要求
+
+- 携带物品：SecretRecipe 2
+
+### 任务奖励
+
+- 经验值：538
+- 金币：800
+
+// 接取 -
+// 交付 - CraftsLady_Alice 0 321 265
+
+### NPC信息
+
+- 交付NPC：CraftsLady_Alice 0 321 265
+
+---
+
+## 任务 6.txt
+
+**文件路径：** `SerpentValley/Village/6.txt`
+
+### 任务描述
+
+你听说过{蛇酒/LightSteelBlue}吗？这种酒是用
+{红蛇/Crimson}和{虎蛇/Crimson}酿造的。我在
+{毒蛇山谷/Yellow}附近喝过一次，我至今忘不了
+那个味道。
+
+### 任务目标
+
+请去从{Mary/LimeGreen}那里买些{蛇酒/LightSteelBlue}。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：411
+- 金币：600
+
+// 接取 - MongchonScout_Brian 0100 4 10
+// 交付 -
+
+### NPC信息
+
+- 接取NPC：MongchonScout_Brian 0100 4 10
+
+---
+
+## 任务 7.txt
+
+**文件路径：** `SerpentValley/Village/7.txt`
+
+### 任务描述
+
+很抱歉，我们的{蛇酒/LightSteelBlue}卖完了。
+我可以给你做一些，但你得把
+材料带给我。
+
+### 任务目标
+
+请从蛇身上收集10个{蛇肉/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：SnakeBody 10
+
+### 任务奖励
+
+- 经验值：800
+- 金币：800
+
+### NPC信息
+
+
+---
+
+## 任务 8.txt
+
+**文件路径：** `SerpentValley/Village/8.txt`
+
+### 任务描述
+
+这是给{盟重斥候/LimeGreen}的{蛇酒/LightSteelBlue}，
+如约奉上。请享用。
+
+### 任务目标
+
+将{蛇酒/LightSteelBlue}送给{盟重斥候/LimeGreen}。
+
+### 任务要求
+
+- 携带物品：SnakeWine 2
+
+### 任务奖励
+
+- 经验值：822
+- 金币：300
+
+// 接取 -
+// 交付 - MongchonScout_Brian 0100 4 10
+- 固定奖励：BrokenSword (断剑)
+
+### NPC信息
+
+- 交付NPC：MongchonScout_Brian 0100 4 10
+
+---
+
+## 任务 9.txt
+
+**文件路径：** `SerpentValley/Village/9.txt`
+
+### 任务描述
+
+你好，旅行者。我还需要一些水果来酿
+这种酒。你能给我找10个{乌木果/LightSteelBlue}吗。
+
+### 任务目标
+
+请收集10个{乌木果/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：Ebony(Fruit) 10
+
+### 任务奖励
+
+- 经验值：1000
+- 金币：250
+- 固定奖励：SuperiorBronzeHelmet (高级青铜头盔)
+
+### NPC信息
+
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `WasteLand/Red Cave/1.txt`
+
+### 任务描述
+
+最近我们发现了一个叫
+{古代遗迹/Yellow}的新区域。然而，去那里的唯一途径
+是穿过恶魔之心。
+如你所见，因为那里有很多怪物，我无法穿过恶魔之心。
+因此，我试图组建一支力量
+来击败里面的怪物。那么……你能不能通过杀死{红洞/Yellow}里的怪物
+来帮我个忙？
+如果怪物减少了，部队就能更轻松地
+完成他们的任务。
+
+### 任务目标
+
+消灭12个{GhastlyLeecher/Crimson}、{CyanoGhast/Crimson}、
+{MutatedManworm/Crimson}和{CrazyManworm/Crimson}。
+
+### 任务要求
+
+- 击杀任务：GhastlyLeecher 12
+CyanoGhast 12
+MutatedManworm 12
+CrazyManworm 12
+
+### 任务奖励
+
+- 经验值：105000
+- 金币：60000
+
+### NPC信息
+
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `WasteLand/Red Cave/2.txt`
+
+### 任务描述
+
+感谢你的辛勤工作！
+然而{红洞/Yellow}里仍然有许多危险的怪物。
+怪物{DreamDevourer/Crimson}和{DarkSoulDevouer/Crimson}仍在该区域游荡。
+这些怪物一直在用它们的能力阻止我们的人移动，
+造成了很大的麻烦。你能帮我们除掉这些怪物吗？
+
+### 任务目标
+
+前往{红洞/Yellow}并消灭3个{DreamDevourer/Crimson}
+和{DarkSoulDevourer/Crimson}。
+
+### 任务要求
+
+- 击杀任务：DreamDevourer 3
+DarkDevouer 3
+
+### 任务奖励
+
+- 经验值：105000
+- 金币：60000
+- 固定奖励：BoxofHolyWater(1) (强效太阳水(1))
+
+### NPC信息
+
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `WoomyonWoods/Castle-GI/Town/1.txt`
+
+### 任务描述
+
+你知道怎么去{CastleGi-Ryoong/Yellow}吗？我
+需要把一本食谱送给{CastleGi-Ryoong/Yellow}的{屠夫Jim/LimeGreen}？
+
+### 任务目标
+
+向北穿过{沃玛森林/Yellow}，将
+{食谱/LightSteelBlue}送给{CastleGi-Ryoong/Yellow}的{Jim/LimeGreen}。
+
+### 任务要求
+
+- 携带物品：CookBook 2
+
+### 任务奖励
+
+- 经验值：2634
+- 金币：3480
+
+// 接取 -
+// 交付 - Merchant_Jim 4 244 188
+
+### NPC信息
+
+- 交付NPC：Merchant_Jim 4 244 188
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `WoomyonWoods/Castle-GI/Town/2.txt`
+
+### 任务描述
+
+我收到来自{沃玛森林/Yellow}的求助信息。
+你能去{沃玛森林/Yellow}帮他们
+解决{昆虫洞/Yellow}的麻烦吗？
+
+### 任务目标
+
+请去与{沃玛森林/Yellow}的{Shok大师/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：1232
+- 金币：1480
+
+// 接取 - Teleport_Kyle 0 371 314
+// 交付 - Master_Shok 1 312 73
+
+### NPC信息
+
+- 接取NPC：Teleport_Kyle 0 371 314
+- 交付NPC：Master_Shok 1 312 73
+
+---
+
+## 任务 3.txt
+
+**文件路径：** `WoomyonWoods/Castle-GI/Town/3.txt`
+
+### 任务描述
+
+我要你消灭{昆虫洞/Yellow}里的昆虫。
+我睡觉很轻，那些昆虫发出的噪音让我
+无法入睡。请你能帮帮我吗。
+
+### 任务目标
+
+消灭10个{KekTal/Crimson}和{VioletKekTal/Crimson}。
+
+### 任务要求
+
+- 击杀任务：KekTal 10
+VioletKekTal 10
+
+### 任务奖励
+
+- 经验值：3000
+- 金币：750
+
+// 接取 - Master_Shok 1 312 73
+// 交付 - Master_Shok 1 312 73
+- 固定奖励：BronzeStrap (青铜腰带)
+
+### NPC信息
+
+- 接取NPC：Master_Shok 1 312 73
+- 交付NPC：Master_Shok 1 312 73
+
+---
+
+## 任务 4.txt
+
+**文件路径：** `WoomyonWoods/Castle-GI/Town/4.txt`
+
+### 任务描述
+
+旅行者，请警告{沃玛森林/Yellow}的{讨伐领队/LimeGreen}
+关于即将到来的威胁。
+
+### 任务目标
+
+前往{沃玛森林/Yellow}并警告他们
+关于即将到来的威胁。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：1380
+- 金币：2563
+
+// 接取 - SubjagationManager_James 0 343 182
+// 交付 - SubjugationLead_Eric 1 317 71
+
+### NPC信息
+
+- 接取NPC：SubjagationManager_James 0 343 182
+- 交付NPC：SubjugationLead_Eric 1 317 71
+
+---
+
+## 任务 5.txt
+
+**文件路径：** `WoomyonWoods/Castle-GI/Town/5.txt`
+
+### 任务描述
+
+我们需要迅速打击这个威胁。前往
+西南方的{寺庙/Yellow}，试图削弱
+它的决心。
+
+### 任务目标
+
+消灭20个{粪虫/Crimson}和{沃玛战士/Crimson}。
+
+### 完成条件
+
+你回来了，希望你的行动削弱了威胁。
+
+### 任务要求
+
+- 击杀任务：Dung 20
+WoomaSoldier 20
+
+### 任务奖励
+
+- 经验值：8200
+- 金币：8200
+
+// 接取 - SubjugationLead_Eric 1 317 71
+// 交付 - SubjugationLead_Eric 1 317 71
+
+### NPC信息
+
+- 接取NPC：SubjugationLead_Eric 1 317 71
+- 交付NPC：SubjugationLead_Eric 1 317 71
+
+---
+
+## 任务 6.txt
+
+**文件路径：** `WoomyonWoods/Castle-GI/Town/6.txt`
+
+### 任务描述
+
+旅行者，我还有个任务。
+我仍然担心这个威胁。我决定我们应该
+给这些生物一个教训。
+
+### 任务目标
+
+在{沃玛寺庙/Yellow}消灭20个{火焰沃玛/Crimson}和
+{沃玛勇士/Crimson}。
+
+### 任务要求
+
+- 击杀任务：FlamingWooma 20
+WoomaFighter 20
+
+### 任务奖励
+
+- 经验值：8300
+- 金币：8300
+
+// 接取 - SubjugationLead_Eric 1 317 71
+// 交付 - SubjugationLead_Eric 1 317 71
+
+### NPC信息
+
+- 接取NPC：SubjugationLead_Eric 1 317 71
+- 交付NPC：SubjugationLead_Eric 1 317 71
+
+---
+
+## 任务 7.txt
+
+**文件路径：** `WoomyonWoods/Castle-GI/Town/7.txt`
+
+### 任务描述
+
+我们收到了新报告。
+{寺庙/Yellow}里出现了一种新型生物。
+
+### 任务目标
+
+消灭30个{沃玛战将/Crimson}和一个
+{沃玛卫士/Crimson}并带回他的{号角/LightSteelBlue}。
+
+### 任务要求
+
+- 击杀任务：WoomaWarrior 30
+WoomaGuardian 1
+- 物品任务：WoomasHorn 1
+
+### 任务奖励
+
+- 经验值：11000
+- 金币：11000
+
+// 接取 - SubjugationManager_James 1 343 182
+// 交付 -
+- 可选奖励：BlueJadePendant (蓝翡翠项链)
+WizardRing (红宝石戒指)
+RingOfMoral (道德戒指)
+
+### NPC信息
+
+- 接取NPC：SubjugationManager_James 1 343 182
+
+---
+
+## 任务 8.txt
+
+**文件路径：** `WoomyonWoods/Castle-GI/Town/8.txt`
+
+### 任务描述
+
+那嚎叫声，噢那嚎叫声……搜索
+源头并杀死那生物。
+
+### 任务目标
+
+消灭{半兽勇士/Crimson}。
+
+### 任务要求
+
+- 击杀任务：OmaWarrior 1
+
+### 任务奖励
+
+- 经验值：8200
+- 金币：2050
+
+// 接取 - Master_Shok 1 312 73
+// 交付 - Master_Shok 1 312 73
+- 固定奖励：BlackIronBelt (黑铁腰带)
+
+### NPC信息
+
+- 接取NPC：Master_Shok 1 312 73
+- 交付NPC：Master_Shok 1 312 73
+
+---
+
+## 任务 1 .txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/1 .txt`
+
+### 任务要求
+
+
+### 任务奖励
+
+- 金币：// 接取 - Traveller_Soho D2042 114 155
+// 交付 - Merchant_Helen 1 292 84
+
+### NPC信息
+
+- 接取NPC：Traveller_Soho D2042 114 155
+- 交付NPC：Merchant_Helen 1 292 84
+
+---
+
+## 任务 Tao .txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao .txt`
+
+### 任务要求
+
+
+### 任务奖励
+
+
+### NPC信息
+
+
+---
+
+## 任务 1 .txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/1 .txt`
+
+### 任务描述
+
+感谢你的帮助，勇敢的旅行者。
+请你回到{Helen/LimeGreen}那里告诉她这个消息。
+
+### 任务目标
+
+与{沃玛森林/Yellow}的{Heleny/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：5114
+- 金币：5700
+
+### NPC信息
+
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/1.txt`
+
+### 任务描述
+
+感谢你的帮助，勇敢的旅行者。
+请你回到{Helen/LimeGreen}那里告诉她这个消息。
+
+### 任务目标
+
+与{沃玛森林/Yellow}的{Heleny/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：5114
+- 金币：5700
+
+### NPC信息
+
+
+---
+
+## 任务 10.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/10.txt`
+
+### 任务描述
+
+发布了一个怪物猎杀令。
+请执行此命令。
+
+### 任务目标
+
+消灭4个{钢牙蜘蛛/Crimson}，{天狼蜘蛛/Crimson}，5个
+{花吻蜘蛛/Crimson}和{幻影蜘蛛/Crimson}。
+
+### 任务要求
+
+- 击杀任务：GangSpider 4
+RootSpider 5
+LureSpider 5
+GreatSpider 5
+
+### 任务奖励
+
+- 经验值：7100
+- 金币：7100
+- 可选奖励：ThickArmour (重盔甲)
+FireMagicRobe (魔法长袍)
+TaoArmour (灵魂战衣)
+SpiritRobe (精神长袍)
+LeatherArmour (轻型盔甲)
+
+### NPC信息
+
+
+---
+
+## 任务 11.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/11.txt`
+
+### 任务描述
+
+学生们喜欢冒险……但是有一个人
+失踪了。
+
+### 任务目标
+
+寻找失踪的学生。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：3860
+- 金币：7000
+
+// 接取 -
+// 交付 - CrushedBones 12 36 368
+
+### NPC信息
+
+- 交付NPC：CrushedBones 12 36 368
+
+---
+
+## 任务 12.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/12.txt`
+
+### 任务描述
+
+搜查完{尸骨/LimeGreen}后发现少了
+{学徒戒指/LightSteelBlue}。
+
+### 任务目标
+
+通过杀死{剧毒蜘蛛/Crimson}取回{学徒戒指/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：TraineeRing 1
+
+### 任务奖励
+
+- 经验值：7000
+- 金币：7000
+
+// 接取 - CrushedBones 12 36 368
+// 交付 -
+
+### NPC信息
+
+- 接取NPC：CrushedBones 12 36 368
+
+---
+
+## 任务 13.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/13.txt`
+
+### 任务描述
+
+我非常想念我的父母。请你能帮帮我吗？
+
+### 任务目标
+
+将{Sky的信/LightSteelBlue}送给{比奇城/Yellow}的{Mogu大人/LimeGreen}。
+
+### 任务要求
+
+- 携带物品：SkysLetter 2
+
+### 任务奖励
+
+- 经验值：1930
+- 金币：4100
+
+// 接取 - Apprentice 11 191 325
+// 交付 - Sir_Mogu 0101 8 12
+
+### NPC信息
+
+- 接取NPC：Apprentice 11 191 325
+- 交付NPC：Sir_Mogu 0101 8 12
+
+---
+
+## 任务 14.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/14.txt`
+
+### 任务描述
+
+请向{比奇考官/LimeGreen}汇报。
+
+### 任务目标
+
+与{比奇省/Yellow}的{比奇考官/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：5180
+- 金币：2422
+
+// 接取 - CaveGuide_Paddy 11 119 293
+// 交付 - Examiner_Tony 0 340 257
+- 固定奖励：BlackIronBangle (黑铁手镯)
+
+### NPC信息
+
+- 接取NPC：CaveGuide_Paddy 11 119 293
+- 交付NPC：Examiner_Tony 0 340 257
+
+---
+
+## 任务 15.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/15.txt`
+
+### 任务描述
+
+{般若岛/Yellow}的{村长/LimeGreen}要求归还
+{般若历史书/LightSteelBlue}……
+我很遗憾地通知你，我们被洗劫了，
+许多珍贵物品被盗。
+袭击的怪物是一只{蓝色大猿/Crimson}。
+
+### 任务目标
+
+杀死{邪恶猿Sobo/Crimson}并取回{般若历史书/LightSteelBlue}。
+前往{赤月峡谷/Yellow}寻找袭击者。
+
+### 任务要求
+
+- 物品任务：PrajnaHistory 1
+
+### 任务奖励
+
+- 经验值：26000
+- 金币：20000
+
+// 接取 - LeadTrainer_Harry 1002 11 8
+// 交付 - LeadTrainer_Harry 1002 11 8
+
+### NPC信息
+
+- 接取NPC：LeadTrainer_Harry 1002 11 8
+- 交付NPC：LeadTrainer_Harry 1002 11 8
+
+---
+
+## 任务 16.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/16.txt`
+
+### 任务描述
+
+你找到了书……这真是个好消息。
+看起来它没有受损。
+
+### 任务目标
+
+将{般若历史书/LightSteelBlue}归还给{般若岛/Yellow}的
+{村长/LimeGreen}。
+
+### 任务要求
+
+- 携带物品：PrajnaHistory 1
+
+### 任务奖励
+
+- 经验值：3912
+- 金币：1500
+
+// 接取 - LeadTrainer 1002 11 8
+// 交付 -
+- 可选奖励：FineIronArmour (精制铁甲)
+FireRobe (火袍)
+YingYangRobe (阴阳战衣)
+FlamingRedArmour (烈焰战甲)
+HardTemperedArmour (强效战甲)
+
+### NPC信息
+
+- 接取NPC：LeadTrainer 1002 11 8
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/2.txt`
+
+### 任务描述
+
+你听说过{丛林迷宫/Yellow}吗？那里是
+收集资源的好地方。请去那里
+收集我需要的材料。
+
+### 任务目标
+
+请通过杀死{剧毒蜘蛛/Crimson}和{幻影蜘蛛/Crimson}
+收集10个{红线/LightSteelBlue}和{黑线/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：RedThread 10
+BlackThread 10
+
+### 任务奖励
+
+- 经验值：5900
+- 金币：5900
+
+// 接取 - Merchant_Sam 1003 13 16
+// 交付 - Merchant_Sam 1003 13 16
+
+### NPC信息
+
+- 接取NPC：Merchant_Sam 1003 13 16
+- 交付NPC：Merchant_Sam 1003 13 16
+
+---
+
+## 任务 3.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/3.txt`
+
+### 任务描述
+
+神话和谣言说，收集{僵尸心脏/LightSteelBlue}进行特殊的仪式
+可以驱逐该区域的僵尸。
+
+### 任务目标
+
+从{尸王/Crimson}身上收集10个{僵尸心脏/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：ZombiesHeart 10
+
+### 任务奖励
+
+- 经验值：7000
+- 金币：7000
+
+// 接取 - MasterMK_Deric 11 165 296
+// 交付 - MasterMK_Deric 11 165 296
+
+### NPC信息
+
+- 接取NPC：MasterMK_Deric 11 165 296
+- 交付NPC：MasterMK_Deric 11 165 296
+
+---
+
+## 任务 4.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/4.txt`
+
+### 任务描述
+
+旅行者，你能帮我一下吗？我在{比奇城/Yellow}的{Ann/LimeGreen}那里
+下了一个订单，但这已经是好久以前的事了……
+你能帮我询问一下我的订单吗。
+
+### 任务目标
+
+请前往{比奇城/Yellow}并与布料商{Ann/LimeGreen}交谈。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：2895
+- 金币：5250
+
+// 接取 - LeadTrainer_Harry 1002 11 8
+// 交付 -
+
+### NPC信息
+
+- 接取NPC：LeadTrainer_Harry 1002 11 8
+
+---
+
+## 任务 5.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/5.txt`
+
+### 任务描述
+
+订单几天前就发出了……
+他现在应该已经收到她的订单了……
+
+### 任务目标
+
+定位失踪的马车。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：1930
+- 金币：3500
+
+// 接取 -
+// 交付 - BrokenCarriage 11 103 391
+
+### NPC信息
+
+- 交付NPC：BrokenCarriage 11 103 391
+
+---
+
+## 任务 6.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/6.txt`
+
+### 任务描述
+
+报告马车被袭击了。
+
+### 任务目标
+
+返回{首席教官/LimeGreen}处。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：1930
+- 金币：3500
+
+// 接取 - BrokenCarriage 11 103 391
+// 交付 - LeadTrainer_Harry 1002 11 8
+
+### NPC信息
+
+- 接取NPC：BrokenCarriage 11 103 391
+- 交付NPC：LeadTrainer_Harry 1002 11 8
+
+---
+
+## 任务 7.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/7.txt`
+
+### 任务描述
+
+最近似乎有很多僵尸出现。
+向西前往{矿区/Yellow}。
+
+### 任务目标
+
+消灭10个{尸王/Crimson}，{尸僵尸/Crimson}，
+{饥饿僵尸/Crimson}。
+
+### 任务要求
+
+- 击杀任务：CursedPriest 10
+ShiZombie 10
+CursedZombie 10
+
+### 任务奖励
+
+- 经验值：6600
+- 金币：6600
+
+// 接取 - LeadTrainer_Harry 1002 11 8
+// 交付 - LeadTrainer_Harry 1002 11 8
+
+### NPC信息
+
+- 接取NPC：LeadTrainer_Harry 1002 11 8
+- 交付NPC：LeadTrainer_Harry 1002 11 8
+
+---
+
+## 任务 8.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/8.txt`
+
+### 任务描述
+
+请返回{丛林迷宫/Yellow}并收集更多
+{材料/LightSteelBlue}。
+
+### 任务目标
+
+通过杀死{天狼蜘蛛/Crimson}找到5个{古树木/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：AncientTree 5
+
+### 任务奖励
+
+- 经验值：7000
+- 金币：7000
+
+// 接取 - Merchant_Jerald 1001 14 12
+// 交付 - Merchant_Jerald 1001 14 12
+
+### NPC信息
+
+- 接取NPC：Merchant_Jerald 1001 14 12
+- 交付NPC：Merchant_Jerald 1001 14 12
+
+---
+
+## 任务 9.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/Tao Village/9.txt`
+
+### 任务描述
+
+旅行者……帮帮忙。我在{丛林迷宫/Yellow}
+砍{木头/LightSteelBlue}时被吓了一跳，把我的
+{斧头/LightSteelBlue}掉了。
+
+### 任务目标
+
+定位并杀死{血色花吻蜘蛛/Crimson}并取回
+{磨损的斧头/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：WornAxe 1
+
+### 任务奖励
+
+- 经验值：7000
+- 金币：7000
+
+### NPC信息
+
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/TreePath/1.txt`
+
+### 任务描述
+
+请前往{赤月峡谷/Yellow}并收集
+原料。
+
+### 任务目标
+
+杀死{蝙蝠/Crimson}并收集20个{蝙蝠毒/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：BatPoison 20
+
+### 任务奖励
+
+- 经验值：33000
+- 金币：33000
+
+// 接取 - Merhcant_Janey 1006 9 10
+// 交付 - Merchant_Janey 1006 9 10
+
+### NPC信息
+
+- 接取NPC：Merhcant_Janey 1006 9 10
+- 交付NPC：Merchant_Janey 1006 9 10
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/TreePath/2.txt`
+
+### 任务描述
+
+你对赏金感兴趣吗？
+
+### 任务目标
+
+在{赤月峡谷/Yellow}找到并消灭{邪恶巨猿/LightSteelBlue}。
+
+### 任务要求
+
+- 击杀任务：EvilBigApe 1
+
+### 任务奖励
+
+- 经验值：40000
+- 金币：40000
+
+// 接取 - Investigator_David 11 182 295
+// 交付 - Investigator_David 11 182 295
+
+### NPC信息
+
+- 接取NPC：Investigator_David 11 182 295
+- 交付NPC：Investigator_David 11 182 295
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `WoomyonWoods/TaoistVillage/WW Mines/1.txt`
+
+### 任务描述
+
+你好玛法勇士，我们经常击退这些{僵尸/Crimson}。
+你能提供协助吗？
+
+### 任务目标
+
+在{矿区/Yellow}消灭{诅咒僵尸/Crimson}，{尸僵尸/Crimson}和
+{饥饿僵尸/Crimson}。
+
+### 任务要求
+
+- 击杀任务：CursedZombie 50 "消除诅咒僵尸的威胁"
+ShiZombie 30 "减少尸僵尸"
+HungryZombie 25 "消除饥饿僵尸的威胁"
+
+### 任务奖励
+
+- 经验值：15000
+- 金币：15000
+
+// 接取 - CaveGuide_Paddy 11 119 293
+// 交付 - CaveGuide_Paddy 11 119 293
+
+### NPC信息
+
+- 接取NPC：CaveGuide_Paddy 11 119 293
+- 交付NPC：CaveGuide_Paddy 11 119 293
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `WoomyonWoods/Wilderness/1.txt`
+
+### 任务描述
+
+你好，旅行者。谢谢你的到来。
+我找你是为了请你帮忙
+维护{沃玛森林/Yellow}的安全。你
+从{比奇城/Yellow}来的路上可能看到了一些{食人花/Crimson}。
+我们需要猎杀它们以保护商人们
+免受危险的攻击。
+
+### 任务目标
+
+请从{食人花/Crimson}身上收集10个{食人花茎/LightSteelBlue}和
+{食人花叶/LightSteelBlue}并送给{比奇城/Yellow}的{向导/LimeGreen}。
+
+### 任务要求
+
+- 物品任务：CannibalStem 10
+CannibalLeaf 10
+
+### 任务奖励
+
+- 经验值：450
+- 金币：113
+- 固定奖励：SteelBangle (钢手镯)
+
+### NPC信息
+
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `WoomyonWoods/Wilderness/2.txt`
+
+### 任务描述
+
+你好，旅行者。请听听我的故事。我40年前
+搬到了{沃玛森林/Yellow}。那时我能够
+猎杀我家周围的所有怪物，
+但现在我年老体弱，不敢
+走出家门了。
+
+### 任务目标
+
+为{Shok大师/LimeGreen}消灭10个{半兽战士/Crimson}。
+
+### 任务要求
+
+- 击杀任务：OmaFighter 10
+
+### 任务奖励
+
+- 经验值：1100
+- 金币：1100
+
+// 接取 - Master_Shok 1 312 73
+// 交付 - Master_Shok 1 312 73
+
+### NPC信息
+
+- 接取NPC：Master_Shok 1 312 73
+- 交付NPC：Master_Shok 1 312 73
+
+---
+
+## 任务 3.txt
+
+**文件路径：** `WoomyonWoods/Wilderness/3.txt`
+
+### 任务描述
+
+你让我想起了我的孙女。她去
+{比奇/Yellow}赚钱了。我听说她在一家
+肉店工作。你能告诉她
+我过得很好吗？
+
+### 任务目标
+
+与{比奇城/Yellow}的{Sarah/LimeGreen}交谈。
+
+### 完成条件
+
+谢谢你旅行者。我一直很担心
+我的爷爷。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：876
+- 金币：300
+
+// 接取 - Master_Shok 1 312 73
+// 交付 - Merchant_Sarah 0 313 271
+- 固定奖励：StrongLeatherShoes (结实的皮鞋)
+
+### NPC信息
+
+- 接取NPC：Master_Shok 1 312 73
+- 交付NPC：Merchant_Sarah 0 313 271
+
+---
+
+## 任务 1.txt
+
+**文件路径：** `WoomyonWoods/Wilderness/InsectCave/1.txt`
+
+### 任务描述
+
+我的视力不太好了。随着年龄增长，我的视力越来越差。
+我听说如果我吃虫眼，视力就会变好。
+你能帮我弄些{虫眼/LightSteelBlue}吗？
+我听说{洞蛆/Crimson}和{蓝色洞蛆/Crimson}的眼睛
+是最好的。
+
+### 任务目标
+
+杀死{洞蛆/Crimson}和{蓝色洞蛆/Crimson}并收集
+12个{虫眼/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：BugEye 12
+
+### 任务奖励
+
+- 经验值：3800
+- 金币：3800
+
+// 接取 - Master_Shok 1 312 73
+// 交付 - Master_Shok 1 312 73
+
+### NPC信息
+
+- 接取NPC：Master_Shok 1 312 73
+- 交付NPC：Master_Shok 1 312 73
+
+---
+
+## 任务 2.txt
+
+**文件路径：** `WoomyonWoods/Wilderness/InsectCave/2.txt`
+
+### 任务描述
+
+{蓝色洞蛆/Crimson}在{昆虫洞/Yellow}里。这种虫子的血
+可以提纯入药。
+你能带给我12个{虫血/LightSteelBlue}吗？
+
+### 任务目标
+
+在{昆虫洞/Yellow}杀死{蓝色洞蛆/Crimson}并收集12个
+{虫血/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：BugBlood 12
+
+### 任务奖励
+
+- 经验值：3800
+- 金币：3800
+
+// 接取 - Merchant_Helen 1 292 84
+// 交付 - Merchant_Helen 1 292 84
+
+### NPC信息
+
+- 接取NPC：Merchant_Helen 1 292 84
+- 交付NPC：Merchant_Helen 1 292 84
+
+---
+
+## 任务 3.txt
+
+**文件路径：** `WoomyonWoods/Wilderness/InsectCave/3.txt`
+
+### 任务描述
+
+你好旅行者，我有另一个适合你天赋的
+任务……我把我心爱的项链落在{昆虫洞/Yellow}了。
+你能找到并把它带回来给我吗？
+
+### 任务目标
+
+击杀{蜘蛛蛙/Crimson}并收集{蓝翡翠项链/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：BluJadePendant 1
+
+### 任务奖励
+
+- 经验值：3800
+- 金币：3800
+
+// 接取 - Merchant_Helen 1 292 84
+// 交付 - Merchant_Helen 1 292 84
+
+### NPC信息
+
+- 接取NPC：Merchant_Helen 1 292 84
+- 交付NPC：Merchant_Helen 1 292 84
+
+---
+
+## 任务 4.txt
+
+**文件路径：** `WoomyonWoods/Wilderness/InsectCave/4.txt`
+
+### 任务描述
+
+我的朋友去{昆虫洞/Yellow}找草药了，
+但还没回来。你觉得你能去{昆虫洞/Yellow}
+找找{Soho/LimeGreen}吗？
+
+### 任务目标
+
+在{昆虫洞/Yellow}二层寻找{Soho/LimeGreen}。
+
+### 任务要求
+
+
+### 任务奖励
+
+- 经验值：1971
+- 金币：2850
+
+// 接取 - Merchant_Helen 1 292 84
+// 交付 - Traveller_Soho D2042 114 155
+
+### NPC信息
+
+- 接取NPC：Merchant_Helen 1 292 84
+- 交付NPC：Traveller_Soho D2042 114 155
+
+---
+
+## 任务 5.txt
+
+**文件路径：** `WoomyonWoods/Wilderness/InsectCave/5.txt`
+
+### 任务描述
+
+几天前我遭到袭击，并且
+中毒了。我买了{解毒剂/LightSteelBlue}，但怪物
+抢走了我的包。
+
+### 任务目标
+
+杀死{KekTal/Crimson}并找到{Soho的/LimeGreen}{解毒剂/LightSteelBlue}。
+
+### 任务要求
+
+- 物品任务：Antidote 1
+
+### 任务奖励
+
+- 经验值：3800
+- 金币：3800
+
+// 接取 - Traveller_Soho D2042 114 155
+// 交付 - Traveller_Soho D2042 114 155
+
+### NPC信息
+
+- 接取NPC：Traveller_Soho D2042 114 155
+- 交付NPC：Traveller_Soho D2042 114 155
+
+---
+
+## 任务 6.txt
+
+**文件路径：** `WoomyonWoods/Wilderness/InsectCave/6.txt`
+
+### 任务描述
+
+因为洞里的昆虫，我弄丢了我的包。
+它们拿走了我所有的财物。你能
+把我的东西拿回来吗？
+
+### 任务目标
+
+击杀{紫KekTal/Crimson}、{KekTal/Crimson}和{蓝色洞蛆/Crimson}。
+
+### 任务要求
+
+- 物品任务：GatheringGlove 1
+GatheringTool 1
+GreenHerb 5
+
+### 任务奖励
+
+- 经验值：3800
+- 金币：950
+
+// 接取 - Traveller_Soho D2042 114 155
+// 交付 - Traveller_Soho D2042 114 155
+- 可选奖励：HardSteelSword (钢剑)
+EbonyBangle (乌木手镯)
+MonkBangle (道士手镯)
+SilkShoes (绸鞋)
+
+### NPC信息
+
+- 接取NPC：Traveller_Soho D2042 114 155
+- 交付NPC：Traveller_Soho D2042 114 155
+
+---

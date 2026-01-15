@@ -3,15 +3,24 @@ using S = ServerPackets;
 
 namespace Server.MirDatabase
 {
+    /// <summary>
+    /// 技能蓝图
+    /// </summary>
     public class MagicInfo
     {
         protected static Envir Envir
         {
             get { return Envir.Main; }
         }
-
+        /// <summary>
+        /// 技能名字
+        /// </summary>
         public string Name;
+        /// <summary>
+        ///
+        /// </summary>
         public Spell Spell;
+
         public byte BaseCost, LevelCost, Icon;
         public byte Level1, Level2, Level3;
         public ushort Need1, Need2, Need3;
@@ -84,6 +93,9 @@ namespace Server.MirDatabase
             writer.Write(MultiplierBonus);
         }
     }
+    /// <summary>
+    /// 用户技能
+    /// </summary>
 
     public class UserMagic
     {
@@ -114,7 +126,7 @@ namespace Server.MirDatabase
         public UserMagic(Spell spell)
         {
             Spell = spell;
-            
+
             Info = GetMagicInfo(Spell);
         }
         public UserMagic(BinaryReader reader, int version, int customVersion)

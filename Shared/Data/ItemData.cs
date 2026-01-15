@@ -1224,22 +1224,69 @@ public class GameShopItem
 public class Awake
 {
     //Awake Option
+    /// <summary>
+    /// 觉醒成功率
+    /// </summary>
     public static byte AwakeSuccessRate = 70;
+    /// <summary>
+    /// 单个命中点的成功率
+    /// </summary>
     public static byte AwakeHitRate = 70;
+    /// <summary>
+    /// 最大觉醒等级
+    /// </summary>
     public static int MaxAwakeLevel = 5;
+    /// <summary>
+    /// 武器觉醒倍率
+    /// </summary>
     public static byte Awake_WeaponRate = 1;
+    /// <summary>
+    /// 头盔觉醒倍率
+    /// </summary>
     public static byte Awake_HelmetRate = 1;
+    /// <summary>
+    /// 衣服觉醒倍率
+    /// </summary>
     public static byte Awake_ArmorRate = 5;
+    /// <summary>
+    /// 最小觉醒的次数
+    /// </summary>
     public static byte AwakeChanceMin = 1;
+    /// <summary>
+    /// 材料倍率（目前代码中未使用）
+    /// </summary>
     public static float[] AwakeMaterialRate = new float[5] { 1.0F, 1.0F, 1.0F, 1.0F, 1.0F };
+    /// <summary>
+    /// 根据物品等级决定的最大觉醒值
+    /// </summary>
     public static byte[] AwakeChanceMax = new byte[5] { 1, 2, 3, 4, 5 };
+    /// <summary>
+    /// 觉醒材料表（结构复杂，目前类中未使用）
+    /// </summary>
     public static List<List<byte>[]> AwakeMaterials = new List<List<byte>[]>();
-
+    /// <summary>
+    /// 当前物品的觉醒类型
+    /// <para>DC（攻击力）</para>
+    /// <para>MC（魔法）</para>
+    /// <para>SC（道术）</para>
+    /// <para>AC（物理防御）</para>
+    /// <para>MAC（魔法防御）</para>
+    /// <para>HP/MP（生命和魔法）</para>
+    /// </summary>
     public AwakeType Type = AwakeType.None;
+    /// <summary>
+    /// 每一级觉醒增加的具体数值列表
+	/// <para>觉醒类型是一致的，只有在第一次的时候需要选择觉醒类型，后续觉醒等级的增加都是基于当前的觉醒类型</para>
+    /// </summary>
     readonly List<byte> listAwake = new List<byte>();
-
+    /// <summary>
+    /// 无参构造函数
+    /// </summary>
     public Awake() { }
-
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="reader">二进制读取器</param>
     public Awake(BinaryReader reader)
     {
         Type = (AwakeType)reader.ReadByte();
@@ -1249,7 +1296,10 @@ public class Awake
             listAwake.Add(reader.ReadByte());
         }
     }
-
+    /// <summary>
+    /// 二进制写入器
+    /// </summary>
+    /// <param name="writer"></param>
     public void Save(BinaryWriter writer)
     {
         writer.Write((byte)Type);
@@ -1259,10 +1309,20 @@ public class Awake
             writer.Write(value);
         }
     }
+    /// <summary>
+    /// 是否是最大觉醒等级
+    /// </summary>
+    /// <returns></returns>
     public bool IsMaxLevel() { return listAwake.Count == Awake.MaxAwakeLevel; }
-
+    /// <summary>
+    /// 获取当前的觉醒等级
+    /// </summary>
+    /// <returns></returns>
     public int GetAwakeLevel() { return listAwake.Count; }
-
+    /// <summary>
+    /// 获取所有的加成
+    /// </summary>
+    /// <returns></returns>
     public byte GetAwakeValue()
     {
         byte total = 0;
@@ -1274,24 +1334,29 @@ public class Awake
 
         return total;
     }
-
+    /// <summary>
+    /// 检测该物品是否允许进行指定类型的觉醒
+    /// </summary>
     public bool CheckAwakening(UserItem item, AwakeType type)
     {
+        // 绑定类型物品进制觉醒
         if (item.Info.Bind.HasFlag(BindMode.DontUpgrade))
             return false;
-
+        // 是否可以觉醒
         if (item.Info.CanAwakening != true)
             return false;
-
+        // 物品品质为 None 的不能觉醒
         if (item.Info.Grade == ItemGrade.None)
             return false;
-
+        // 达到上限不能觉醒
         if (IsMaxLevel()) return false;
-
+        // 如果物品第一次觉醒
         if (this.Type == AwakeType.None)
         {
+            // 如果是武器
             if (item.Info.Type == ItemType.Weapon)
             {
+                // 只能选择物理攻击 或 魔法攻击 或 道术攻击
                 if (type == AwakeType.DC ||
                     type == AwakeType.MC ||
                     type == AwakeType.SC)
@@ -1301,9 +1366,10 @@ public class Awake
                 }
                 else
                     return false;
-            }
+            } // 如果是头盔
             else if (item.Info.Type == ItemType.Helmet)
             {
+                // 只能选择物理防御或魔法防御
                 if (type == AwakeType.AC ||
                     type == AwakeType.MAC)
                 {
@@ -1312,9 +1378,10 @@ public class Awake
                 }
                 else
                     return false;
-            }
+            }// 如果是盔甲
             else if (item.Info.Type == ItemType.Armour)
             {
+                // 只能选择 HPMP
                 if (type == AwakeType.HPMP)
                 {
                     this.Type = type;
@@ -1328,34 +1395,46 @@ public class Awake
         }
         else
         {
+            // 如果传入的是之前的值：比如第一次觉醒是DC(物理攻击)，以后传入必须都是DC(物理攻击)否则不能强化
             if (this.Type == type)
                 return true;
             else
                 return false;
         }
     }
-
+    /// <summary>
+    /// 执行一次物品觉醒
+    /// </summary>
+    /// <param name="item">物品</param>
+    /// <param name="type">觉醒类型</param>
+    /// <param name="isHit"></param>
+    /// <returns></returns>
     public int UpgradeAwake(UserItem item, AwakeType type, out bool[] isHit)
     {
         //return -1 condition error, -1 = dont upgrade, 0 = failed, 1 = Succeed,
         isHit = null;
         if (CheckAwakening(item, type) != true)
             return -1;
-
+        // TODO: 这里随机种子有风险
         Random rand = new Random(DateTime.Now.Millisecond);
-
+        // 随机数小于等于觉醒成功率
         if (rand.Next(0, 100) <= AwakeSuccessRate)
         {
+            // 觉醒成功
             isHit = Awakening(item);
             return 1;
         }
         else
         {
+            // 觉醒失败
             isHit = MakeHit(1, out _);
             return 0;
         }
     }
-
+    /// <summary>
+    /// 清除觉醒信息
+    /// </summary>
+    /// <returns></returns>
     public int RemoveAwake()
     {
         if (listAwake.Count > 0)
@@ -1373,27 +1452,63 @@ public class Awake
             return 0;
         }
     }
-
+    /// <summary>
+    /// 根据索引获取觉醒的值
+    /// </summary>
+    /// <param name="i">索引</param>
+    /// <returns></returns>
     public int GetAwakeLevelValue(int i) { return listAwake[i]; }
-
+    /// <summary>
+    /// 获取觉醒的攻击力
+    /// </summary>
+    /// <returns></returns>
     public byte GetDC() { return (Type == AwakeType.DC ? GetAwakeValue() : (byte)0); }
+    /// <summary>
+    /// 获取觉醒的魔法攻击力
+    /// </summary>
+    /// <returns></returns>
     public byte GetMC() { return (Type == AwakeType.MC ? GetAwakeValue() : (byte)0); }
+    /// <summary>
+    /// 获取觉醒的道术攻击力
+    /// </summary>
+    /// <returns></returns>
     public byte GetSC() { return (Type == AwakeType.SC ? GetAwakeValue() : (byte)0); }
+    /// <summary>
+    /// 获取觉醒的物理防御力
+    /// </summary>
+    /// <returns></returns>
     public byte GetAC() { return (Type == AwakeType.AC ? GetAwakeValue() : (byte)0); }
+    /// <summary>
+    /// 获取觉醒的魔法防御力
+    /// </summary>
+    /// <returns></returns>
     public byte GetMAC() { return (Type == AwakeType.MAC ? GetAwakeValue() : (byte)0); }
+    /// <summary>
+    /// 获取觉醒的HPMP
+    /// </summary>
+    /// <returns></returns>
     public byte GetHPMP() { return (Type == AwakeType.HPMP ? GetAwakeValue() : (byte)0); }
-
+    /// <summary>
+    /// 按 maxValue 分成 5 份进行 5 次命中判定，返回每次命中结果并输出最终增加值（最小为 1）。
+    /// </summary>
+    /// <param name="maxValue">最大值</param>
+    /// <param name="makeValue">最终的觉醒的值（向下取整）</param>
+    /// <returns>返回bool长度为5的数组，标记这每次的成功率</returns>
     private bool[] MakeHit(int maxValue, out int makeValue)
     {
+        // 5分之maxValue
         float stepValue = (float)maxValue / 5.0f;
         float totalValue = 0.0f;
+        // 5次命中的成功率（默认是 70% 的 5 次方 ≈ 16.8%）
         bool[] isHit = new bool[5];
+        // TODO: 随机种子有风险
         Random rand = new Random(DateTime.Now.Millisecond);
-
+        // 循环 5 次，每次 70% 的成功率
         for (int i = 0; i < 5; i++)
         {
             if (rand.Next(0, 100) < AwakeHitRate)
             {
+                // 累加觉醒的值
                 totalValue += stepValue;
                 isHit[i] = true;
             }
@@ -1402,18 +1517,25 @@ public class Awake
                 isHit[i] = false;
             }
         }
-
+        // 保底觉醒 1 ，最大不限（向下取整）
         makeValue = totalValue <= 1.0f ? 1 : (int)totalValue;
         return isHit;
     }
 
+    /// <summary>
+    /// 觉醒用户物品
+    /// </summary>
+    /// <param name="item">用户物品</param>
+    /// <returns></returns>
     private bool[] Awakening(UserItem item)
     {
+        // 获取最小觉醒次数
         int minValue = AwakeChanceMin;
+        // 根据物品品质确定最大觉醒次数<最小觉醒次数：maxValue是最小觉醒次数，负责就是物品品质-1作为最大觉醒次数
         int maxValue = (AwakeChanceMax[(int)item.Info.Grade - 1] < minValue) ? minValue : AwakeChanceMax[(int)item.Info.Grade - 1];
-
+        // result 为本次觉醒的结果, returnValue 5次命中的结果
         bool[] returnValue = MakeHit(maxValue, out int result);
-
+        // 是武器、头盔、衣服乘以对应的倍率
         switch (item.Info.Type)
         {
             case ItemType.Weapon:
@@ -1429,9 +1551,9 @@ public class Awake
                 result = 0;
                 break;
         }
-
+        // 将本次
         listAwake.Add((byte)result);
-
+        // 返回5次命中的成功率
         return returnValue;
     }
 }

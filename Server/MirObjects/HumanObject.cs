@@ -2362,8 +2362,9 @@ namespace Server.MirObjects
                 if (temp.Info.IsFishingRod) continue;
                 // 直接添加物品属性表到玩家属性表
                 Stats.Add(realItem.Stats);
+                // 添加装备额外属性：比如强化的武器伤害
                 Stats.Add(temp.AddedStats);
-
+                #region 加上觉醒的值
                 Stats[Stat.MinAC] += temp.Awake.GetAC();
                 Stats[Stat.MaxAC] += temp.Awake.GetAC();
                 Stats[Stat.MinMAC] += temp.Awake.GetMAC();
@@ -2378,6 +2379,7 @@ namespace Server.MirObjects
 
                 Stats[Stat.HP] += temp.Awake.GetHPMP();
                 Stats[Stat.MP] += temp.Awake.GetHPMP();
+                #endregion
 
                 if (realItem.Light > Light) Light = realItem.Light;
                 // 如果装备有特殊效果
@@ -2395,13 +2397,14 @@ namespace Server.MirObjects
                 {
                     FastRun = true;
                 }
-
+                // 刷新插槽的值
                 RefreshSocketStats(temp, skillsToAdd);
 
+                // 如果不是套装就不叠加套装效果
                 if (realItem.Set == ItemSet.None) continue;
-
+                // 在当前套装中查找是否有不相同类型的实例
                 ItemSets itemSet = ItemSets.Where(set => set.Set == realItem.Set && !set.Type.Contains(realItem.Type) && !set.SetComplete).FirstOrDefault();
-
+                // 如果找到了会添到当前类型
                 if (itemSet != null)
                 {
                     itemSet.Type.Add(realItem.Type);
@@ -2409,10 +2412,12 @@ namespace Server.MirObjects
                 }
                 else
                 {
+                    // 未找到会创建新的套装实例
                     ItemSets.Add(new ItemSets { Count = 1, Set = realItem.Set, Type = new List<ItemType> { realItem.Type } });
                 }
 
                 //Mir Set
+                // 米尔套装单独统计，去重后放到MirSet集合中
                 if (realItem.Set == ItemSet.Mir)
                 {
                     if (!MirSet.Contains((EquipmentSlot)i))
@@ -2421,7 +2426,7 @@ namespace Server.MirObjects
                     }
                 }
             }
-
+            // 给当前角色附加技能
             AddTempSkills(skillsToAdd);
             RemoveTempSkills(skillsToRemove.Except(skillsToAdd));
 
@@ -2442,46 +2447,57 @@ namespace Server.MirObjects
                 RefreshMount(false);
             }
         }
+        /// <summary>
+        /// 刷新装备插槽的属性表
+        /// </summary>
+        /// <param name="equipItem">装备</param>
+        /// <param name="skillsToAdd">技能列表</param>
         private void RefreshSocketStats(UserItem equipItem, List<string> skillsToAdd)
         {
+            // 装备为空直接返回
             if (equipItem == null) return;
-
+            // 装备类型是武器并且是鱼竿直接返回
             if (equipItem.Info.Type == ItemType.Weapon && equipItem.Info.IsFishingRod)
             {
                 return;
             }
-
+            // 装备类型是坐骑，并且不在乘骑状态直接返回
             if (equipItem.Info.Type == ItemType.Mount && !RidingMount)
             {
                 return;
             }
-
+            // 遍历当前物品的插槽(目前只有坐骑有插槽)
             for (int j = 0; j < equipItem.Slots.Length; j++)
             {
                 UserItem temp = equipItem.Slots[j];
                 if (temp == null) continue;
-
+                // 获取真实的物品蓝图
                 ItemInfo RealItem = Functions.GetRealItem(temp.Info, Info.Level, Info.Class, Envir.ItemInfoList);
-
+                // 如果是武器或火把重量加到手腕上
                 if (RealItem.Type == ItemType.Weapon || RealItem.Type == ItemType.Torch)
                     CurrentHandWeight = (int)Math.Min(int.MaxValue, CurrentHandWeight + temp.Weight);
-                else
+                else  // 其他物品重量加到任务负重上
                     CurrentWearWeight = (int)Math.Min(int.MaxValue, CurrentWearWeight + temp.Weight);
-
+                // 如果没有持久并且物品蓝图有持久在不加额外属性
                 if (temp.CurrentDura == 0 && temp.Info.Durability > 0) continue;
-
+                // 添加默认属性
                 Stats.Add(RealItem.Stats);
+                // 添加扩展属性
                 Stats.Add(temp.AddedStats);
 
                 if (RealItem.Light > Light) Light = RealItem.Light;
+                // 如果是特殊物品
                 if (RealItem.Unique != SpecialItemMode.None)
                 {
-                    SpecialMode |= RealItem.Unique;
-
+					// 将当前物品的特殊效果添加到角色的特殊效果中
+					SpecialMode |= RealItem.Unique;
+                    // 3的技能经验获取
                     if (RealItem.Unique.HasFlag(SpecialItemMode.Skill)) Stats[Stat.SkillGainMultiplier] = 3;
-
+                    // 获得小火球
                     if (RealItem.Unique.HasFlag(SpecialItemMode.Flame)) skillsToAdd.Add(Settings.FireRing);
+                    // 获得自愈技能
                     if (RealItem.Unique.HasFlag(SpecialItemMode.Healing)) skillsToAdd.Add(Settings.HealRing);
+                    // 获得blink技能
                     if (RealItem.Unique.HasFlag(SpecialItemMode.Blink)) skillsToAdd.Add(Settings.BlinkSkill);
                 }
             }
@@ -2767,14 +2783,14 @@ namespace Server.MirObjects
             {
                 Spell spelltype;
                 bool hasSkill = false;
-
+                // 尝试转换成技能枚举、转换失败则返回
                 if (!Enum.TryParse(skill, out spelltype)) return;
-
+                // 遍历以学过的技能列表，如果学过了则标记hasSkill为true
                 for (var i = Info.Magics.Count - 1; i >= 0; i--)
                     if (Info.Magics[i].Spell == spelltype) hasSkill = true;
-
+                // 如果学过了则遍历下一个
                 if (hasSkill) continue;
-
+                // 创建技能实例
                 var magic = new UserMagic(spelltype) { IsTempSpell = true };
                 Info.Magics.Add(magic);
                 SendMagicInfo(magic);

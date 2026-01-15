@@ -118,12 +118,33 @@ public enum GMOptions : byte
 
 public enum AwakeType : byte
 {
+    /// <summary>
+    /// 没有选择觉醒类型
+    /// </summary>
     None = 0,
+    /// <summary>
+    /// 攻击
+    /// </summary>
     DC,
+    /// <summary>
+    /// 魔法
+    /// </summary>
     MC,
+    /// <summary>
+    /// 道术
+    /// </summary>
     SC,
+    /// <summary>
+    /// 物理防御
+    /// </summary>
     AC,
+    /// <summary>
+    /// 魔法防御
+    /// </summary>
     MAC,
+    /// <summary>
+    /// 生命值、魔法值
+    /// </summary>
     HPMP,
 }
 
@@ -148,14 +169,34 @@ public enum OutputMessageType : byte
     Quest,
     Guild
 }
-
+/// <summary>
+/// 物品品质
+/// </summary>
 public enum ItemGrade : byte
 {
+    /// <summary>
+    /// 无品质
+    /// </summary>
     None = 0,
+    /// <summary>
+    /// 普通品质
+    /// </summary>
     Common = 1,
+    /// <summary>
+    /// 稀有品质
+    /// </summary>
     Rare = 2,
+    /// <summary>
+    /// 传说品质
+    /// </summary>
     Legendary = 3,
+    /// <summary>
+    /// 神话品质
+    /// </summary>
     Mythical = 4,
+    /// <summary>
+    /// 史诗品质（最高级品质）
+    /// </summary>
     Heroic = 5,
 }
 
@@ -1459,7 +1500,9 @@ public enum RequiredType : byte
     MinMC = 10,
     MinSC = 11,
 }
-
+/// <summary>
+/// 装备套装
+/// </summary>
 public enum ItemSet : byte
 {
     None = 0,
@@ -1497,7 +1540,9 @@ public enum ItemSet : byte
     DarkGhost = 38,
     BlueFrostH = 39
 }
-
+/// <summary>
+/// 技能类型
+/// </summary>
 public enum Spell : byte
 {
     None = 0,

@@ -17,17 +17,73 @@ namespace Server.MirDatabase
         /// </summary>
         public string Name;
         /// <summary>
-        ///
+        /// 当前技能
         /// </summary>
         public Spell Spell;
 
-        public byte BaseCost, LevelCost, Icon;
-        public byte Level1, Level2, Level3;
+        /// <summary>
+        /// 魔法基础消耗
+        /// </summary>
+        public byte BaseCost;
+        /// <summary>
+        /// 魔法等级消耗
+        /// </summary>
+        public byte LevelCost;
+        /// <summary>
+        /// 显示的icon
+        /// </summary>
+        public byte Icon;
+        /// <summary>
+        /// 技能等级 1 级
+        /// </summary>
+        public byte Level1;
+        /// <summary>
+        /// 技能等级 2 级
+        /// </summary>
+        public byte Level2;
+        /// <summary>
+        /// 技能等级 3 级
+        /// </summary>
+        public byte Level3;
+        /// <summary>
+        /// 技能等级的经验需求
+        /// </summary>
         public ushort Need1, Need2, Need3;
-        public uint DelayBase = 1800, DelayReduction;
-        public ushort PowerBase, PowerBonus;
-        public ushort MPowerBase, MPowerBonus;
-        public float MultiplierBase = 1.0f, MultiplierBonus;
+        /// <summary>
+        /// 魔法基础延迟时间
+        /// </summary>
+        public uint DelayBase = 1800;
+        /// <summary>
+        /// 每级延迟减少值
+        /// </summary>
+        public uint DelayReduction;
+        /// <summary>
+        /// 物理攻击力基础值
+        /// </summary>
+        public ushort PowerBase;
+        /// <summary>
+        /// 物理攻击力附加值
+        /// </summary>
+        public ushort PowerBonus;
+        /// <summary>
+        /// 魔法攻击力基础值
+        /// </summary>
+        public ushort MPowerBase;
+        /// <summary>
+        /// 魔法攻击力附加值
+        /// </summary>
+        public ushort MPowerBonus;
+        /// <summary>
+        /// 基础伤害倍数
+        /// </summary>
+        public float MultiplierBase = 1.0f;
+        /// <summary>
+        /// 每级倍数增加
+        /// </summary>
+        public float MultiplierBonus;
+        /// <summary>
+        /// 魔法可以释放的距离
+        /// </summary>
         public byte Range = 9;
 
         public override string ToString()
@@ -39,7 +95,12 @@ namespace Server.MirDatabase
         {
 
         }
-
+        /// <summary>
+        /// 初始化技能
+        /// </summary>
+        /// <param name="reader">二进制读取器</param>
+        /// <param name="version">版本</param>
+        /// <param name="Customversion">自定义版本</param>
         public MagicInfo (BinaryReader reader, int version = int.MaxValue, int Customversion = int.MaxValue)
         {
             Name = reader.ReadString();
@@ -99,14 +160,24 @@ namespace Server.MirDatabase
 
     public class UserMagic
     {
+        /// <summary>
+        /// 主环境
+        /// </summary>
         protected static Envir Envir
         {
             get { return Envir.Main; }
         }
-
+        /// <summary>
+        /// 技能
+        /// </summary>
         public Spell Spell;
+        /// <summary>
+        /// 技能蓝图
+        /// </summary>
         public MagicInfo Info;
-
+        /// <summary>
+        ///
+        /// </summary>
         public byte Level, Key;
         public ushort Experience;
         public bool IsTempSpell;

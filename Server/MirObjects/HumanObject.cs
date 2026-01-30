@@ -724,9 +724,11 @@ namespace Server.MirObjects
                 MonsterObject pet = Pets[i];
                 if (pet.Dead) Pets.Remove(pet);
             }
-
+            // 处理buff相关
             ProcessBuffs();
+            // 药品恢复、自动恢复、吸血恢复
             ProcessRegen();
+            // 处理红绿毒
             ProcessPoison();
 
             UserItem item;
@@ -836,25 +838,25 @@ namespace Server.MirObjects
                         }
                         break;
                     case BuffType.ClearRing:
-                        clearRing = true; // 如果没有隐身戒指，清除标记
-                        if (!SpecialMode.HasFlag(SpecialItemMode.ClearRing)) buff.FlagForRemoval = true; // 隐身buff标记为清理
+                        clearRing = true; // 有隐身buff 把clearRing设置为true
+                        if (!SpecialMode.HasFlag(SpecialItemMode.ClearRing)) buff.FlagForRemoval = true; // 如果没有了隐身戒指，隐身buff标记为清理
                         break;
                     case BuffType.Skill:
-                        skill = true; // 如果没有技巧戒指，清除标记
-                        if (!SpecialMode.HasFlag(SpecialItemMode.Skill)) buff.FlagForRemoval = true; // 技巧buff标记为清理
+                        skill = true; // 有技巧戒指的buff，把skill设置为true
+                        if (!SpecialMode.HasFlag(SpecialItemMode.Skill)) buff.FlagForRemoval = true; // 如果没有了技巧戒指，技巧戒指buff标记为清理
                         break;
                     case BuffType.GameMaster:
-                        gm = true; // 如果没有GM权限，清除标记
-                        if (!IsGM) buff.FlagForRemoval = true; // GMbuff标记为清理
+                        gm = true; // 有GMbuff， 把gm设置为true
+                        if (!IsGM) buff.FlagForRemoval = true; // 如果已经不是GM，GMbuff标记为清理
                         break;
                     case BuffType.Mentor:
                     case BuffType.Mentee:
-                        mentor = true; // 如果没有师徒关系，清除标记
-                        if (Info.Mentor == 0) buff.FlagForRemoval = true; // 师徒buff标记为清理
+                        mentor = true; // 有师徒buff，把 mentor 设置为true
+                        if (Info.Mentor == 0) buff.FlagForRemoval = true; // 如果当前角色没有师徒对象，师徒buff标记为清理
                         break;
                     case BuffType.Lover:
-                        lover = true; // 如果没有结婚关系，清除标记
-                        if (Info.Married == 0) buff.FlagForRemoval = true; // 结婚buff标记为清理
+                        lover = true; // 有婚姻buff，把lover设置为true
+                        if (Info.Married == 0) buff.FlagForRemoval = true; // 如果当前角色没有婚姻对象，结婚buff标记为清理
                         break;
                 }
                 // 如果buff过期时间未到，继续下一个buff, 也就是不处理
@@ -937,35 +939,43 @@ namespace Server.MirObjects
             {
                 UpdateGMBuff();
             }
-
+            // 如果有隐身戒指
             if (SpecialMode.HasFlag(SpecialItemMode.ClearRing) && !clearRing)
             {
+                // 添加隐身buff
                 AddBuff(BuffType.ClearRing, this, 0, new Stats());
             }
-
+            // 如果有技巧戒指
             if (SpecialMode.HasFlag(SpecialItemMode.Skill) && !skill)
             {
+                // 增加技巧buff
                 AddBuff(BuffType.Skill, this, 0, new Stats { [Stat.SkillGainMultiplier] = 3 }, false);
             }
-
+            // 如果是师徒并且没有师徒buff
             if (Info.Mentor != 0 && !mentor)
             {
+                // 获取角色
                 CharacterInfo partnerC = Envir.GetCharacterInfo(Info.Mentor);
+                // 获取玩家
                 PlayerObject partnerP = partnerC != null ? Envir.GetPlayer(partnerC.Name) : null;
 
                 if (partnerP != null)
                 {
+                    // 如果是师父
                     if (Info.IsMentor)
                     {
+                        // 增加师父伤害buff
                         AddBuff(BuffType.Mentor, partnerP, 0, new Stats { [Stat.MentorDamageRatePercent] = Settings.MentorDamageBoost });
                     }
                     else
                     {
+                        // 增加经验加成buff
                         AddBuff(BuffType.Mentee, partnerP, 0, new Stats { [Stat.MentorExpRatePercent] = Settings.MentorExpBoost });
                     }
                 }
             }
 
+            // 婚姻buff
             if (Info.Married != 0 && !lover)
             {
                 CharacterInfo loverC = Envir.GetCharacterInfo(Info.Married);
@@ -973,167 +983,220 @@ namespace Server.MirObjects
 
                 if (loverP != null)
                 {
+                    // 增加经验加成buff
                     AddBuff(BuffType.Lover, loverP, 0, new Stats { [Stat.LoverExpRatePercent] = Settings.LoverEXPBonus });
                 }
             }
-
+            // 行会buff
             if (MyGuild != null && MyGuild.Name == Settings.NewbieGuild && Settings.NewbieGuildBuffEnabled == true)
             {
                 AddBuff(BuffType.Newbie, this, 0, new Stats { [Stat.ExpRatePercent] = Settings.NewbieGuildExpBuff });
             }
-
+            // 需要刷新属性表
             if (refresh)
             {
+                // 刷新属性表
                 RefreshStats();
             }
         }
+        /// <summary>
+        /// 处理角色的生命值 / 魔法值恢复逻辑
+        /// </summary>
         private void ProcessRegen()
         {
+            // 如果死亡后续不执行
             if (Dead) return;
 
-            int healthRegen = 0, manaRegen = 0;
-
+            // 生命恢复
+            int healthRegen = 0;
+            // 魔法恢复
+            int manaRegen = 0;
+            // 如果可以恢复
             if (CanRegen)
             {
+                // 设置下次恢复的时间（10s）恢复一次
                 RegenTime = Envir.Time + RegenDelay;
-
+                // 如果当前HP，小于角色最大HP,进行生命回复
                 if (HP < Stats[Stat.HP])
                 {
+                    // 恢复最大生命值的 3% + 1，保证最少恢复 1 点生命值
                     healthRegen += (int)(Stats[Stat.HP] * 0.03F) + 1;
+                    // 目前只有衣服有生命回复 HealthRecovery 最多 25, HealthRegenWeight默认是10
+                    // 有这件衣服的生命恢复是没有这件衣服的2.5倍
                     healthRegen += (int)(healthRegen * ((double)Stats[Stat.HealthRecovery] / Settings.HealthRegenWeight));
                 }
-
+                // MP 恢复
                 if (MP < Stats[Stat.MP])
                 {
+                    // 恢复最大魔法的 3% + 1，保证最少恢复 1 点魔法值
                     manaRegen += (int)(Stats[Stat.MP] * 0.03F) + 1;
+                    // 加上装备的魔法恢复，逻辑跟生命的魔法恢复一样
                     manaRegen += (int)(manaRegen * ((double)Stats[Stat.SpellRecovery] / Settings.ManaRegenWeight));
                 }
             }
-
+            // 200ms 恢复一次
             if (Envir.Time > PotTime)
             {
                 //PotTime = Envir.Time + Math.Max(50,Math.Min(PotDelay, 600 - (Level * 10)));
-                PotTime = Envir.Time + PotDelay;
-                int PerTickRegen = 5 + (Level / 10);
 
+                // 下次使用药水的时间
+                PotTime = Envir.Time + PotDelay;
+                // 每逻辑帧恢复的量
+                int PerTickRegen = 5 + (Level / 10);
+                // 药水的生命总量大于当前要回复的量
                 if (PotHealthAmount > PerTickRegen)
                 {
+                    // 加上当前要恢复的量
                     healthRegen += PerTickRegen;
+                    // 药水恢复总量减去当前恢复的量
                     PotHealthAmount -= (ushort)PerTickRegen;
                 }
                 else
                 {
+                    // 直接加上剩余的恢复量
                     healthRegen += PotHealthAmount;
+                    // 清空生命药水的总恢复量
                     PotHealthAmount = 0;
                 }
-
+                // 药水的魔法总量大于当前要回复的量
                 if (PotManaAmount > PerTickRegen)
                 {
+                    // 加上当前要恢复的量
                     manaRegen += PerTickRegen;
+                    // 魔法药水恢复总量减去当前恢复的量
                     PotManaAmount -= (ushort)PerTickRegen;
                 }
                 else
                 {
+                    // 加上剩余要恢复的量
                     manaRegen += PotManaAmount;
+                    // 清空魔法药水恢复总量
                     PotManaAmount = 0;
                 }
             }
-
+            // 治疗效果
             if (Envir.Time > HealTime)
             {
+                // 下次加成生效的时间
                 HealTime = Envir.Time + HealDelay;
-
+                // 等级的 1/10 + 治疗总量的 1/10 作为每一次的恢复量
                 int incHeal = (Level / 10) + (HealAmount / 10);
+                // 如果治疗总量大于每次恢复量（5 + incHeal 保证最少恢复5点，因为 incHeal 是向下取整有可能为 0）
                 if (HealAmount > (5 + incHeal))
                 {
                     healthRegen += (5 + incHeal);
+                    // 治疗总量减去当前恢复量
                     HealAmount -= (ushort)Math.Min(HealAmount, 5 + incHeal);
                 }
                 else
                 {
+                    // 加上剩余量
                     healthRegen += HealAmount;
+                    // 清空治疗总量
                     HealAmount = 0;
                 }
             }
-
+            // 吸血
             if (Envir.Time > VampTime)
             {
+                // 下次生效的时间（默认建个500ms）
                 VampTime = Envir.Time + VampDelay;
-
+                // 吸血总量大于10
                 if (VampAmount > 10)
                 {
+                    // 一次只加10点血
                     healthRegen += 10;
+                    // 总量减 10
                     VampAmount -= 10;
                 }
                 else
                 {
+                    // 加上剩余吸血量
                     healthRegen += VampAmount;
+                    // 清空总吸血量
                     VampAmount = 0;
                 }
             }
-
+            //如果总恢复量大于0
             if (healthRegen > 0)
             {
+                // 修改声明
                 ChangeHP(healthRegen);
+                // 通知客户端
                 BroadcastDamageIndicator(DamageType.Hit, healthRegen);
             }
-
+            // 如果HP等于角色最大HP
             if (HP == Stats[Stat.HP])
             {
+                // 药品回复总量清空
                 PotHealthAmount = 0;
+                // 治疗总量清空
                 HealAmount = 0;
             }
-
-            if (manaRegen > 0) ChangeMP(manaRegen);
-            if (MP == Stats[Stat.MP]) PotManaAmount = 0;
+            // 魔法恢复大于0
+            if (manaRegen > 0) ChangeMP(manaRegen); // 修改魔法值
+            if (MP == Stats[Stat.MP]) PotManaAmount = 0; // 如果当前魔法值等于角色上线魔法值，魔法药水恢复总量清空
         }
         private void ProcessPoison()
         {
+            // 初始化毒的类型
             PoisonType type = PoisonType.None;
-            ArmourRate = 1F;
-            DamageRate = 1F;
-
+            ArmourRate = 1F; // 护甲系数
+            DamageRate = 1F; // 伤害系数
+            // 倒序遍历: 遍历过程中会溢出当前项，为了保证索引稳定
             for (int i = PoisonList.Count - 1; i >= 0; i--)
             {
+                // 如果玩家死亡则退出
                 if (Dead) return;
-
+                // 拿到当前毒物列表中的一项
                 Poison poison = PoisonList[i];
-
+                // 如果当前的毒有释放者，并且到期了
                 if (poison.Owner != null && poison.Owner.Node == null)
                 {
+                    // 删除当前毒对象
                     PoisonList.RemoveAt(i);
+                    // 处理下一个毒物对象
                     continue;
                 }
-
+                // 是否触发毒伤
                 if (Envir.Time > poison.TickTime)
                 {
+                    // 统计毒伤
                     poison.Time++;
+                    // 设置下次的生效时间
                     poison.TickTime = Envir.Time + poison.TickSpeed;
-
+                    // 如果毒伤次数大于次数
                     if (poison.Time >= poison.Duration)
                     {
+                        // 删除当前中毒buff
                         PoisonList.RemoveAt(i);
                     }
-
+                    // 如果是绿毒或流血
                     if (poison.PType == PoisonType.Green || poison.PType == PoisonType.Bleeding)
                     {
+                        // 角色最后攻击者 = 施毒者
                         LastHitter = poison.Owner;
+                        // 设置 10s 归属
                         LastHitTime = Envir.Time + 10000;
-
+                        // 如果是流血
                         if (poison.PType == PoisonType.Bleeding)
                         {
+                            // 通知客户端显示流血效果
                             Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.Bleeding, EffectType = 0 });
                         }
-
+                        // 毒伤和流血忽略防御
                         PoisonDamage(-poison.Value, poison.Owner);
+                        // 通知客户端显示伤害值
                         BroadcastDamageIndicator(DamageType.Hit, -poison.Value);
-
+                        // 如果死亡跳出当前循环
                         if (Dead) break;
+                        // 自动恢复生命和魔法时间延迟10s(不能自动回血了)
                         RegenTime = Envir.Time + RegenDelay;
                     }
-
+                    // 延迟爆炸
                     if (poison.PType == PoisonType.DelayedExplosion)
                     {
+                        // 当前时间大于延时爆炸的时间，爆炸进入下一个阶段
                         if (Envir.Time > ExplosionInflictedTime) ExplosionInflictedStage++;
 
                         if (!ProcessDelayedExplosion(poison))
@@ -1171,38 +1234,53 @@ namespace Server.MirObjects
 
             CurrentPoison = type;
         }
+        /// <summary>
+        /// 处理延时爆炸
+        /// </summary>
+        /// <param name="poison">延时爆炸的实例</param>
+        /// <returns></returns>
         private bool ProcessDelayedExplosion(Poison poison)
         {
+            // 如果死亡了返回false
             if (Dead) return false;
-
+            // 如果是第一个阶段
             if (ExplosionInflictedStage == 0)
             {
+                // 通知客户端显示爆炸效果
                 Enqueue(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.DelayedExplosion, EffectType = 0 });
                 Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.DelayedExplosion, EffectType = 0 });
-                return true;
+                return true; // 返回true
             }
             if (ExplosionInflictedStage == 1)
             {
+                // 如果是第二阶段
                 if (Envir.Time > ExplosionInflictedTime)
-                    ExplosionInflictedTime = poison.TickTime + 3000;
+                    ExplosionInflictedTime = poison.TickTime + 3000; // 下次执行延迟3s
+                // 通知客户端
                 Enqueue(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.DelayedExplosion, EffectType = 1 });
                 Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.DelayedExplosion, EffectType = 1 });
                 return true;
             }
             if (ExplosionInflictedStage == 2)
             {
+                // 通知客户端
                 Enqueue(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.DelayedExplosion, EffectType = 2 });
                 Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.DelayedExplosion, EffectType = 2 });
                 if (poison.Owner != null)
                 {
                     switch (poison.Owner.Race)
                     {
+                        // 是玩家
                         case ObjectType.Player:
+                            // 获取施毒者
                             PlayerObject caster = (PlayerObject)poison.Owner;
+                            // 创建个延时执行的对象
                             DelayedAction action = new DelayedAction(DelayedType.Magic, Envir.Time, poison.Owner, caster.GetMagic(Spell.DelayedExplosion), poison.Value, this.CurrentLocation);
+                            // 放到延迟列表中
                             CurrentMap.ActionList.Add(action);
                             break;
                         case ObjectType.Monster://this is in place so it could be used by mobs if one day someone chooses to
+                            // 直接结算
                             Attacked((MonsterObject)poison.Owner, poison.Value, DefenceType.MAC);
                             break;
                     }
@@ -2212,10 +2290,14 @@ namespace Server.MirObjects
             RefreshBagWeight();
             // 刷新装备属性
             RefreshEquipmentStats();
+            // 刷新套装属性
             RefreshItemSetStats();
             RefreshMirSetStats();
+            // 刷新技能
             RefreshSkills();
+            // 刷新buff
             RefreshBuffs();
+            // 刷新公会buff
             RefreshGuildBuffs();
 
             //Add any rate percent changes
@@ -2426,22 +2508,26 @@ namespace Server.MirObjects
                     }
                 }
             }
-            // 给当前角色附加技能
+            // 给当前角色附加临时技能
             AddTempSkills(skillsToAdd);
+            // 删除临时技能（排除掉要附加的技能）
             RemoveTempSkills(skillsToRemove.Except(skillsToAdd));
 
+            // 如果有肌肉力量（负重戒指）的特殊物品
             if (SpecialMode.HasFlag(SpecialItemMode.Muscle))
             {
+                // 角色所有的负重*2
                 Stats[Stat.BagWeight] = Stats[Stat.BagWeight] * 2;
                 Stats[Stat.WearWeight] = Stats[Stat.WearWeight] * 2;
                 Stats[Stat.HandWeight] = Stats[Stat.HandWeight] * 2;
             }
-
+            // 如果外观发生改变
             if ((OldLooks_Armour != Looks_Armour) || (OldLooks_Weapon != Looks_Weapon) || (OldLooks_WeaponEffect != Looks_WeaponEffect) || (OldLooks_Wings != Looks_Wings) || (OldLight != Light))
             {
+                // 广播给客户端
                 UpdateLooks(OldLooks_Weapon);
             }
-
+            // 坐骑发生改变
             if (Old_MountType != Mount.MountType)
             {
                 RefreshMount(false);
@@ -2776,7 +2862,10 @@ namespace Server.MirObjects
             Stats[Stat.MinSC] = Math.Min(Stats[Stat.MinSC], Stats[Stat.MaxSC]);
         }
         #endregion
-
+        /// <summary>
+        /// 添加临时技能
+        /// </summary>
+        /// <param name="skillsToAdd"></param>
         private void AddTempSkills(IEnumerable<string> skillsToAdd)
         {
             foreach (var skill in skillsToAdd)
@@ -2792,14 +2881,24 @@ namespace Server.MirObjects
                 if (hasSkill) continue;
                 // 创建技能实例
                 var magic = new UserMagic(spelltype) { IsTempSpell = true };
+                // 添加到角色技能栏中
                 Info.Magics.Add(magic);
+                // 发送给客户端
                 SendMagicInfo(magic);
             }
         }
+        /// <summary>
+        /// 发送给客户端
+        /// </summary>
+        /// <param name="magic">技能实例</param>
         public virtual void SendMagicInfo(UserMagic magic)
         {
             Enqueue(magic.GetInfo(false));
         }
+        /// <summary>
+        /// 删除临时技能
+        /// </summary>
+        /// <param name="skillsToRemove">要删除的临时技能集合</param>
         private void RemoveTempSkills(IEnumerable<string> skillsToRemove)
         {
             foreach (var skill in skillsToRemove)
@@ -7595,6 +7694,10 @@ namespace Server.MirObjects
                 MountType = Mount.MountType
             };
         }
+        /// <summary>
+        /// 获取外观的网络服务包对象
+        /// </summary>
+        /// <returns>返回外观相关的网络服务包</returns>
         protected Packet GetUpdateInfo()
         {
             return new S.PlayerUpdate
@@ -7607,6 +7710,10 @@ namespace Server.MirObjects
                 WingEffect = Looks_Wings
             };
         }
+        /// <summary>
+        /// 广播给客户端用户发送消息更新外观
+        /// </summary>
+        /// <param name="OldLooks_Weapon"></param>
         protected virtual void UpdateLooks(short OldLooks_Weapon)
         {
             Broadcast(GetUpdateInfo());
@@ -7771,15 +7878,23 @@ namespace Server.MirObjects
             ChangeHP(armour - damage);
             return damage - armour;
         }
+        /// <summary>
+        /// 被怪物攻击
+        /// </summary>
+        /// <param name="attacker">攻击者</param>
+        /// <param name="damage">伤害/param>
+        /// <param name="type">防御类型</param>
+        /// <returns></returns>
         public override int Attacked(MonsterObject attacker, int damage, DefenceType type = DefenceType.ACAgility)
         {
+            // 获取受到的真实伤害和是否命中
             var armour = GetArmour(type, attacker, out bool hit);
-
+            // 如果没有命中返回0
             if (!hit)
             {
                 return 0;
             }
-
+            // 如果怪物有反伤
             if (Envir.Random.Next(100) < Stats[Stat.Reflect])
             {
                 if (attacker.IsAttackTarget(this))
@@ -9185,26 +9300,31 @@ namespace Server.MirObjects
         }
 
         #region Mounts
-
+        /// <summary>
+        /// 刷新坐骑
+        /// </summary>
+        /// <param name="refreshStats">默认为true</param>
         public void RefreshMount(bool refreshStats = true)
         {
+            // 如果是骑乘状态
             if (RidingMount)
             {
+                // 检查是否有坐骑
                 if (Mount.MountType < 0)
                 {
                     RidingMount = false;
                 }
-                else if (!Mount.CanRide)
+                else if (!Mount.CanRide) // 是否有马鞍
                 {
                     RidingMount = false;
                     ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.YouMustHaveSaddle), ChatType.System);
                 }
-                else if (!Mount.CanMapRide)
+                else if (!Mount.CanMapRide) // 当前地图是否可以骑乘
                 {
                     RidingMount = false;
                     ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.YouCannotRideOnMap), ChatType.System);
                 }
-                else if (!Mount.CanDungeonRide)
+                else if (!Mount.CanDungeonRide) // 是否可以在副本中骑乘
                 {
                     RidingMount = false;
                     ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.YouCannotRideWithoutBridle), ChatType.System);
@@ -9214,11 +9334,12 @@ namespace Server.MirObjects
             {
                 RidingMount = false;
             }
-
+            // 是否需要刷新属性
             if (refreshStats)
                 RefreshStats();
-
+            // 广播给周围玩家
             Broadcast(GetMountInfo());
+            // 通知自己
             Enqueue(GetMountInfo());
         }
         public void IncreaseMountLoyalty(int amount)

@@ -4903,6 +4903,11 @@ namespace Server.MirEnvir
             }
             return null;
         }
+        /// <summary>
+        /// 获取玩家
+        /// </summary>
+        /// <param name="name">角色名字</param>
+        /// <returns></returns>
         public PlayerObject GetPlayer(string name)
         {
             for (var i = 0; i < Players.Count; i++)
@@ -4927,7 +4932,11 @@ namespace Server.MirEnvir
 
             return null;
         }
-
+        /// <summary>
+        /// 获取角色
+        /// </summary>
+        /// <param name="index">角色id</param>
+        /// <returns>查到的角色</returns>
         public CharacterInfo GetCharacterInfo(int index)
         {
             for (var i = 0; i < CharacterList.Count; i++)

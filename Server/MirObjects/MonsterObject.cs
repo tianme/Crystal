@@ -2433,37 +2433,56 @@ namespace Server.MirObjects
             }
             return targets;
         }
-
+        /// <summary>
+        /// 是否可以被玩家攻击
+        /// </summary>
+        /// <param name="attacker">攻击者</param>
+        /// <returns>是否可以攻击</returns>
         public override bool IsAttackTarget(HumanObject attacker)
         {
+            // 如果攻击者是null 或 攻击者不在世界节点中不能攻击
             if (attacker == null || attacker.Node == null) return false;
-            if (Dead) return false;
-            if (Master == null) return true;
+            if (Dead) return false; // 如果怪物死亡，不能攻击
+            if (Master == null) return true; // 如果怪物没有主人，可以攻击
 
             if (attacker.Race == ObjectType.Hero)
-                attacker = ((HeroObject)attacker).Owner;
+                attacker = ((HeroObject)attacker).Owner; // 如果是玩家的英雄，攻击者指向英雄的主人
 
-            if (attacker.AMode == AttackMode.Peace) return false;
+            if (attacker.AMode == AttackMode.Peace) return false; // 攻击者的攻击模式是和平攻击，返回false
+            // 怪物的主人是攻击者的话，看攻击者开启的模式是否是全体攻击，如果是全体攻击就能攻击这个怪物，如果不是就不能攻击
             if (Master == attacker) return attacker.AMode == AttackMode.All;
+            // 如果主人是玩家并且在安全区内，这不能攻击
             if (Master.Race == ObjectType.Player && (attacker.InSafeZone || InSafeZone)) return false;
-
+            // 攻击模式判断
             switch (attacker.AMode)
             {
+                // 如果是编组模式
                 case AttackMode.Group:
+                    // 主人没有编组 或 编组内没有攻击者可以攻击
                     return Master.GroupMembers == null || !Master.GroupMembers.Contains(attacker);
+                // 行会模式
                 case AttackMode.Guild:
                     {
+                        // 如果不是主人不是玩家不能攻击（因为行会攻击肯定都是玩家）
                         if (!(Master is PlayerObject)) return false;
+                        // 把 Master 转成 PlayerObject类型
                         PlayerObject master = (PlayerObject)Master;
+                        // 如果主人没有公会可以攻击 或 主人跟攻击者不是一个公会的可以攻击
                         return master.MyGuild == null || master.MyGuild != attacker.MyGuild;
                     }
+                // 敌对公会模式
                 case AttackMode.EnemyGuild:
                     {
+                        // 如果不是主人不是玩家不能攻击（因为行会攻击肯定都是玩家）
                         if (!(Master is PlayerObject)) return false;
+                        // 把 Master 转成 PlayerObject 类型
                         PlayerObject master = (PlayerObject)Master;
+                        // 如果主人有公会，攻击者也有公会，并且主人跟攻击者公会是敌对的可以攻击怪物
                         return (master.MyGuild != null && attacker.MyGuild != null) && master.MyGuild.IsEnemy(attacker.MyGuild);
                     }
+                // 红名模式
                 case AttackMode.RedBrown:
+                    // 如果主人的pk值大于等于200 或 主人是棕名
                     return Master.PKPoints >= 200 || Envir.Time < Master.BrownTime;
                 default:
                     return true;

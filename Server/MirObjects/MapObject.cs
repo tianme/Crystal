@@ -34,8 +34,13 @@ namespace Server.MirObjects
         /// 地图名字
         /// </summary>
         public abstract string Name { get; set; }
-
+        /// <summary>
+        /// 记录各阶段的时间戳，用于控制阶段转换的时机
+        /// </summary>
         public long ExplosionInflictedTime;
+        /// <summary>
+        /// 延时爆炸的阶段
+        /// </summary>
         public int ExplosionInflictedStage;
         /// <summary>
         /// 生成线程
@@ -1527,12 +1532,12 @@ namespace Server.MirObjects
         /// </summary>
         public int Value;
         /// <summary>
-        /// 毒的总持续时间（毫秒）
-        /// 超过该时间后毒效果自动移除
+        /// 毒药效果的总触发次数
+        /// 超过次数自动移除
         /// </summary>
         public long Duration;
         /// <summary>
-        /// 毒开始生效的时间戳（服务器时间）
+        /// 毒药效果的当前触发次数计数器
         /// 用于判断毒是否已过期
         /// </summary>
         public long Time;

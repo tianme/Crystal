@@ -176,13 +176,30 @@ namespace Server.MirDatabase
         /// </summary>
         public MagicInfo Info;
         /// <summary>
-        ///
+        /// 等级
         /// </summary>
-        public byte Level, Key;
+        public byte Level;
+        /// <summary>
+        /// 技能绑定的快捷键
+        /// </summary>
+        public byte Key;
+        /// <summary>
+        /// 技能经验值
+        /// </summary>
         public ushort Experience;
+        /// <summary>
+        /// 是不是临时技能
+        /// </summary>
         public bool IsTempSpell;
+        /// <summary>
+        /// 最后释放的时间
+        /// </summary>
         public long CastTime;
-
+        /// <summary>
+        /// 获取技能蓝图
+        /// </summary>
+        /// <param name="spell">技能枚举</param>
+        /// <returns></returns>
         private MagicInfo GetMagicInfo(Spell spell)
         {
             for (int i = 0; i < Envir.MagicInfoList.Count; i++)
@@ -193,13 +210,22 @@ namespace Server.MirDatabase
             }
             return null;
         }
-
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="spell"></param>
         public UserMagic(Spell spell)
         {
             Spell = spell;
-
+            // 获取到技能蓝图
             Info = GetMagicInfo(Spell);
         }
+        /// <summary>
+        /// 从二进制中读取技能
+        /// </summary>
+        /// <param name="reader">二进制读取器</param>
+        /// <param name="version">版本</param>
+        /// <param name="customVersion">自定义版本</param>
         public UserMagic(BinaryReader reader, int version, int customVersion)
         {
             Spell = (Spell) reader.ReadByte();
@@ -210,11 +236,17 @@ namespace Server.MirDatabase
             Experience = reader.ReadUInt16();
 
             if (version < 15) return;
+            // version大于15读取是否是临时技能
             IsTempSpell = reader.ReadBoolean();
 
             if (version < 65) return;
+            // version 大于 65 读最后施法时间
             CastTime = reader.ReadInt64();
         }
+        /// <summary>
+        /// 保存
+        /// </summary>
+        /// <param name="writer"></param>
         public void Save(BinaryWriter writer)
         {
             writer.Write((byte) Spell);
@@ -225,7 +257,11 @@ namespace Server.MirDatabase
             writer.Write(IsTempSpell);
             writer.Write(CastTime);
         }
-
+        /// <summary>
+        /// 生成魔法信息的网络数据包，用于发送给客户端显示
+        /// </summary>
+        /// <param name="hero">是否为英雄角色的魔法</param>
+        /// <returns>包含魔法信息的网络数据包</returns>
         public Packet GetInfo(bool hero)
         {
             return new S.NewMagic
@@ -259,22 +295,35 @@ namespace Server.MirDatabase
                     CastTime = CastTime - Envir.Time
             };
         }
-
+        /// <summary>
+        /// 计算出最终伤害
+        /// </summary>
+        /// <param name="DamageBase">基础伤害</param>
+        /// <returns>技能的最终伤害</returns>
         public int GetDamage(int DamageBase)
         {
             return (int)((DamageBase + GetPower()) * GetMultiplier());
         }
-
+        /// <summary>
+        /// 获取倍数伤害
+        /// </summary>
+        /// <returns></returns>
         public float GetMultiplier()
         {
             return (Info.MultiplierBase + (Level * Info.MultiplierBonus));
         }
-
+        /// <summary>
+        /// 获取混合伤害
+        /// </summary>
+        /// <returns>魔法伤害+物理伤害</returns>
         public int GetPower()
         {
             return (int)Math.Round((MPower() / 4F) * (Level + 1) + DefPower());
         }
-
+        /// <summary>
+        /// 获取魔法攻击力
+        /// </summary>
+        /// <returns>技能的魔法攻击力</returns>
         public int MPower()
         {
             if (Info.MPowerBonus > 0)
@@ -284,6 +333,10 @@ namespace Server.MirDatabase
             else
                 return Info.MPowerBase;
         }
+        /// <summary>
+        /// 获取物理攻击力
+        /// </summary>
+        /// <returns>技能物理攻击力</returns>
         public int DefPower()
         {
             if (Info.PowerBonus > 0)
@@ -298,9 +351,13 @@ namespace Server.MirDatabase
         {
             return (int)Math.Round(power / 4F * (Level + 1) + DefPower());
         }
-
+        /// <summary>
+        /// 技能的延迟时间
+        /// </summary>
+        /// <returns></returns>
         public long GetDelay()
         {
+            // 基础延时 - （技能等级+技能缩减的延时时间）
             return Info.DelayBase - (Level * Info.DelayReduction);
         }
     }
